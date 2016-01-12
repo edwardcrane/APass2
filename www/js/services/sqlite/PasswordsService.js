@@ -1,11 +1,12 @@
 var PasswordsService = function () {
 
     this.init = function () {
+        var deferred = $.Deferred();
         if(typeof window.sqlitePlugin === 'undefined') {
             console.log("sqlitePlugin is undefined, using WebSQL");
             this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 200000);
         } else {
-            console.log("Using sqlitePlugin.");
+            // console.log("Using sqlitePlugin.");
             // console.log("sqlitePlugin property names: [" + Object.getOwnPropertyNames(window.sqlitePlugin).sort() + "]");
             this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});
         }
@@ -18,11 +19,14 @@ var PasswordsService = function () {
             },
             function (error) {
                 console.log('Transaction error: ' + error);
+                deferred.reject('Transaction error: ' + error);
             },
             function () {
                 console.log('Transaction success');
+                deferred.resolve();
             }
         );
+        return deferred.promise();
     }
 
     this.getAllResources = function() {
@@ -42,6 +46,25 @@ var PasswordsService = function () {
                 });
             },
             function(error) {
+                deferred.reject("Transaction Error: " + error.message);
+            }
+        );
+        return deferred.promise();
+    }
+
+    this.findById = function(id) {
+        var deferred = $.Deferred();
+        this.db.transaction(
+            function (tx) {
+
+                var sql = "SELECT * FROM mypassentry " +
+                    "WHERE _id=" + id + ";";
+
+                tx.executeSql(sql, null, function (tx, results) {
+                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0) : null);
+                });
+            },
+            function (error) {
                 deferred.reject("Transaction Error: " + error.message);
             }
         );
@@ -87,7 +110,7 @@ var PasswordsService = function () {
                 console.log("Create mypassentry table succeeded.");
             },
             function (tx, error) {
-                console.log('Create mypassentry table error: ' + error.message);
+                alert('Create mypassentry table error: ' + error.message);
             });
     }
 
@@ -123,7 +146,7 @@ var PasswordsService = function () {
                     console.log('INSERT success');
                 },
                 function (tx, error) {
-                    console.log('INSERT error: ' + error.message);
+                    alert('INSERT error: ' + error.message);
                 });
         }
     }
@@ -140,7 +163,7 @@ var PasswordsService = function () {
                 console.log("UPDATE success");
             },
             function (tx, error) {
-                console.log("UPDATE error: " + error.message);
+                alert("UPDATE error: " + error.message);
             });
     }
 
@@ -151,7 +174,7 @@ var PasswordsService = function () {
                 console.log("DELETE success.");
             },
             function(tx, error) {
-                console.log("DELETE error: " + error.message);
+                alert("DELETE error: " + error.message);
             })
     }
 

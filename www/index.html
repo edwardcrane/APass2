@@ -10,23 +10,169 @@
         * Enable inline JS: add 'unsafe-inline' to default-src
         * Enable eval(): add 'unsafe-eval' to default-src
 	-->
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">
-	<link href="css/styles.css" rel="stylesheet">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'unsafe-eval' 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">
+
+ 	<link href="css/styles.css" rel="stylesheet">
+	<link href="assets/css/pageslider.css" rel="stylesheet">
+
 </head>
 <body>
 <!-- 	<p><button class="help-btn">Help</button></p>
  -->
- 	<div class='header'><h2>APass</h2></div>
+<!--  	<div class='header'><h2>APass</h2></div>
 	<div class='search-view'>
 		<span class="ico ico-mglass"></span>
     	<input class='search-key' type="search" placeholder="Search!"/>
     	<ul class='list resource-list'></ul>
 	</div>
+ -->
+<script id="home-tpl" type="text/template">
+	<header class="bar bar-nav">
+		<h1 class="title">APass</h1>
+	</header>
+	<div class="bar bar-standard bar-header-secondary">
+		<input class='search-key' type="search" autofocus title="Search" />
+	</div>
+	<div class="content"></div>
+</script>
 
-<script src="lib/jquery.js"></script>
+<script id="splash-tpl" type="text/template">
+	<a href="http://www.airanza.com">
+		<img class="splash-logo" src="img/airanza_logo_white_trans_border.png">
+	</a>
+    <a class="terms-of-use" href="http://www.airanza.com/products/apass/tou">Terms of Use</a>
+    <a class="privacy-policy" href="http://www.airanza.com/products/apass/privacy">Privacy Policy</a>
+	<a class="corporate-link" href="http://www.airanza.com">www.airanza.com</a>
+</script>
+
+<script id="resource-list-tpl" type="text/template">
+	<ul class="table-view">
+		{{#each this}}
+		<li class="table-view-cell media">
+			<a href="#resources/{{ _id }}">
+				<img class="media-object pull-left" src="assets/pics/{{ pic }}">
+				<div class="media-body">
+					{{resourcename}}
+					<p>{{description}}</p>
+				</div>
+			</a>
+		</li>
+		{{/each}}
+	</ul>
+</script>
+
+<script id="resource-tpl" type="text/template">
+	<header class="bar bar-nav">
+		<a class="btn btn-link btn-nav pull-left" href="#">
+			<span class="icon icon-left-nav"></span>
+		</a>
+		<h1 class="title">Resource</h1>
+	</header>
+	<div class="content">
+		<div class="card">
+			<ul class="table-view">
+				<li class="table-view-cell media">
+					<img class="media-object pull-left emp-pic" src="assets/pics/{{pic}}">
+					<div class="media-body">
+						{{resourcename}}
+						<p>{{ description }} </p>
+					</div>
+				</li>
+				<li class="table-view-cell media">
+					<div class="media-body">
+						{{username}}
+						<p>{{ username }} </p>
+					</div>
+				</li>
+				<li class="table-view-cell media">
+					<div class="media-body">
+						{{password}}
+						<p>{{ password }} </p>
+				</li>
+				<li class="table-view-cell media">
+					<div class="media-body">
+						{{description}}
+						<p>{{ description }} </p>
+					</div>
+				</li>
+				// <li class="table-view-cell media">
+				// 	<a href="tel:{{ officePhone }}" class="push-right">
+				// 		<span class="media-object pull-left icon icon-call"></span>
+				// 		<div class="media-body">
+				// 			Call office
+				// 			<p>{{ officePhone }}</p>
+				// 		</div>
+				// 	</a>
+				// </li>
+				// <li class="table-view-cell media">
+				// 	<a href="tel:{{ cellPhone }}" class="push-right">
+				// 		<span class="media-object pull-left icon icon-call"></span>
+				// 		<div class="media-body">
+				// 			Call Cell
+				// 			<p>{{ cellPhone }}</p>
+				// 		</div>
+				// 	</a>
+				// </li>
+				// <li class="table-view-cell media">
+				// 	<a href="sms:{{ cellPhone }}" class="push-right">
+				// 		<span class="media-object pull-left icon icon-sms"></span>
+				// 		<div class="media-body">
+				// 			SMS
+				// 			<p>{{ cellPhone}}</p>
+				// 		</div>
+				// 	</a>
+				// </li>
+				// <li class="table-view-cell media">
+				// 	<a href="mailto:{{ email }}" class="push-right">
+				// 		<span class="media-object pull-left icon icon-mail"></span>
+				// 		<div class="media-body">
+				// 			Email
+				// 			<p>{{ email }}</p>
+				// 		</div>
+				// 	</a>
+				// </li>
+				// <li class="table-view-cell media">
+				// 	<a href="#" class="push-right add-location-btn">
+				// 		<span class="media-object pull-left"></span>
+				// 		<div class="media-body">
+				// 			Add location
+				// 		</div>
+				// 	</a>
+				// </li>
+				// <li class="table-view-cell media">
+				// 	<a href="#" class="push-right add-contact-btn">
+				// 		<span class="media-object pull-left"></span>
+				// 		<div class="media-body">
+				// 			Add to contacts
+				// 		</div>
+				// 	</a>
+				// </li>
+				// <li class="table-view-cell media">
+  		// 			<a href="#" class="push-right change-pic-btn">
+    //   					<span class="media-object pull-left"></span>
+    //   					<div class="media-body">
+    //       					Change Picture
+    //   					</div>
+  		// 			</a>
+				// </li>
+			</ul>
+		</div>
+	</div>
+</script>
+
+
+<script src="lib/fastclick.js"></script>
 <script src="cordova.js"></script>
+<script src="lib/jquery.js"></script>
+<script src="lib/pageslider.js"></script>
+<script src="lib/router.js"></script>
 <script src="SQLitePlugin.js"></script>
 <script src="js/services/sqlite/PasswordsService.js"></script>
+<script src="lib/handlebars.js"></script>
+<script src="js/SplashView.js"></script>
+<script src="js/HomeView.js"></script>
+<script src="js/ResourceView.js"></script>
+<script src="js/ResourceListView.js"></script>
 <script src="js/app.js"></script>
 
 </body>

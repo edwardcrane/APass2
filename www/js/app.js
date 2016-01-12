@@ -1,9 +1,17 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
-    if(typeof document === 'undefined') {
-        alert("document is undefined");
-    }
+    console.log("About to start Handlebars.compiling templates");
+
+    // use Handlebars to compile templates:
+    HomeView.prototype.template = Handlebars.compile($("#home-tpl").html());
+    ResourceListView.prototype.template = Handlebars.compile($("#resource-list-tpl").html());
+    ResourceView.prototype.template = Handlebars.compile($("#resource-tpl").html());
+    SplashView.prototype.template = Handlebars.compile($("#splash-tpl").html());
+
+    console.log("About to create PageSlider");
+
+    var slider = new PageSlider($('body'));
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -11,12 +19,33 @@
 
     function onDeviceReady() {
         console.log("inside onDeviceReady()");
-        console.log("sqlitePlugin property names: [" + Object.getOwnPropertyNames(window.sqlitePlugin).sort() + "]");
+
+        // register FastClick fix for 300ms delay on IOS devices:
+        FastClick.attach(document.body);
+
+        // StatusBar.overlaysWebView(false);
+        // StatusBar.backgroundcolorByHexString('#ffffff');
+        // StatusBar.styleDefault();
+
         service = new PasswordsService();
-        service.init();
-        // service.initialize().done(function() {
-        //     alert("Service initialized");
-        // })
+        service.init().done(function() {
+
+            router.addRoute('', function() {
+                slider.slidePage(new HomeView(service).render().$el);
+            });
+
+            router.addRoute('resources/:id', function(id) {
+                service.findById(parseInt(id)).done(function(resource) {
+                    slider.slidePage(new ResourceView(resource).render().$el);
+                })
+            });
+
+            router.addRoute('splash', function() {
+                slider.slidePage(new SplashView().render().$el);
+            });
+
+            router.start();
+        });
     }
 
     // /* ---------------------------------- Local Variables ---------------------------------- */
@@ -27,13 +56,14 @@
 
     /* --------------------------------- Event Registration -------------------------------- */
 
-    $('.search-key').on('keyup', findByName);
-    $('.help-btn').on('click', function() {
-        alert("APass v2.0");
-    });
+    // $('.search-key').on('keyup', findResources);
+    // $('.help-btn').on('click', function() {
+    //     alert("APass v2.0");
+    // });
 
     /* ---------------------------------- Local Functions ---------------------------------- */
-    function findByName() {
+    function findResources() {
+        alert("inside findResources.  search-key is: [" + $('.search-key').val() + "]");
         service.findResources($('.search-key').val()).done(function (resources) {
             var l = resources.length;
             var r;
