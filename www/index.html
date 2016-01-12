@@ -19,19 +19,13 @@
 <body>
 <!-- 	<p><button class="help-btn">Help</button></p>
  -->
-<!--  	<div class='header'><h2>APass</h2></div>
-	<div class='search-view'>
-		<span class="ico ico-mglass"></span>
-    	<input class='search-key' type="search" placeholder="Search!"/>
-    	<ul class='list resource-list'></ul>
-	</div>
- -->
 <script id="home-tpl" type="text/template">
 	<header class="bar bar-nav">
-		<h1 class="title">APass</h1>
+		<h3 class="title">APass</h3>
 	</header>
 	<div class="bar bar-standard bar-header-secondary">
-		<input class='search-key' type="search" autofocus title="Search" />
+		<span class="ico ico-mglass"></span>
+		<input class='search-key' type="search" autofocus placeholder="Search" />
 	</div>
 	<div class="content"></div>
 </script>
@@ -50,7 +44,6 @@
 		{{#each this}}
 		<li class="table-view-cell media">
 			<a href="#resources/{{ _id }}">
-				<img class="media-object pull-left" src="assets/pics/{{ pic }}">
 				<div class="media-body">
 					{{resourcename}}
 					<p>{{description}}</p>
@@ -66,95 +59,30 @@
 		<a class="btn btn-link btn-nav pull-left" href="#">
 			<span class="icon icon-left-nav"></span>
 		</a>
-		<h1 class="title">Resource</h1>
+		<h3 class="title">Edit</h3>
 	</header>
 	<div class="content">
 		<div class="card">
 			<ul class="table-view">
 				<li class="table-view-cell media">
-					<img class="media-object pull-left emp-pic" src="assets/pics/{{pic}}">
 					<div class="media-body">
 						{{resourcename}}
-						<p>{{ description }} </p>
 					</div>
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
 						{{username}}
-						<p>{{ username }} </p>
 					</div>
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
 						{{password}}
-						<p>{{ password }} </p>
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
 						{{description}}
-						<p>{{ description }} </p>
 					</div>
 				</li>
-				// <li class="table-view-cell media">
-				// 	<a href="tel:{{ officePhone }}" class="push-right">
-				// 		<span class="media-object pull-left icon icon-call"></span>
-				// 		<div class="media-body">
-				// 			Call office
-				// 			<p>{{ officePhone }}</p>
-				// 		</div>
-				// 	</a>
-				// </li>
-				// <li class="table-view-cell media">
-				// 	<a href="tel:{{ cellPhone }}" class="push-right">
-				// 		<span class="media-object pull-left icon icon-call"></span>
-				// 		<div class="media-body">
-				// 			Call Cell
-				// 			<p>{{ cellPhone }}</p>
-				// 		</div>
-				// 	</a>
-				// </li>
-				// <li class="table-view-cell media">
-				// 	<a href="sms:{{ cellPhone }}" class="push-right">
-				// 		<span class="media-object pull-left icon icon-sms"></span>
-				// 		<div class="media-body">
-				// 			SMS
-				// 			<p>{{ cellPhone}}</p>
-				// 		</div>
-				// 	</a>
-				// </li>
-				// <li class="table-view-cell media">
-				// 	<a href="mailto:{{ email }}" class="push-right">
-				// 		<span class="media-object pull-left icon icon-mail"></span>
-				// 		<div class="media-body">
-				// 			Email
-				// 			<p>{{ email }}</p>
-				// 		</div>
-				// 	</a>
-				// </li>
-				// <li class="table-view-cell media">
-				// 	<a href="#" class="push-right add-location-btn">
-				// 		<span class="media-object pull-left"></span>
-				// 		<div class="media-body">
-				// 			Add location
-				// 		</div>
-				// 	</a>
-				// </li>
-				// <li class="table-view-cell media">
-				// 	<a href="#" class="push-right add-contact-btn">
-				// 		<span class="media-object pull-left"></span>
-				// 		<div class="media-body">
-				// 			Add to contacts
-				// 		</div>
-				// 	</a>
-				// </li>
-				// <li class="table-view-cell media">
-  		// 			<a href="#" class="push-right change-pic-btn">
-    //   					<span class="media-object pull-left"></span>
-    //   					<div class="media-body">
-    //       					Change Picture
-    //   					</div>
-  		// 			</a>
-				// </li>
 			</ul>
 		</div>
 	</div>
