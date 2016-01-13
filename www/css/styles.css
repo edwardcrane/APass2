@@ -33,34 +33,29 @@ a.privacy-policy {
 }
 
 input {
-/*	text-transform: none|capitalize|uppercase|lowercase|initial|inherit;
-*/
 	text-transform: none;
 }
 
+.loginusername {
+	float: left;
+}
 
-.ico-mglass {
-  position:relative;
-  display:inline-block;
-  background: #fff;
-  border-radius: 30px;
-  height: 6px;
-  width: 6px;
-  border: 2px solid #888;
-  
-  &:after {
-    content: "";
-    height: 2px;
-    width: 6px;
-    background: #888;
-    position:absolute;
-    top:7px;
-    left:5px;
-    -webkit-transform: rotate(45deg);
-     -moz-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-       -o-transform: rotate(45deg);
-  }
-  
+.loginrememberusername {
+	font-size: 10px;
+	float: left;
+}
+
+.loginpassword {
+	float: left;
+}
+
+.loginshowpasswordhint {
+	font-size: 10px;
+}
+
+.showhiddenpasswordicon {
+	float: right;
+	max-width: 25px;
+	max-height: 25px;
 }
 

@@ -8,7 +8,7 @@ var HomeView = function (service) {
 		this.$el.on('keyup', '.search-key', this.findResources);
 		resourceListView = new ResourceListView();
 		this.render();
-
+		this.$el.on('click', '.newresource', this.newResource);
 	};
 
 	this.render = function() {
@@ -22,6 +22,10 @@ var HomeView = function (service) {
 	      	resourceListView.setResources(resources);
 	    });
 	};
+
+	this.newResource = function() {
+		window.location.href="#resources/0";
+	}
 
 	this.initialize();
 

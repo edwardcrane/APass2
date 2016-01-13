@@ -6,16 +6,16 @@ var PasswordsService = function () {
             console.log("sqlitePlugin is undefined, using WebSQL");
             this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 200000);
         } else {
-            // console.log("Using sqlitePlugin.");
-            // console.log("sqlitePlugin property names: [" + Object.getOwnPropertyNames(window.sqlitePlugin).sort() + "]");
+            console.log("Using sqlitePlugin.");
+            console.log("sqlitePlugin property names: [" + Object.getOwnPropertyNames(window.sqlitePlugin).sort() + "]");
             this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});
         }
 
         this.db.transaction(
             function (tx) {
                 createMyPassTable(tx);
-                addSampleData(tx);
-                addMoreSampleData(tx);
+                // addSampleData(tx);
+                // addMoreSampleData(tx);
             },
             function (error) {
                 console.log('Transaction error: ' + error);
@@ -97,6 +97,49 @@ var PasswordsService = function () {
         return deferred.promise();
     }
 
+    this.createResource = function(resourceName, username, password, description) {
+        var deferred = $.Deferred();
+        this.db.transaction(
+            function(tx) {
+                createResource(tx, resourceName, username, password, description);
+                deferred.resolve();  // RESOLVE TO WHAT?
+            },
+            function(error) {
+                deferred.reject("Transaction Error: " + error.message);
+            }
+        );
+        return deferred.promise();
+    }
+
+    this.updateResource = function(id, resourceName, username, password, description) {
+        var deferred = $.Deferred();
+        this.db.transaction(
+            function(tx) {
+                updateResource(tx, id, resourceName, description, username, password);
+                deferred.resolve();  // RESOLVE TO WHAT?
+            },
+            function(error) {
+                console.alert("PasswordsService.updateResource() Transaction Error: " + error.message);
+                deferred.reject("Transaction Error: " + error.message);
+            }
+        );
+        return deferred.promise();
+    }
+
+    this.deleteResource = function(id) {
+        var deferred = $.Deferred();
+        this.db.transaction(
+            function(tx) {
+                deleteResource(tx, id);
+                deferred.resolve();  // RESOLVE TO WHAT?
+            },
+            function(error) {
+                deferred.reject("Transaction Error: " + error.message);
+            }
+        );
+        return deferred.promise();
+    };
+
     var createMyPassTable = function (tx) {
         // tx.executeSQL('DROP TABLE IF EXISTS mypassentry');
         var sql = "CREATE TABLE IF NOT EXISTS mypassentry ( " +
@@ -153,17 +196,17 @@ var PasswordsService = function () {
 
     var updateResource = function(tx, _id, resourceName, description, userName, password) {
         var sql = "UPDATE mypassentry SET resourcename = \'" + resourceName + 
-            "\', description = \'" + description + 
-            "\', username = \'" + username + 
-            "\', password = \'" + password + 
-            "\' WHERE _ID = \'" + _id + "\'";
-            alert(sql);
+                    "\', description = \'" + description + 
+                    "\', username = \'" + userName + 
+                    "\', password = \'" + password + 
+                    "\'  WHERE _id = " + _id + ";";
         tx.executeSql(sql, null, 
             function () {
                 console.log("UPDATE success");
             },
             function (tx, error) {
                 alert("UPDATE error: " + error.message);
+                console.log("UPDATE error: " + error.message);
             });
     }
 
@@ -171,7 +214,7 @@ var PasswordsService = function () {
         var sql = "DELETE FROM mypassentry WHERE _id = " + _id + ";";
         tx.executeSql(sql, null,
             function() {
-                console.log("DELETE success.");
+                console.log("DELETE success. " + _id);
             },
             function(tx, error) {
                 alert("DELETE error: " + error.message);

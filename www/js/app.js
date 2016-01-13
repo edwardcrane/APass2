@@ -1,15 +1,12 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
-    console.log("About to start Handlebars.compiling templates");
-
     // use Handlebars to compile templates:
     HomeView.prototype.template = Handlebars.compile($("#home-tpl").html());
     ResourceListView.prototype.template = Handlebars.compile($("#resource-list-tpl").html());
     ResourceView.prototype.template = Handlebars.compile($("#resource-tpl").html());
     SplashView.prototype.template = Handlebars.compile($("#splash-tpl").html());
-
-    console.log("About to create PageSlider");
+    LoginView.prototype.template = Handlebars.compile($("#login-tpl").html());
 
     var slider = new PageSlider($('body'));
 
@@ -31,12 +28,16 @@
         service.init().done(function() {
 
             router.addRoute('', function() {
+                slider.slidePage(new LoginView(service).render().$el);
+            });
+
+            router.addRoute('home', function() {
                 slider.slidePage(new HomeView(service).render().$el);
             });
 
             router.addRoute('resources/:id', function(id) {
                 service.findById(parseInt(id)).done(function(resource) {
-                    slider.slidePage(new ResourceView(resource).render().$el);
+                    slider.slidePage(new ResourceView(service, resource).render().$el);
                 })
             });
 
@@ -47,12 +48,6 @@
             router.start();
         });
     }
-
-    // /* ---------------------------------- Local Variables ---------------------------------- */
-    // var service = new EmployeeService();
-    // service.initialize().done(function () {
-    //     console.log("Service initialized");
-    // });
 
     /* --------------------------------- Event Registration -------------------------------- */
 

@@ -1,10 +1,11 @@
-var ResourceView = function(resource) {
+var ResourceView = function(service, resource) {
 
 	this.initialize = function() {
 		this.$el = $('<div/>');
-		// this.$el.on('click', '.add-location-btn', this.addLocation);
-		// this.$el.on('click', '.add-contact-btn', this.addToContacts);
-		// this.$el.on('click', '.change-pic-btn', this.changePicture);
+		this.$el.on('click', '.saveresource', this.saveResource);
+		this.$el.on('click', '.deleteresource', this.deleteResource);
+		this.$el.on('click', '.newresource', this.newResource);
+		this.$el.on('click', '.showhiddenpasswordicon', this.showPassword)
 	};
 
 	this.render = function() {
@@ -12,58 +13,46 @@ var ResourceView = function(resource) {
 		return this;
 	};
 
-	// this.addLocation = function(event) {
-	// 	event.preventDefault();
-	// 	navigator.geolocation.getCurrentPosition(
-	// 		function(position) {
-	// 			alert(position.coords.latitude + ',' + position.coords.longitude);
-	// 		},
-	// 		function() {
-	// 			alert('Error getting location');
-	// 		});
-	// 	return false;
-	// };
+	this.saveResource = function() {
+		if($('.resource_id').val() > 0) {
+			service.updateResource(	$('.resource_id').val(),
+									$('.resource_resourcename').val(),
+									$('.resource_username').val(),
+									$('.resource_password').val(),
+									$('.resource_description').val()
+			);
+		} else {
+			service.createResource( $('.resource_resourcename').val(),
+									$('.resource_username').val(),
+									$('.resource_password').val(),
+									$('.resource_description').val()
+			);
+		}
+		window.history.back();
+	};
 
-	// this.addToContacts = function(event) {
-	// 	event.preventDefault();
-	// 	console.log('addToContacts');
-	// 	if(!navigator.contacts) {
-	// 		alert("Contacts API not supported", "Error");
-	// 		return;
-	// 	}
-	// 	var contact = navigator.contacts.create();
-	// 	contact.name = {givenName: employee.firstName, familyName: employee.lastName};
-	// 	var phoneNumbers = [];
-	// 	phoneNumbers[0] = new ContactField('work', employee.officePhone, false);
-	// 	phoneNumbers[1] = new ContactField('mobile', employee.cellPhone, true);
-	// 	contact.phoneNumbers = phoneNumbers;
-	// 	contact.save();
-	// 	return false;
-	// };
+	this.deleteResource = function() {
+		if(confirm("Are you sure you want to delete " + $('.resource_resourcename').val() + "?")) {
+			service.deleteResource( $('.resource_id').val());
+			window.history.back();
+		}
+	};
 
-	// this.changePicture = function(event) {
-	// 	event.preventDefault();
-	// 	if (!navigator.camera) {
-	// 		alert("Camera API not supported", "Error");
-	// 		return;
-	// 	}
+	this.newResource = function () {
+		document.getElementById("resource-tpl-id").value = 0;
+		document.getElementById("resource-tpl-resourcename").value = '';
+		document.getElementById("resource-tpl-username").value = '';
+		document.getElementById("resource-tpl-password").value = '';
+		document.getElementById("resource-tpl-description").value = '';
+	};
 
-	// 	var options = { quality: 50,
-	// 					destinationType: Camera.DestinationType.DATA_URL,
-	// 					sourceType: 1,			// 0:Photo Library, 1=Camera, 2=Saved Album
-	// 					encodingType: 0			// 0=JPG, 1=PNG
-	// 				};
-
-	// 	navigator.camera.getPicture(
-	// 		function(imgData) {
-	// 			$('.media-object', this.$el).attr('src', "data:image/jpeg;base64, "+imgData);
-	// 		},
-	// 		function() {
-	// 			alert('Eror taking picture', 'Error');
-	// 		},
-	// 		options);
-	// 	return false;
-	// };
+	this.showPassword = function () {
+		if(document.getElementById("resource-tpl-password").type == "password") {
+			document.getElementById("resource-tpl-password").type = "text";
+		} else {
+			document.getElementById("resource-tpl-password").type = "password";
+		}
+	}
 
 	this.initialize();
 }
