@@ -1,0 +1,27 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        }
+    },
+    "dependent_plugins": {}
+}

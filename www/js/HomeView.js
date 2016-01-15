@@ -10,7 +10,6 @@ var HomeView = function (service) {
 		service.getAllResources().done(function(data){
 			resourceListView.setResources(data);
 		});
-//		resourceListView.setResources(service.getAllResources());
 		this.render();
 		this.$el.on('click', '.newresource', this.newResource);
 	};
@@ -27,8 +26,8 @@ var HomeView = function (service) {
 	    		console.log("trying to set font to RED");
 	    		$('.search-key').css("color", "red");
 	    	} else {
-	    		console.log("Trying to set font to BLACK");
-	    		$('.search-key').css("color", "black");
+	    		console.log("Trying to set font to WHITE");
+	    		$('.search-key').css("color", "white");
 	    	}
 	      	resourceListView.setResources(resources);
 	    });
