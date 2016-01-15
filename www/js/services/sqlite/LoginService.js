@@ -1,5 +1,7 @@
 var LoginService = function () {
 
+     var loggedInUser;
+
     this.init = function () {
         var deferred = $.Deferred();
 
@@ -119,6 +121,16 @@ var LoginService = function () {
         return deferred.promise();
     }
 
+    this.setLoggedInUser = function(newUser) {
+        console.log(loggedInUser + " -> setLoggedInUser: " + newUser);
+        loggedInUser = newUser;
+    }
+
+    this.getLoggedInUser = function() {
+        console.log("loggedInUser inside LoginService is: " + loggedInUser);
+        return loggedInUser;
+    }
+
     this.changeUsername = function(oldUsername, newUsername ) {
         var deferred = $.Deferred();
         this.db.transaction(
@@ -226,7 +238,7 @@ var LoginService = function () {
             function(tx) {
                 var sql = "SELECT email from login WHERE username = \'" + username + "\';";
                 tx.executeSql(sql, null, function(tx, results){
-                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0) : null);
+                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0).email : null);
                 });
             },
             function(error) {
@@ -258,7 +270,7 @@ var LoginService = function () {
             function(tx) {
                 var sql = "SELECT password_hint from login WHERE username = \'" + username + "\';";
                 tx.executeSql(sql, null, function(tx, results){
-                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0) : null);
+                    deferred.resolve(results.rows.length === 1 ? results.rows.item(0).password_hint : null);
                 });
             },
             function(error) {

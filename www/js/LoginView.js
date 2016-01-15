@@ -5,6 +5,7 @@ var LoginView = function (loginService) {
 		// Define a div wrapper for the view (used to attach events)
 		this.$el = $('<div/>');
 		this.$el.on('keyup', '.loginpassword', this.checkLogin);
+		this.$el.on('click', '.loginshowpasswordhint', this.showPasswordHint);
 		// this.render();
 
 		var lastuser = loginService.getRememberedLastUser().done(function(lastuser) {
@@ -27,8 +28,15 @@ var LoginView = function (loginService) {
 				} else {
 					loginService.changeRememberLastUser($('.loginusername').val(), 0);
 				}
+				loginService.setLoggedInUser($('.loginusername').val());
 				window.location.href="#home";
 			}
+		});
+	}
+
+	this.showPasswordHint = function() {
+		loginService.getPasswordHint($('.loginusername').val()).done(function(gotPasswordHint){
+			alert("Password Hint: " + gotPasswordHint);
 		});
 	}
 

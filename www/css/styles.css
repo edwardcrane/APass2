@@ -163,6 +163,11 @@ title {
 	font-size: smaller;
 }
 
+.login-tpl-rememberusernamelabel {
+	font-size: smaller;
+	color: #FFFFFF;
+}
+
 .loginpassword {
 	width:100%;
 	font-size: large;

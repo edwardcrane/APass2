@@ -48,7 +48,7 @@
             });
 
             router.addRoute('', function() {
-                slider.slidePage(new SplashView().render().$el);
+                slider.slidePage(new SplashView(loginService).render().$el);
             });
 
             router.addRoute('register', function() {

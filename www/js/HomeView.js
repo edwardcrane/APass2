@@ -23,10 +23,8 @@ var HomeView = function (service) {
 	this.findResources = function() {
 	    service.findResources($('.search-key').val()).done(function (resources) {
 	    	if(resources.length == 0) {
-	    		console.log("trying to set font to RED");
 	    		$('.search-key').css("color", "red");
 	    	} else {
-	    		console.log("Trying to set font to WHITE");
 	    		$('.search-key').css("color", "white");
 	    	}
 	      	resourceListView.setResources(resources);
