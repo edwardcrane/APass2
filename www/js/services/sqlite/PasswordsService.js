@@ -35,7 +35,7 @@ var PasswordsService = function () {
 
         this.db.transaction(
             function(tx) {
-                var sql = "SELECT * FROM mypassentry";
+                var sql = "SELECT * FROM mypassentry ORDER BY resourcename COLLATE NOCASE ASC;";
                 tx.executeSql(sql, null, function(tx, results) {
                     var len = results.rows.length,
                     resources = [],
@@ -59,7 +59,7 @@ var PasswordsService = function () {
             function (tx) {
 
                 var sql = "SELECT * FROM mypassentry " +
-                    "WHERE _id=" + id + ";";
+                    "WHERE _id=" + id + " ORDER BY resourcename COLLATE NOCASE ASC;";
 
                 tx.executeSql(sql, null, function (tx, results) {
                     deferred.resolve(results.rows.length === 1 ? results.rows.item(0) : null);

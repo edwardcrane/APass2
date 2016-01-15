@@ -10,8 +10,6 @@ var LoginView = function (loginService) {
 		var lastuser = loginService.getRememberedLastUser().done(function(lastuser) {
 				if(lastuser != null) {
 				$('.loginusername').val(lastuser);
-				console.log($('.loginusername').val());
-				console.log($('.loginrememberusername').val());
 				$('.loginrememberusername').prop('checked', true);
 			}
 		});
@@ -21,8 +19,8 @@ var LoginView = function (loginService) {
 	this.checkLogin = function() {
 		loginService.getPassword($('.loginusername').val()).done(function(gotPassword){
 			if($('.loginpassword').val() == gotPassword) {
-				document.getElementById("login-tpl-username").style.color = "green";
-				document.getElementById("login-tpl-password").style.color = "green";
+				document.getElementById("login-tpl-username").style.background = "Lime";
+				document.getElementById("login-tpl-password").style.background = "Lime";
 				// use the service to save that state of checkbox.
 				if($('.loginrememberusername').prop('checked') == true) {
 					loginService.changeRememberLastUser($('.loginusername').val(), 1);

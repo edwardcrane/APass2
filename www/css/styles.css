@@ -8,29 +8,37 @@ html {
 	background: radial-gradient(ellipse, #5cdbff, #5cdbff, #24B2eb); /* Standard syntax */
 }
 
-img.splash-logo {
+.splash-logo {
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+}
+
+/*img.splash-logo {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	vertical-align: middle;
 }
-
+*/
 a.corporate-link {
-	margin-left: auto;
-	margin-right: auto;
-	vertical-align: bottom;
 }
 
 a.terms-of-use {
-	float: left;
 }
 
 a.privacy-policy {
-	float: right;
 }
 
 h3 {
 	color: #FFF;
+}
+
+table {
+	width: 100%;
 }
 
 input {
@@ -38,10 +46,8 @@ input {
 	border: none;
 	border-bottom: 1px solid #FFF;
 	color: #FFF;
-}
-
-table {
-	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
@@ -58,6 +64,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .search-key {
+	width: 100%;
+	margin-bottom: 10px;
 	font-size: larger;
 	font-weight: bold;
 	background: "white";
@@ -79,9 +87,11 @@ title {
 	color: #FFF;
 }
 
+.content{
+	width: 100%;
+}
+
 .scrollableresourcelist {
-	float: left;
-	height: auto;
 	width: 100%;
 	overflow: auto;
 }
@@ -91,7 +101,7 @@ title {
 */}
 
 .resource-list-tpl-resourcename {
-	min-width: 100%;
+	width: 100%;
 	font-weight: bold;
 	font-size: larger;
 	display: block;
@@ -99,53 +109,69 @@ title {
 }
 
 .resource-list-tpl-description {
-	min-width: 100%;
+	width: 100%;
 	display: block;
 	color: #FFF;
 	border-bottom: 1px solid #FFF;
+	margin-bottom: 5px;
+}
+
+.resource_id {
+	visibility: hidden;
 }
 
 .resource_resourcename {
+	width: 100%;
 	font-weight: bold;
 	font-size: larger;
+}
+
+
+
+.table-view {
 	width: 100%;
 }
 
 .table-view-cell {
 	width: 100%;
-}
-
-.resource_username {
-
-}
-
-.resource_password {
-
-}
-
-.resource_description {
-
+	display: block;
 }
 
 .resource_username {
 	width: 100%;
 }
 
+.resource_password {
+	width: 100%;
+}
+
+.resource-tpl-passwordicon-td {
+	width: 25px;
+}
+
+.resource_description {
+	width: 100%;
+}
+
 .loginusername {
-	float: left;
+	width:100%;
+	font-size: large;
 }
 
 .loginrememberusername {
+	width:100%;
 	font-size: smaller;
-	float: left;
 }
 
 .loginpassword {
-	float: left;
+	width:100%;
+	font-size: large;
 }
 
 .loginshowpasswordhint {
+	display: block;
 	font-size: smaller;
+	text-align: center;
 }
 
 .showhiddenpasswordicon {
@@ -153,24 +179,25 @@ title {
 	max-width: 25px;
 	max-height: 25px;
 	border: 1px solid #FFF;
-/*	margin: 50;
-	padding: 50;
-*/}
+}
 
 .saveresource {
 	float: right;
+	padding: 5px;
 	max-width: 30px;
 	max-height: 30px;
 }
 
 .newresource {
 	float: right;
+	padding: 5px;
 	max-width: 30px;
 	max-height: 30px;
 }
 
 .deleteresource {
 	float: right;
+	padding: 5px;
 	max-width: 30px;
 	max-height: 30px;
 }
@@ -191,9 +218,10 @@ title {
 .resource_description {
 	background: transparent;
 	width: 100%;
-	border: 1px solid #FFF;
-/*	border-bottom: 1px solid #FFF;
-*/	color: #FFF;
+	border: none;
+/*	border: 1px solid #FFF;
+*/	border-bottom: 1px solid #FFF;
+	color: #FFF;
 	min-height: 100px;
 	height: 100%;
 }

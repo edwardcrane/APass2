@@ -27,7 +27,14 @@
 		<h3 class="title">Login to APass</h3>
 		<form>
 			<input type="text" class="loginusername" name="username" placeholder="User Name" autocapitalize="off" id="login-tpl-username" value={{username}}>
-			<input type="checkbox" class="loginrememberusername" name="remember_username" value={{remember_username}} >Remember my User Name?
+			<table>
+				<tr>
+					<td><input type="checkbox" class="loginrememberusername" id="remember_username_checkbox" name="remember_username" value={{remember_username}} >
+					</td>
+					<td>Remember my User Name?
+					</td>
+				</tr>
+			</table>
 			<input type="password" class="loginpassword" name="password" id="login-tpl-password" placeholder="Password">
 			<a class="loginshowpasswordhint" href="#passwordhint/{{ username }}">Show Password Hint</a>
 		</form>
@@ -87,9 +94,13 @@
 	<a href="http://www.airanza.com">
 		<img class="splash-logo" src="img/airanza_logo_white_trans_border.png">
 	</a>
-    <a class="terms-of-use" href="http://www.airanza.com/products/apass/tou">Terms of Use</a>
-    <a class="privacy-policy" href="http://www.airanza.com/products/apass/privacy">Privacy Policy</a>
-	<a class="corporate-link" href="http://www.airanza.com">www.airanza.com</a>
+	<table border=1px solid "white">
+		<tr>
+		    <td><a class="terms-of-use" href="http://www.airanza.com/products/apass/tou">Terms of Use</a></td>
+			<td><a class="corporate-link" href="http://www.airanza.com">www.airanza.com</a></td>
+		    <td><a class="privacy-policy" href="http://www.airanza.com/products/apass/privacy">Privacy Policy</a></td
+		</tr>
+	</table>
 </script>
 
 <script id="resource-list-tpl" type="text/template">
@@ -100,7 +111,7 @@
 			<a href="#resources/{{ _id }}">
 				<div class="media-body resource-list-tpl-record">
 					<div class="resource-list-tpl-resourcename">{{resourcename}}</div><br>
-					<div class="resource-list-tpl-description">{{description}}</div>
+					<input class="resource-list-tpl-description" disabled value="{{description}}">
 				</div>
 			</a>
 		</li>
@@ -132,7 +143,7 @@
 			<ul class="table-view">
 				<li class="table-view-cell media" hidden>
 					<div class="media-body">
-						<input class="resource_id" type="number" name="resourceid" id="resource-tpl-id"  placeholder="Resource ID#" value={{_id}}>
+						<input class="resource_id" type="number" name="resourceid" id="resource-tpl-id"  placeholder="Resource ID#" hidden value={{_id}}>
 					</div>
 				</li>
 				<li class="table-view-cell media">
@@ -147,8 +158,16 @@
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
-						<input class="resource_password" type="password" name="password" id="resource-tpl-password" placeholder="Password" value="{{password}}">
-						<img class="showhiddenpasswordicon" src="img/icon_eye.png">
+						<table>
+							<tr>
+								<td>
+									<input class="resource_password" type="password" name="password" id="resource-tpl-password" placeholder="Password" value="{{password}}">
+								</td>
+								<td class="resource-tpl-passwordicon-td">
+									<img class="showhiddenpasswordicon" src="img/icon_eye.png">
+								</td>
+							</tr>
+						</table>
 					</div>
 				</li>
 				<li class="table-view-cell media">
