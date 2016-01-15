@@ -8,10 +8,20 @@ var SplashView = function(loginService) {
 
 	this.render = function() {
 		setTimeout(function() {
-			if(loginService.getNumLogins <= 0) {
-				window.location.href="#register";
-				return;
-			}
+
+			loginService.getAllLogins().done(function(logins) {
+				console.log(logins.length);
+				if(logins.length <= 0) {
+					window.location.href="#register";
+					return;
+				}
+			});
+
+			// console.log(loginService.getNumLogins());
+			// if(loginService.getNumLogins() <= 0) {
+			// 	window.location.href="#register";
+			// 	return;
+			// }
 
 			if(loginService.getLoggedInUser() == undefined) {
 				window.location.href="#login";

@@ -74,11 +74,6 @@ var LoginService = function () {
         return deferred.promise();
     }
 
-    var getNumLogins = function() {
-        var logins = getAllLogins();
-        return getAllLogins().length;
-    }
-
     this.createLogin = function(username, password, password_hint, email) {
         var deferred = $.Deferred();
 

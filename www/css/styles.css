@@ -63,6 +63,48 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     color:    #FFF;
 }
 
+.saveregistration {
+	float: right;
+	padding: 5px;
+	max-width: 30px;
+	max-height: 30px;
+}
+
+.registerusername {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.registerpassword {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.registerconfirmpassword {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.registerpasswordhint {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.registeremail {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
 .search-key {
 	width: 100%;
 	margin-bottom: 10px;

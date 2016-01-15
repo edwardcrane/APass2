@@ -43,14 +43,22 @@
 
 <script id="register-tpl" type="text/template">
 	<header class="bar bar-nav">
-		<h3 class="title">Register for APass</h3>
-		<img class="saveregistration" src="img/icon_save.png">
+		<table>
+			<tr>
+				<td>
+					<h3 class="title">Register for APass</h3>
+				</td>
+				<td>
+					<img class="saveregistration" src="img/icon_save.png">
+				</td>
+			</tr>
+		</table>
 		<form>
-			<input type="text" class="registerusername" name="username" placeholder="User Name" autocapitalize="off" id="register-tpl-username" value={{username}}>
-			<input type="password" class="registerpassword" name="password" id="register-tpl-password" placeholder="Password">
-			<input type="password" class="registerconfirmpassword" name="confirmpassword" id="register-tpl-confirmpassword" placeholder="Confirm Password">
-			<input type="text" class="registerpasswordhint" name="passwordhint" id="register-tpl-passwordhint" placeholder="Password Hint">
-			<input type="email" class="registeremail" name="email" id="register-tpl-email" placeholder="Email">
+			<input type="text" class="registerusername" name="username" placeholder="User Name" autocapitalize="off"  required id="register-tpl-username" value={{username}}>
+			<input type="password" class="registerpassword" name="password" id="register-tpl-password" required placeholder="Password">
+			<input type="password" class="registerconfirmpassword" name="confirmpassword" id="register-tpl-confirmpassword" required placeholder="Confirm Password">
+			<input type="text" class="registerpasswordhint" name="passwordhint" id="register-tpl-passwordhint" required placeholder="Password Hint">
+			<input type="email" class="registeremail" name="email" id="register-tpl-email" required placeholder="Email">
 		</form>
 	</header>
 	<footer>
