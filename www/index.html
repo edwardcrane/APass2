@@ -34,6 +34,23 @@
 	</header>
 </script>
 
+<script id="register-tpl" type="text/template">
+	<header class="bar bar-nav">
+		<h3 class="title">Register for APass</h3>
+		<img class="saveregistration" src="img/icon_save.png">
+		<form>
+			<input type="text" class="registerusername" name="username" placeholder="User Name" autocapitalize="off" id="register-tpl-username" value={{username}}>
+			<input type="password" class="registerpassword" name="password" id="register-tpl-password" placeholder="Password">
+			<input type="password" class="registerconfirmpassword" name="confirmpassword" id="register-tpl-confirmpassword" placeholder="Confirm Password">
+			<input type="text" class="registerpasswordhint" name="passwordhint" id="register-tpl-passwordhint" placeholder="Password Hint">
+			<input type="email" class="registeremail" name="email" id="register-tpl-email" placeholder="Email">
+		</form>
+	</header>
+	<footer>
+		<img class="logo-footer" src="img/airanza_logo_white_trans_border.png">
+	</footer>
+</script>
+
 <script id="change-registration-tpl" type="text/template">
 	<header class="bar bar-nav">
 		<h3 class="title">Change Login Info</h3>
@@ -49,11 +66,19 @@
 
 <script id="home-tpl" type="text/template">
 	<header class="bar bar-nav">
-		<h3 class="title">APass</h3>
-		<img class="newresource" src="img/icon_add.png">
+		<table>
+			<tr>
+				<td>
+					<h3 class="title">APass</h3>
+				</td>
+				<td>
+					<img class="newresource" src="img/icon_add.png">
+				</td>
+			</tr>
+		</table>
 	</header>
 	<div class="bar bar-standard bar-header-secondary">
-		<input class='search-key' type="search" autofocus placeholder="Search" results="0"/>
+		<input class='search-key' type="search" autofocus autocapitalize="off" placeholder="Search" results="0"/>
 	</div>
 	<div class="content"></div>
 </script>
@@ -68,18 +93,20 @@
 </script>
 
 <script id="resource-list-tpl" type="text/template">
+	<div class="scrollableresourcelist">
 	<ul class="table-view">
 		{{#each this}}
 		<li class="table-view-cell media">
 			<a href="#resources/{{ _id }}">
-				<div class="media-body">
-					<h4>{{resourcename}}</h4>
-					{{description}}
+				<div class="media-body resource-list-tpl-record">
+					<div class="resource-list-tpl-resourcename">{{resourcename}}</div><br>
+					<div class="resource-list-tpl-description">{{description}}</div>
 				</div>
 			</a>
 		</li>
 		{{/each}}
 	</ul>
+	</div>
 </script>
 
 <script id="resource-tpl" type="text/template">
@@ -87,10 +114,18 @@
 		<a class="btn btn-link btn-nav pull-left" href="#">
 			<span class="icon icon-left-nav"></span>
 		</a>
-		<h3 class="title">Edit</h3>
-		<img class="saveresource" src="img/icon_save.png">
-		<img class="deleteresource" src="img/icon_trashcan.png">
-		<img class="newresource" src="img/icon_add.png">
+		<table>
+			<tr>
+				<td>
+					<h3 class="title">Edit</h3>
+				</td>
+				<td>
+					<img class="saveresource" src="img/icon_save.png">
+					<img class="deleteresource" src="img/icon_trashcan.png">
+					<img class="newresource" src="img/icon_add.png">
+				</td>
+			</tr>
+		</table>
 	</header>
 	<div class="content">
 		<div class="card">
@@ -102,23 +137,23 @@
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
-						<input class="resource_resourcename" type="text" name="resourcename" id="resource-tpl-resourcename" placeholder="Record Name" value={{resourcename}}>
+						<input class="resource_resourcename" type="text" autocapitalize="off" name="resourcename" id="resource-tpl-resourcename" placeholder="Record Name" value="{{resourcename}}" >
 					</div>
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
-						<input class="resource_username" type="text" name="username" id="resource-tpl-username" placeholder="User Name" value={{username}}>
+						<input class="resource_username" type="text" autocapitalize="off" name="username" id="resource-tpl-username" placeholder="User Name" value="{{username}}">
 					</div>
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
-						<input class="resource_password" type="password" name="password" id="resource-tpl-password" placeholder="Password" value={{password}}>
+						<input class="resource_password" type="password" name="password" id="resource-tpl-password" placeholder="Password" value="{{password}}">
 						<img class="showhiddenpasswordicon" src="img/icon_eye.png">
 					</div>
 				</li>
 				<li class="table-view-cell media">
 					<div class="media-body">
-						<input class="resource_description" type="text" name="description" id="resource-tpl-description" placeholder="Description" value={{description}}>
+						<input class="resource_description" type="text" autocapitalize="off" name="description" id="resource-tpl-description" placeholder="Description" value="{{description}}" >
 					</div>
 				</li>
 			</ul>
@@ -126,15 +161,16 @@
 	</div>
 </script>
 
-
 <script src="lib/fastclick.js"></script>
 <script src="cordova.js"></script>
 <script src="lib/jquery.js"></script>
 <script src="lib/pageslider.js"></script>
 <script src="lib/router.js"></script>
 <script src="SQLitePlugin.js"></script>
+<script src="js/services/sqlite/LoginService.js"></script>
 <script src="js/services/sqlite/PasswordsService.js"></script>
 <script src="lib/handlebars.js"></script>
+<script src="js/RegisterView.js"></script>
 <script src="js/LoginView.js"></script>
 <script src="js/SplashView.js"></script>
 <script src="js/HomeView.js"></script>

@@ -1,6 +1,3 @@
-@import "compass/css3";
-
-
 html {
 	height: 100%;
 	width: 100%;
@@ -32,8 +29,86 @@ a.privacy-policy {
 	float: right;
 }
 
+h3 {
+	color: #FFF;
+}
+
 input {
-	text-transform: none;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #FFF;
+	color: #FFF;
+}
+
+table {
+	width: 100%;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
+    color:    #FFF;
+}
+input:-moz-placeholder, textarea:-moz-placeholder { 
+    color:    #FFF;
+}
+input::-moz-placeholder, textarea::-moz-placeholder { 
+    color:    #FFF;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
+    color:    #FFF;
+}
+
+.search-key {
+	font-size: larger;
+	font-weight: bold;
+	background: "white";
+}
+
+ul {
+	list-style-type: none;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+li a {
+	display: block;
+}
+
+title {
+	float: left;
+	color: #FFF;
+}
+
+.scrollableresourcelist {
+	float: left;
+	height: auto;
+	width: 100%;
+	overflow: auto;
+}
+
+.resource-list-tpl-record {
+/*	border-bottom: 1px solid #FFF;
+*/}
+
+.resource-list-tpl-resourcename {
+	min-width: 100%;
+	font-weight: bold;
+	font-size: larger;
+	display: block;
+	color: #FFF;
+}
+
+.resource-list-tpl-description {
+	min-width: 100%;
+	display: block;
+	color: #FFF;
+	border-bottom: 1px solid #FFF;
+}
+
+.resource_resourcename {
+	font-weight: bold;
+	font-size: larger;
+	width: 100%;
 }
 
 .loginusername {
@@ -57,5 +132,36 @@ input {
 	float: right;
 	max-width: 25px;
 	max-height: 25px;
+	border: 1px solid #FFF;
 }
 
+.saveresource {
+	float: right;
+	max-width: 30px;
+	max-height: 30px;
+}
+
+.newresource {
+	float: right;
+	max-width: 30px;
+	max-height: 30px;
+}
+
+.deleteresource {
+	float: right;
+	max-width: 30px;
+	max-height: 30px;
+}
+
+.resource-list-tpl-resourcename {
+	font-weight: bold;
+	float: left;
+}
+
+.resource-list-tpl-description {
+	float: left;
+}
+
+.resource_resourcename {
+	font-weight: bold;
+}

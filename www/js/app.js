@@ -7,6 +7,7 @@
     ResourceView.prototype.template = Handlebars.compile($("#resource-tpl").html());
     SplashView.prototype.template = Handlebars.compile($("#splash-tpl").html());
     LoginView.prototype.template = Handlebars.compile($("#login-tpl").html());
+    RegisterView.prototype.template = Handlebars.compile($("#register-tpl").html());
 
     var slider = new PageSlider($('body'));
 
@@ -24,25 +25,35 @@
         // StatusBar.backgroundcolorByHexString('#ffffff');
         // StatusBar.styleDefault();
 
-        service = new PasswordsService();
-        service.init().done(function() {
+        loginService = new LoginService();
+        loginService.init().done(function() {
+            console.log("loginService is initialized");
+        });
 
-            router.addRoute('', function() {
-                slider.slidePage(new LoginView(service).render().$el);
+        passwordsService = new PasswordsService();
+        passwordsService.init().done(function() {
+
+            router.addRoute('login', function() {
+                slider.slidePage(new LoginView(loginService).render().$el);
             });
 
             router.addRoute('home', function() {
-                slider.slidePage(new HomeView(service).render().$el);
+                slider.slidePage(new HomeView(passwordsService).render().$el);
             });
 
             router.addRoute('resources/:id', function(id) {
-                service.findById(parseInt(id)).done(function(resource) {
-                    slider.slidePage(new ResourceView(service, resource).render().$el);
+                passwordsService.findById(parseInt(id)).done(function(resource) {
+                    slider.slidePage(new ResourceView(passwordsService, resource).render().$el);
                 })
             });
 
-            router.addRoute('splash', function() {
+            router.addRoute('', function() {
                 slider.slidePage(new SplashView().render().$el);
+            });
+
+            router.addRoute('register', function() {
+                console.log(loginService);
+                slider.slidePage(new RegisterView(loginService).render().$el);
             });
 
             router.start();

@@ -7,6 +7,10 @@ var HomeView = function (service) {
 		this.$el = $('<div/>');
 		this.$el.on('keyup', '.search-key', this.findResources);
 		resourceListView = new ResourceListView();
+		service.getAllResources().done(function(data){
+			resourceListView.setResources(data);
+		});
+//		resourceListView.setResources(service.getAllResources());
 		this.render();
 		this.$el.on('click', '.newresource', this.newResource);
 	};
@@ -19,6 +23,13 @@ var HomeView = function (service) {
 
 	this.findResources = function() {
 	    service.findResources($('.search-key').val()).done(function (resources) {
+	    	if(resources.length == 0) {
+	    		console.log("trying to set font to RED");
+	    		$('.search-key').css("color", "red");
+	    	} else {
+	    		console.log("Trying to set font to BLACK");
+	    		$('.search-key').css("color", "black");
+	    	}
 	      	resourceListView.setResources(resources);
 	    });
 	};

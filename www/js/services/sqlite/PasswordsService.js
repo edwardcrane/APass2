@@ -2,13 +2,14 @@ var PasswordsService = function () {
 
     this.init = function () {
         var deferred = $.Deferred();
-        if(typeof window.sqlitePlugin === 'undefined') {
-            console.log("sqlitePlugin is undefined, using WebSQL");
-            this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 200000);
+
+
+        if(device.platform === 'browser') {
+            console.log("PasswordService running on platform "+ device.platform + ", using WebSQL");
+            this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 20000);
         } else {
-            console.log("Using sqlitePlugin.");
-            console.log("sqlitePlugin property names: [" + Object.getOwnPropertyNames(window.sqlitePlugin).sort() + "]");
-            this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});
+            console.log("LoginService running on platform " + device.platform + ", using SQLitePlugin");
+            this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});            
         }
 
         this.db.transaction(
@@ -36,7 +37,7 @@ var PasswordsService = function () {
             function(tx) {
                 var sql = "SELECT * FROM mypassentry";
                 tx.executeSql(sql, null, function(tx, results) {
-                    var len = reslts.rows.length,
+                    var len = results.rows.length,
                     resources = [],
                     i = 0;
                     for(i = 0; i < len; i++) {
