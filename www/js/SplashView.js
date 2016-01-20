@@ -10,7 +10,6 @@ var SplashView = function(loginService) {
 		setTimeout(function() {
 
 			loginService.getAllLogins().done(function(logins) {
-				console.log(logins.length);
 				if(logins.length <= 0) {
 					window.location.href="#register";
 					return;

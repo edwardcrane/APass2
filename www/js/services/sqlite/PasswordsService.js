@@ -79,11 +79,13 @@ var PasswordsService = function () {
             function(tx) {
                 var sql = "SELECT * FROM mypassentry " + 
                     "WHERE resourcename LIKE \'%"+ searchKey + "%\' OR " + 
-                    "description LIKE \'%" + searchKey + "%\' COLLATE NOCASE";
-                tx.executeSql(sql, null, function(tx, results) {
+                    "description LIKE \'%" + searchKey + "%\' ORDER BY resourcename COLLATE NOCASE ASC;";
+                tx.executeSql(sql, null, function (tx, results) {
+
                     var len = results.rows.length,
                     resources = [],
                     i = 0;
+
                     for (i = 0; i < len; i++) {
                         resources[i] = results.rows.item(i);
                     }
@@ -91,6 +93,8 @@ var PasswordsService = function () {
                 });
             },
             function(error) {
+                console.log("Transaction Error: " + error.message);
+                console.log(error);
                 deferred.reject("Transaction Error: " + error.message);
             }
 

@@ -242,6 +242,14 @@ title {
 	max-height: 30px;
 }
 
+.menuicon {
+	float: right;
+	padding: 5px;
+	max-width: 30px;
+	max-height: 30px;
+	cursor: pointer;
+}
+
 .deleteresource {
 	float: right;
 	padding: 5px;
@@ -272,3 +280,35 @@ title {
 	min-height: 100px;
 	height: 100%;
 }
+
+/*Menu styling for drop-down functionality*/
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	position: relative;
+	display: block;
+	z-index: 1
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #5cdbff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}

@@ -18,6 +18,8 @@
     function onDeviceReady() {
         console.log("inside onDeviceReady()");
 
+        document.addEventListener("backbutton", onBackKeyDown, false);
+
         // register FastClick fix for 300ms delay on IOS devices:
         FastClick.attach(document.body);
 
@@ -58,27 +60,45 @@
 
             router.start();
         });
+
+        // console.log(cordova.plugins.email);
+        // cordova.plugins.email.isAvailable(function(isAvailable) {
+        //     alert("Email Service availability: " + isAvailable);
+        // });
     }
 
     /* --------------------------------- Event Registration -------------------------------- */
 
-    // $('.search-key').on('keyup', findResources);
-    // $('.help-btn').on('click', function() {
-    //     alert("APass v2.0");
-    // });
 
     /* ---------------------------------- Local Functions ---------------------------------- */
-    function findResources() {
-        alert("inside findResources.  search-key is: [" + $('.search-key').val() + "]");
-        service.findResources($('.search-key').val()).done(function (resources) {
-            var l = resources.length;
-            var r;
-            $('.resource-list').empty();
-            for (var i = 0; i < l; i++) {
-                r = resources[i];
-                $('.resource-list').append('<li><a href="#resources/' + r._id + '">' + r.resourcename + ' ' + r.description + '</a></li>');
+
+    // first clear search box if back pressed, then exit.
+    function onBackKeyDown() {
+        if(window.location.href.endsWith("#home")) {
+            if($('.search-key').val() !== "") {
+                $('.search-key').val("");
+                $('.search-key').keyup();
+                return false;
+            } else {
+                if(device.platform === 'Android') {
+                    navigator.app.exitApp();
+                } else {
+                    console.log(device.platform + " does not support navigator.app.exitApp()");
+                    window.location.href="#login";
+                }
+                return false;
             }
-        });
+        } else if(window.location.href.endsWith("#login")) {
+            if(device.platform === 'Android') {
+                navigator.app.exitApp();
+            } else {
+                console.log(device.platform + " does not support navigator.app.exitApp()");
+            }
+            return false;
+        } else {
+            window.history.back();
+            return(true);
+        }
     }
 
 }());

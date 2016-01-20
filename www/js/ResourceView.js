@@ -5,7 +5,7 @@ var ResourceView = function(service, resource) {
 		this.$el.on('click', '.saveresource', this.saveResource);
 		this.$el.on('click', '.deleteresource', this.deleteResource);
 		this.$el.on('click', '.newresource', this.newResource);
-		this.$el.on('click', '.showhiddenpasswordicon', this.showPassword)
+		this.$el.on('click', '.showhiddenpasswordicon', this.showPassword);
 	};
 
 	this.render = function() {
@@ -33,7 +33,9 @@ var ResourceView = function(service, resource) {
 
 	this.deleteResource = function() {
 		if(confirm("Are you sure you want to delete " + $('.resource_resourcename').val() + "?")) {
-			service.deleteResource( $('.resource_id').val());
+			if($('.resource_id').val() > 0) {
+				service.deleteResource( $('.resource_id').val());
+			}
 			window.history.back();
 		}
 	};
