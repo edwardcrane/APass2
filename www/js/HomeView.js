@@ -1,4 +1,4 @@
-var HomeView = function (service) {
+var HomeView = function (loginService, passwordsService) {
 
 	var resourceListView;
 
@@ -8,11 +8,20 @@ var HomeView = function (service) {
 		this.$el.on('keyup', '.search-key', this.findResources);
 		this.$el.on('click', '.newresource', this.newResource);
 		this.$el.on('click', '.menuicon', this.menuClicked);
+		this.$el.on('click', '.menuitememailcsvfile', this.onCSVFile);
+		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
+		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
+		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
+		this.$el.on('click', '.menuitemchangelogin', this.onChangeLogin);
+		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
+		this.$el.on('click', '.menuitemabout', this.onAbout);
 
 		window.addEventListener("click", this.handleClick);
 
+        document.addEventListener("backbutton", onBackKeyDown, false);
+
 		resourceListView = new ResourceListView();
-		service.getAllResources().done(function(data){
+		passwordsService.getAllResources().done(function(data){
 			resourceListView.setResources(data);
 		});
 		this.render();
@@ -24,8 +33,49 @@ var HomeView = function (service) {
 		return this;
 	};
 
+	function onBackKeyDown() {
+        if(window.location.href.endsWith("#home")) {
+			// first, if menus are visible, get rid of them and do nothing else:
+			if(document.getElementById("myDropdown").classList.contains('show') || 
+				document.getElementById("advancedDropdown").classList.contains('show')) {
+				if(document.getElementById("myDropdown").classList.contains('show')){
+					document.getElementById("myDropdown").classList.remove('show');
+				};
+				if(document.getElementById("advancedDropdown").classList.contains('show')){
+					document.getElementById("advancedDropdown").classList.remove('show');
+				};
+				return false;
+			};
+
+			// if there is text in the search box, then clear it.
+            if($('.search-key').val() !== "") {
+                $('.search-key').val("");
+                $('.search-key').keyup();
+                return false;
+            } else {
+                if(device.platform === 'Android') {
+                    navigator.app.exitApp();
+                } else {
+                    console.log(device.platform + " does not support navigator.app.exitApp()");
+                    window.location.href="#login";
+                }
+                return false;
+            }
+        } else if(window.location.href.endsWith("#login")) {
+            if(device.platform === 'Android') {
+                navigator.app.exitApp();
+            } else {
+                console.log(device.platform + " does not support navigator.app.exitApp()");
+            }
+            return false;
+        } else {
+            window.history.back();
+            return(true);
+        }
+	};
+
 	this.findResources = function() {
-	    service.findResources($('.search-key').val()).done(function (resources) {
+	    passwordsService.findResources($('.search-key').val()).done(function (resources) {
 	    	if(resources.length == 0) {
 	    		$('.search-key').css("color", "red");
 	    	} else {
@@ -46,7 +96,7 @@ var HomeView = function (service) {
 	};
 
 	this.handleClick = function(event) {
-		if(!event.target.matches('.menuicon')) {
+		if((!event.target.matches('.menuicon')) && (!event.target.matches('.menuitemadvanced'))) {
 			var dropdowns = document.getElementsByClassName("dropdown-content");
 			var i;
 			for (i = 0; i < dropdowns.length; i++) {
@@ -55,8 +105,77 @@ var HomeView = function (service) {
 					openDropdown.classList.remove('show');
 				};
 			};
+			var advanceddropdowns = document.getElementsByClassName("advanced-dropdown-content");
+			var i;
+			for (i = 0; i < advanceddropdowns.length; i++) {
+				var openDropdown = advanceddropdowns[i];
+				if(openDropdown.classList.contains('show')) {
+					openDropdown.classList.remove('show');
+				};
+			};
 		};
 	};
+
+	this.onCSVFile = function(event) {
+		event.preventDefault();
+		passwordsService.exportCSV("export.csv");
+
+		// NOW SEND EMAIL ATTACHMENT:		
+        cordova.plugins.email.isAvailable(function(isAvailable) {
+        	if(isAvailable) {
+        		loginService.getEmail(loginService.getLoggedInUser()).done(function (myemail) {
+        			var atts = [];
+        			var emails = [];
+
+        			emails.push(myemail);
+        			atts.push(cordova.file.externalDataDirectory + "export.csv");
+
+        			window.plugin.email.open({
+        					to: emails,
+    	    				attachments: atts,
+        					subject: "APass CSV Export File",
+        					body: "This is the latest CSV Export File from APass."
+        				},
+						function() {
+							console.log('email view dismissed');
+        		 		},
+        		 		this
+        		 	);
+        		});
+       		}
+        });
+	}
+
+	this.onAdvanced = function(event) {
+		event.preventDefault();
+		document.getElementById("myDropdown").classList.toggle("show");
+		document.getElementById("advancedDropdown").classList.toggle("show");
+	}
+
+	this.onSaveEncryptedFile = function(event) {
+		event.preventDefault();
+		alert("FEATURE NOT YET IMPLEMENTED");
+	}
+
+	this.onLoadEncryptedFile = function(event) {
+		event.preventDefault();
+		alert("FEATURE NOT YET IMPLEMENTED");
+	}
+
+	this.onChangeLogin = function(event) {
+		event.preventDefault();
+		alert("FEATURE NOT YET IMPLEMENTED");
+	}
+
+	this.onRemoveAds = function(event) {
+		event.preventDefault();
+		alert("FEATURE NOT YET IMPLEMENTED");
+	}
+
+	this.onAbout = function(event) {
+		event.preventDefault();
+		window.location.href="#";
+	}
 
 	// Close the dropdown menu if user clicks outside of it
 	// window.onClick = function(event) {

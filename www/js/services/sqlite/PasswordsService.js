@@ -1,5 +1,12 @@
 var PasswordsService = function () {
 
+    var logOb;
+
+    function fail(e) { 
+        console.log("FileSystem Error");
+        console.dir(e);
+    };
+
     this.init = function () {
         var deferred = $.Deferred();
 
@@ -238,5 +245,79 @@ var PasswordsService = function () {
                 alert('INSERT error: ' + error.message);
             });
     }
+
+    var stringifyCSV = function(table) {
+        var csv = '', c, cc, r, rr = table.length, cell;
+        for (r = 0; r < rr; ++r) {
+            if (r) { csv += '\r\n'; }
+            for (c = 0, cc = table[r].length; c < cc; ++c) {
+                if (c) { csv += ','; }
+                cell = table[r][c];
+                if (/[,\r\n"]/.test(cell)) { cell = '"' + cell.replace(/"/g, '""') + '"'; }
+                csv += (cell || 0 === cell) ? cell : '';
+            }
+        }
+        return csv;
+    }
+
+    this.exportCSV = function (filename) {
+        var table = [];
+        this.getAllResources().done(function (newTable) {
+            table = newTable;
+
+
+            console.log("Table contains " + table.length + " records.");
+            for(var i = 0; i < table.length; i++) {
+                console.log(table[i]);
+                for (var key in table[i]) { console.log(key + ":" + table[i].key);}
+                // for(var j = 0; j < table[i].length; j++) {
+                //     console.log(table[i][j]);
+                // }
+            }
+            // cordova.file.dataDirectory: "file:///data/data/com.airanza.apass2/files/"
+            // cordova.file.externalDataDirectory: "file:///storage/emulated/0/Android/data/com.airanza.apass2/files/"
+            window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+                console.log(cordova.file.externalDataDirectory);
+
+                dir.getFile(filename, {create:true}, function(file){
+                    logOb = file;
+
+                    writeStr(stringifyCSV(table));
+    //                writeStr(doNothingToString("This is just a simple string, dammit!"));
+                });
+            });
+        });
+    }
+
+    function writeStr(table) {
+        if(!logOb) {
+            alert(logOb);
+            return;
+        }
+        var str = stringifyCSV(table);
+        logOb.createWriter(function(fileWriter) {
+            // if we wanted to append, we would uncomment the following:
+            // fileWriter.seek(fileWriter.length);
+            
+            var blob = new Blob([str], {type:'text/plain'});
+            fileWriter.write(blob);
+            console.log("Successfully completed writeStr().");
+        }, fail);
+    }
+
+    // function writeLog(str) {
+    //     if(!logOb) {
+    //         alert(logOb);
+    //         return;
+    //     }
+    //     var log = str + " [" + (new Date()) + "]\n";
+    //     logOb.createWriter(function(fileWriter) {
+    //         fileWriter.seek(fileWriter.length);
+            
+    //         var blob = new Blob([log], {type:'text/plain'});
+    //         fileWriter.write(blob);
+    //         console.log("ok, in theory i worked");
+    //     }, fail);
+    // }
 
 }

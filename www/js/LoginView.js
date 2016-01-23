@@ -12,6 +12,7 @@ var LoginView = function (loginService) {
 				if(lastuser != null) {
 				$('.loginusername').val(lastuser);
 				$('.loginrememberusername').prop('checked', true);
+				$('.loginpassword').focus();
 			}
 		});
 		this.render();

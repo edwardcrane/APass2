@@ -117,12 +117,10 @@ var LoginService = function () {
     }
 
     this.setLoggedInUser = function(newUser) {
-        console.log(loggedInUser + " -> setLoggedInUser: " + newUser);
         loggedInUser = newUser;
     }
 
     this.getLoggedInUser = function() {
-        console.log("loggedInUser inside LoginService is: " + loggedInUser);
         return loggedInUser;
     }
 

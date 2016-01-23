@@ -18,7 +18,7 @@
     function onDeviceReady() {
         console.log("inside onDeviceReady()");
 
-        document.addEventListener("backbutton", onBackKeyDown, false);
+        // document.addEventListener("backbutton", onBackKeyDown, false);
 
         // register FastClick fix for 300ms delay on IOS devices:
         FastClick.attach(document.body);
@@ -40,7 +40,7 @@
             });
 
             router.addRoute('home', function() {
-                slider.slidePage(new HomeView(passwordsService).render().$el);
+                slider.slidePage(new HomeView(loginService, passwordsService).render().$el);
             });
 
             router.addRoute('resources/:id', function(id) {
@@ -61,10 +61,6 @@
             router.start();
         });
 
-        // console.log(cordova.plugins.email);
-        // cordova.plugins.email.isAvailable(function(isAvailable) {
-        //     alert("Email Service availability: " + isAvailable);
-        // });
     }
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -72,33 +68,33 @@
 
     /* ---------------------------------- Local Functions ---------------------------------- */
 
-    // first clear search box if back pressed, then exit.
-    function onBackKeyDown() {
-        if(window.location.href.endsWith("#home")) {
-            if($('.search-key').val() !== "") {
-                $('.search-key').val("");
-                $('.search-key').keyup();
-                return false;
-            } else {
-                if(device.platform === 'Android') {
-                    navigator.app.exitApp();
-                } else {
-                    console.log(device.platform + " does not support navigator.app.exitApp()");
-                    window.location.href="#login";
-                }
-                return false;
-            }
-        } else if(window.location.href.endsWith("#login")) {
-            if(device.platform === 'Android') {
-                navigator.app.exitApp();
-            } else {
-                console.log(device.platform + " does not support navigator.app.exitApp()");
-            }
-            return false;
-        } else {
-            window.history.back();
-            return(true);
-        }
-    }
+    // // first clear search box if back pressed, then exit.
+    // function onBackKeyDown() {
+    //     // if(window.location.href.endsWith("#home")) {
+    //     //     if($('.search-key').val() !== "") {
+    //     //         $('.search-key').val("");
+    //     //         $('.search-key').keyup();
+    //     //         return false;
+    //     //     } else {
+    //     //         if(device.platform === 'Android') {
+    //     //             navigator.app.exitApp();
+    //     //         } else {
+    //     //             console.log(device.platform + " does not support navigator.app.exitApp()");
+    //     //             window.location.href="#login";
+    //     //         }
+    //     //         return false;
+    //     //     }
+    //     // } else if(window.location.href.endsWith("#login")) {
+    //     //     if(device.platform === 'Android') {
+    //     //         navigator.app.exitApp();
+    //     //     } else {
+    //     //         console.log(device.platform + " does not support navigator.app.exitApp()");
+    //     //     }
+    //     //     return false;
+    //     // } else {
+    //     //     window.history.back();
+    //     //     return(true);
+    //     // }
+    // }
 
 }());

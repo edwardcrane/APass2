@@ -285,15 +285,17 @@ title {
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
+	float: right;
 	position: relative;
-	display: block;
-	z-index: 1
+	display: inline-block;
+	z-index: 1;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
     position: absolute;
+    right: 30px;
     background-color: #5cdbff;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -309,6 +311,36 @@ title {
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
+
+/* For ADVANCED sub-menu */
+
+.advanced-dropdown {
+	float: right;
+	position: relative;
+	display: inline-block;
+	z-index: 2;
+}
+
+/* container for advanced nested dropdown */
+.advanced-dropdown-content {
+	display: none;
+	position: absolute;
+	right: 30px;
+	background-color: #5cdbff;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.advanced-dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.advanced-dropdown-content a:hover {background-color: #f1f1f1}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
