@@ -97,6 +97,9 @@ var PasswordsService = function () {
                         resources[i] = results.rows.item(i);
                     }
                     deferred.resolve(resources);
+                },function (tx, error) {
+                    alert("UPDATE error: " + sql + " error: " + error.message);
+                    console.log("UPDATE error: " + sql + " error: " + error.message);
                 });
             },
             function(error) {
@@ -249,16 +252,17 @@ var PasswordsService = function () {
         });
     }
 
+    function escapeSearchChars(instr) {
+        return instr.replace(/'/g, '\'\'');
+    }
+
     function escapeSpecialChars (instr) {
         // suppose a number is passed in?
-        if(typeof str !== 'string') {
+        if(typeof instr !== 'string') {
             // return it unmolested:
             return instr;
         }
-
-        var str = instr;
-        str = str.replace(/"/g, '\\"');
-        return str;
+        return instr.replace(/"/g, '""');
     }
 
     function writeStr(instr) {
