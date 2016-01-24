@@ -82,6 +82,9 @@ var PasswordsService = function () {
     this.findResources = function(searchKey) {
         var deferred = $.Deferred();
 
+        // SUBSTITUTE '' for ' as needed:
+        searchKey = searchKey.replace(/'/g, '\'\'');
+
         this.db.transaction(
             function(tx) {
                 var sql = "SELECT * FROM mypassentry " + 
@@ -250,10 +253,6 @@ var PasswordsService = function () {
                 });
             });
         });
-    }
-
-    function escapeSearchChars(instr) {
-        return instr.replace(/'/g, '\'\'');
     }
 
     function escapeSpecialChars (instr) {
