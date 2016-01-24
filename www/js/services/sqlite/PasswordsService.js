@@ -131,7 +131,7 @@ var PasswordsService = function () {
                 deferred.resolve();  // RESOLVE TO WHAT?
             },
             function(error) {
-                console.alert("PasswordsService.updateResource() Transaction Error: " + error.message);
+                console.log("PasswordsService.updateResource() Transaction Error: " + error.message);
                 deferred.reject("Transaction Error: " + error.message);
             }
         );
@@ -169,62 +169,22 @@ var PasswordsService = function () {
             });
     }
 
-    var addMoreSampleData = function(tx) {
-        createResource(tx, "resourceName1", "userName1", "password1", "description1");
-        createResource(tx, "resourceName2", "userName2", "password2", "description2");
-        createResource(tx, "resourceName3", "userName3", "password3", "description3");
-        createResource(tx, "resourceName4", "userName4", "password4", "description4");
-        createResource(tx, "resourceName5", "userName5", "password5", "description5");
-        createResource(tx, "resourceName6", "userName6", "password6", "description6");
-        createResource(tx, "resourceName7", "userName7", "password7", "description7");
-    }
-
-    var addSampleData = function (tx, resources) {
-
-        var resources = [
-            {"_id": 1, "resourcename": "test1", "description": "test1 description", "username": "user1", "password": "password1"},
-            {"_id": 2, "resourcename": "test2", "description": "test2 description", "username": "user2", "password": "password2"},
-            {"_id": 3, "resourcename": "test3", "description": "test3 description", "username": "user3", "password": "password3"},
-            {"_id": 4, "resourcename": "test4", "description": "test4 description", "username": "user4", "password": "password4"},
-            {"_id": 5, "resourcename": "test5", "description": "test5 description", "username": "user5", "password": "password5"},
-            {"_id": 6, "resourcename": "test6", "description": "test6 description", "username": "user6", "password": "password6"}
-        ];
-        var l = resources.length;
-        var sql = "INSERT OR REPLACE INTO mypassentry " +
-            "(_id, resourcename, description, username, password) " +
-            "VALUES (?, ?, ?, ?, ?)";
-        var r;
-        for (var i = 0; i < l; i++) {
-            r = resources[i];
-            tx.executeSql(sql, [r._id, r.resourcename, r.description, r.username, r.password],
-                function () {
-                    console.log('INSERT success');
-                },
-                function (tx, error) {
-                    alert('INSERT error: ' + error.message);
-                });
-        }
-    }
-
     var updateResource = function(tx, _id, resourceName, description, userName, password) {
-        var sql = "UPDATE mypassentry SET resourcename = \'" + resourceName + 
-                    "\', description = \'" + description + 
-                    "\', username = \'" + userName + 
-                    "\', password = \'" + password + 
-                    "\'  WHERE _id = " + _id + ";";
-        tx.executeSql(sql, null, 
+        var sql = "UPDATE mypassentry SET resourcename = ?, description = ?, username = ?, password = ?" +
+            " WHERE _id = ?";
+        tx.executeSql(sql, [resourceName, description, userName, password, _id], 
             function () {
                 console.log("UPDATE success");
             },
             function (tx, error) {
-                alert("UPDATE error: " + error.message);
-                console.log("UPDATE error: " + error.message);
+                alert("UPDATE error: " + sql + " error: " + error.message);
+                console.log("UPDATE error: " + sql + " error: " + error.message);
             });
     }
 
     var deleteResource = function(tx, _id) {
-        var sql = "DELETE FROM mypassentry WHERE _id = " + _id + ";";
-        tx.executeSql(sql, null,
+        var sql = "DELETE FROM mypassentry WHERE _id = ?;";
+        tx.executeSql(sql, [_id],
             function() {
                 console.log("DELETE success. " + _id);
             },
@@ -236,26 +196,42 @@ var PasswordsService = function () {
     var createResource = function(tx, resourceName, userName, password, description) {
         var sql = "INSERT OR REPLACE INTO mypassentry (" +
             "resourcename, description, username, password ) " +
-            "VALUES (\'"+resourceName+"\', \'"+description+"\', \'"+userName+"\', \'"+password+"\')";
-        tx.executeSql(sql, null,
+            "VALUES (?, ?, ?, ?)";
+        tx.executeSql(sql,
+            [resourceName, description, userName, password],
             function () {
                 console.log('INSERT success');
             },
             function (tx, error) {
-                alert('INSERT error: ' + error.message);
+                alert('INSERT error: ' + sql + " error: " + error.message);
             });
     }
 
     var stringifyCSV = function(table) {
-        var csv = '', c, cc, r, rr = table.length, cell;
-        for (r = 0; r < rr; ++r) {
-            if (r) { csv += '\r\n'; }
-            for (c = 0, cc = table[r].length; c < cc; ++c) {
-                if (c) { csv += ','; }
-                cell = table[r][c];
-                if (/[,\r\n"]/.test(cell)) { cell = '"' + cell.replace(/"/g, '""') + '"'; }
-                csv += (cell || 0 === cell) ? cell : '';
+        var csv = "";
+
+        console.log("Table contains " + table.length + " records.");
+        // if we have any rows, create header row
+        if(table.length > 0) {
+            var firstRow = table[0];
+            for(var key in firstRow) {
+                console.log(key + ": " + firstRow[key]);
+                csv += "\"" + key + "\"";
+                if(key !== "password") { csv += ","};  // last elt no comma.
             }
+            csv += "\r\n";
+        }
+
+        // now handle each row in table:
+        for(var i = 0; i < table.length; i++) {
+            var curRow = table[i];
+
+            for (var key in curRow) {
+                console.log(key + ": " + curRow[key]);
+                csv += "\"" + escapeSpecialChars(curRow[key]) + "\"";
+                if(key !== "password") { csv += ","}; // last elt no comma.
+            }
+            csv += "\r\n";
         }
         return csv;
     }
@@ -264,37 +240,33 @@ var PasswordsService = function () {
         var table = [];
         this.getAllResources().done(function (newTable) {
             table = newTable;
-
-
-            console.log("Table contains " + table.length + " records.");
-            for(var i = 0; i < table.length; i++) {
-                console.log(table[i]);
-                for (var key in table[i]) { console.log(key + ":" + table[i].key);}
-                // for(var j = 0; j < table[i].length; j++) {
-                //     console.log(table[i][j]);
-                // }
-            }
-            // cordova.file.dataDirectory: "file:///data/data/com.airanza.apass2/files/"
-            // cordova.file.externalDataDirectory: "file:///storage/emulated/0/Android/data/com.airanza.apass2/files/"
             window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
-                console.log(cordova.file.externalDataDirectory);
-
                 dir.getFile(filename, {create:true}, function(file){
                     logOb = file;
-
                     writeStr(stringifyCSV(table));
-    //                writeStr(doNothingToString("This is just a simple string, dammit!"));
                 });
             });
         });
     }
 
-    function writeStr(table) {
+    function escapeSpecialChars (instr) {
+        // suppose a number is passed in?
+        if(typeof str !== 'string') {
+            // return it unmolested:
+            return instr;
+        }
+
+        var str = instr;
+        str = str.replace(/"/g, '\\"');
+        return str;
+    }
+
+    function writeStr(instr) {
         if(!logOb) {
             alert(logOb);
             return;
         }
-        var str = stringifyCSV(table);
+        var str = instr;
         logOb.createWriter(function(fileWriter) {
             // if we wanted to append, we would uncomment the following:
             // fileWriter.seek(fileWriter.length);
@@ -304,20 +276,4 @@ var PasswordsService = function () {
             console.log("Successfully completed writeStr().");
         }, fail);
     }
-
-    // function writeLog(str) {
-    //     if(!logOb) {
-    //         alert(logOb);
-    //         return;
-    //     }
-    //     var log = str + " [" + (new Date()) + "]\n";
-    //     logOb.createWriter(function(fileWriter) {
-    //         fileWriter.seek(fileWriter.length);
-            
-    //         var blob = new Blob([log], {type:'text/plain'});
-    //         fileWriter.write(blob);
-    //         console.log("ok, in theory i worked");
-    //     }, fail);
-    // }
-
 }

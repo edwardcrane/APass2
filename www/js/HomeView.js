@@ -18,8 +18,6 @@ var HomeView = function (loginService, passwordsService) {
 
 		window.addEventListener("click", this.handleClick);
 
-        document.addEventListener("backbutton", onBackKeyDown, false);
-
 		resourceListView = new ResourceListView();
 		passwordsService.getAllResources().done(function(data){
 			resourceListView.setResources(data);
@@ -31,47 +29,6 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.html(this.template());
 		$('.content', this.$el).html(resourceListView.$el);
 		return this;
-	};
-
-	function onBackKeyDown() {
-        if(window.location.href.endsWith("#home")) {
-			// first, if menus are visible, get rid of them and do nothing else:
-			if(document.getElementById("myDropdown").classList.contains('show') || 
-				document.getElementById("advancedDropdown").classList.contains('show')) {
-				if(document.getElementById("myDropdown").classList.contains('show')){
-					document.getElementById("myDropdown").classList.remove('show');
-				};
-				if(document.getElementById("advancedDropdown").classList.contains('show')){
-					document.getElementById("advancedDropdown").classList.remove('show');
-				};
-				return false;
-			};
-
-			// if there is text in the search box, then clear it.
-            if($('.search-key').val() !== "") {
-                $('.search-key').val("");
-                $('.search-key').keyup();
-                return false;
-            } else {
-                if(device.platform === 'Android') {
-                    navigator.app.exitApp();
-                } else {
-                    console.log(device.platform + " does not support navigator.app.exitApp()");
-                    window.location.href="#login";
-                }
-                return false;
-            }
-        } else if(window.location.href.endsWith("#login")) {
-            if(device.platform === 'Android') {
-                navigator.app.exitApp();
-            } else {
-                console.log(device.platform + " does not support navigator.app.exitApp()");
-            }
-            return false;
-        } else {
-            window.history.back();
-            return(true);
-        }
 	};
 
 	this.findResources = function() {
