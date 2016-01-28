@@ -24,7 +24,7 @@
 
 <script id="login-tpl" type="text/template">
 	<header class="bar bar-nav">
-		<h3 class="title">Login to APass</h3>
+		<h3 class="pagetitle">Login to APass</h3>
 		<form>
 			<input type="text" class="loginusername" name="username" placeholder="User Name" autocapitalize="off" id="login-tpl-username" value={{username}}>
 			<table>
@@ -46,7 +46,7 @@
 		<table>
 			<tr>
 				<td>
-					<h3 class="title">Register for APass</h3>
+					<h3 class="pagetitle">Register for APass</h3>
 				</td>
 				<td>
 					<img class="saveregistration" src="img/icon_save.png">
@@ -68,7 +68,7 @@
 
 <script id="change-registration-tpl" type="text/template">
 	<header class="bar bar-nav">
-		<h3 class="title">Change Login Info</h3>
+		<h3 class="pagetitle">Change Login Info</h3>
 		<form>
 			<input type="text" name="username" placeholder="User Name" value={{username}}>
 			<input type="text" name="password" placeholder="Password" value={{password}}>
@@ -81,10 +81,10 @@
 
 <script id="home-tpl" type="text/template">
 	<header class="bar bar-nav">
-		<table>
+		<table class="toolbartable">
 			<tr>
 				<td>
-					<h3 class="title">APass</h3>
+					<h3 class="pagetitle">APass</h3>
 				</td>
 				<td>
 					<img class="menuicon" src="img/icon_menu.png">
@@ -121,17 +121,16 @@
 	<a href="http://www.airanza.com">
 		<img class="splash-logo" src="img/airanza_logo_white_trans_border.png">
 	</a>
-	<table border=1px solid "white">
+	<table class="splash-links">
 		<tr>
-		    <td><a class="terms-of-use" href="http://www.airanza.com/products/apass/tou">Terms of Use</a></td>
-			<td><a class="corporate-link" href="http://www.airanza.com">www.airanza.com</a></td>
-		    <td><a class="privacy-policy" href="http://www.airanza.com/products/apass/privacy">Privacy Policy</a></td
+		    <td class="terms-of-use"><a href="http://www.airanza.com/products/apass/tou">Terms of Use</a></td>
+			<td class="corporate-link"><a href="http://www.airanza.com">www.airanza.com</a></td>
+		    <td class="privacy-policy"><a href="http://www.airanza.com/products/apass/privacy">Privacy Policy</a></td
 		</tr>
 	</table>
 </script>
 
 <script id="resource-list-tpl" type="text/template">
-	<div class="scrollableresourcelist">
 	<ul class="table-view">
 		{{#each this}}
 		<li class="table-view-cell media">
@@ -144,7 +143,6 @@
 		</li>
 		{{/each}}
 	</ul>
-	</div>
 </script>
 
 <script id="resource-tpl" type="text/template">
@@ -155,7 +153,7 @@
 		<table>
 			<tr>
 				<td>
-					<h3 class="title">Edit</h3>
+					<h3 class="pagetitle">Edit</h3>
 				</td>
 				<td>
 					<img class="saveresource" src="img/icon_save.png">

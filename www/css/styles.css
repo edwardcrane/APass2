@@ -6,6 +6,13 @@ html {
 	background: -o-radial-gradient(ellipse, #5cdbff, #5cdbff, #24B2eb); /* For Opera 11.6 to 12.0 */
 	background: -moz-radial-gradient(ellipse, #5cdbff, #5cdbff, #24B2eb); /* For Firefox 3.6 to 15 */
 	background: radial-gradient(ellipse, #5cdbff, #5cdbff, #24B2eb); /* Standard syntax */
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.toolbartable {
+	position: top;
+	attachment: fixed;
 }
 
 .splash-logo {
@@ -17,24 +24,16 @@ html {
 	transform: translate(-50%, -50%);
 }
 
-/*img.splash-logo {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	vertical-align: middle;
-}
-*/
 a.corporate-link {
+	text-align: center;
 }
 
 a.terms-of-use {
+	text-align: left;
 }
 
 a.privacy-policy {
-}
-
-h3 {
-	color: #FFF;
+	text-align: right;
 }
 
 table {
@@ -48,6 +47,10 @@ input {
 	color: #FFF;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+input:focus {
+	outline: none;
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
@@ -107,55 +110,52 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .search-key {
 	width: 100%;
+	padding: 5px;
 	margin-bottom: 10px;
 	font-size: larger;
 	font-weight: bold;
-	background: "white";
 }
 
-ul {
-	list-style-type: none;
-	float: left;
-	margin: 0;
-	padding: 0;
-}
-
-li a {
-	display: block;
-}
-
-title {
+.pagetitle {
+	padding: 5px;
 	float: left;
 	color: #FFF;
 }
 
 .content{
 	width: 100%;
-}
-
-.scrollableresourcelist {
-	width: 100%;
-	overflow: auto;
-}
+/*	padding: 5px;
+*/}
 
 .resource-list-tpl-record {
-/*	border-bottom: 1px solid #FFF;
-*/}
+	padding: 5px;
+}
 
 .resource-list-tpl-resourcename {
 	width: 100%;
 	font-weight: bold;
 	font-size: larger;
+	float: left;
 	display: block;
 	color: #FFF;
 }
 
 .resource-list-tpl-description {
 	width: 100%;
+	float: left;
 	display: block;
 	color: #FFF;
 	border-bottom: 1px solid #FFF;
 	margin-bottom: 5px;
+}
+
+.table-view {
+	padding: 0;
+	overflow-y:scroll;
+}
+
+.table-view-cell {
+	display: block;
 }
 
 .resource_id {
@@ -164,23 +164,14 @@ title {
 
 .resource_resourcename {
 	width: 100%;
+	padding: 5px;
 	font-weight: bold;
 	font-size: larger;
 }
 
-
-
-.table-view {
-	width: 100%;
-}
-
-.table-view-cell {
-	width: 100%;
-	display: block;
-}
-
 .resource_username {
 	width: 100%;
+	padding:5px;
 }
 
 .resource_password {
@@ -192,7 +183,13 @@ title {
 }
 
 .resource_description {
+	background: transparent;
 	width: 100%;
+	border: none;
+	border-bottom: 1px solid #FFF;
+	color: #FFF;
+	min-height: 100px;
+	height: 100%;
 }
 
 .loginusername {
@@ -202,6 +199,7 @@ title {
 
 .loginrememberusername {
 	width:100%;
+	padding:5px;
 	font-size: smaller;
 }
 
@@ -211,12 +209,13 @@ title {
 }
 
 .loginpassword {
-	width:100%;
+	width: 100%;
 	font-size: large;
 }
 
 .loginshowpasswordhint {
 	display: block;
+	padding: 5px;
 	font-size: smaller;
 	text-align: center;
 }
@@ -255,30 +254,6 @@ title {
 	padding: 5px;
 	max-width: 30px;
 	max-height: 30px;
-}
-
-.resource-list-tpl-resourcename {
-	font-weight: bold;
-	float: left;
-}
-
-.resource-list-tpl-description {
-	float: left;
-}
-
-.resource_resourcename {
-	font-weight: bold;
-}
-
-.resource_description {
-	background: transparent;
-	width: 100%;
-	border: none;
-/*	border: 1px solid #FFF;
-*/	border-bottom: 1px solid #FFF;
-	color: #FFF;
-	min-height: 100px;
-	height: 100%;
 }
 
 /*Menu styling for drop-down functionality*/
