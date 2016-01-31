@@ -16,8 +16,6 @@
     var service = null;
 
     function onDeviceReady() {
-        console.log("inside onDeviceReady()");
-
         // register FastClick fix for 300ms delay on IOS devices:
         FastClick.attach(document.body);
 

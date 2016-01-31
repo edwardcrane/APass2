@@ -1,6 +1,9 @@
 html {
 	height: 100%;
 	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
 	background: #5cdbff; /* For browsers that do not support gradients */
 	background: -webkit-radial-gradient(ellipse, #5cdbff, #5cdbff, #24B2eb); /* Safari 5.1 to 6.0 */
 	background: -o-radial-gradient(ellipse, #5cdbff, #5cdbff, #24B2eb); /* For Opera 11.6 to 12.0 */
@@ -10,9 +13,20 @@ html {
 	background-attachment: fixed;
 }
 
+body {
+	margin: 0px;
+}
+
 .toolbartable {
 	position: top;
 	attachment: fixed;
+}
+
+.splash-links {
+	position:absolute;
+	bottom:0;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .splash-logo {
@@ -50,7 +64,8 @@ input {
 }
 
 input:focus {
-	outline: none;
+	outline: none !important;
+	border-bottom: 1px solid lime;
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
@@ -117,6 +132,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .pagetitle {
+	font-family: "Arial Black", Gadget, sans-serif;
 	padding: 5px;
 	float: left;
 	color: #FFF;
@@ -124,8 +140,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .content{
 	width: 100%;
-/*	padding: 5px;
-*/}
+	font-family: "Arial Black", Gadget, sans-serif;
+}
 
 .resource-list-tpl-record {
 	padding: 5px;
@@ -164,18 +180,21 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .resource_resourcename {
 	width: 100%;
-	padding: 5px;
+	font-family: "Arial Black", Gadget, sans-serif;
 	font-weight: bold;
 	font-size: larger;
 }
 
 .resource_username {
 	width: 100%;
-	padding:5px;
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: large;
 }
 
 .resource_password {
 	width: 100%;
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: large;
 }
 
 .resource-tpl-passwordicon-td {
@@ -187,15 +206,30 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	width: 100%;
 	border: none;
 	border-bottom: 1px solid #FFF;
+	font-family: "Arial Black", Gadget, sans-serif;
+	font-size: large;
 	color: #FFF;
 	min-height: 100px;
 	height: 100%;
 }
 
+.resource_description:focus {
+	outline: none !important;
+	border-bottom: 1px solid lime;
+}
+
+
+
 .loginusername {
 	width:100%;
+	padding: 0px;
 	font-size: large;
 }
+
+.loginrememberusernametable {
+/*	width:100%;
+	font-size:smaller;
+*/}
 
 .loginrememberusername {
 	width:100%;
@@ -204,18 +238,20 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .login-tpl-rememberusernamelabel {
+	font-family: "Arial Black", Gadget, sans-serif;
 	font-size: smaller;
 	color: #FFFFFF;
 }
 
 .loginpassword {
 	width: 100%;
+	padding: 0px;
 	font-size: large;
 }
 
 .loginshowpasswordhint {
+	font-family: "Arial Black", Gadget, sans-serif;
 	display: block;
-	padding: 5px;
 	font-size: smaller;
 	text-align: center;
 }
