@@ -26,6 +26,7 @@
         // StatusBar.styleDefault();
 
         loginService = new LoginService();
+
         loginService.init().done(function() {
             console.log("loginService is initialized");
         });

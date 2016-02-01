@@ -22,6 +22,16 @@ body {
 	attachment: fixed;
 }
 
+.version_number {
+	color: #FFFFFF;
+	text-align: center;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, 0);
+}
+
 .splash-links {
 	position:absolute;
 	bottom:0;
@@ -38,7 +48,16 @@ body {
 	transform: translate(-50%, -50%);
 }
 
+a:link {
+	color: white;
+}
+
+a:visited {
+	color: white;
+}
+
 a.corporate-link {
+	color: white;
 	text-align: center;
 }
 
@@ -83,9 +102,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .saveregistration {
 	float: right;
-	padding: 5px;
-	max-width: 30px;
-	max-height: 30px;
+	padding: 3px;
+	max-width: 25px;
+	max-height: 25px;
 }
 
 .registerusername {
@@ -233,7 +252,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .loginrememberusername {
 	width:100%;
-	padding:5px;
+	padding:10px;
 	font-size: smaller;
 }
 
@@ -250,6 +269,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .loginshowpasswordhint {
+	padding: 10px;
 	font-family: "Arial Black", Gadget, sans-serif;
 	display: block;
 	font-size: smaller;
@@ -265,31 +285,31 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .saveresource {
 	float: right;
-	padding: 5px;
-	max-width: 30px;
-	max-height: 30px;
+	padding: 3px;
+	max-width: 25px;
+	max-height: 25px;
 }
 
 .newresource {
 	float: right;
-	padding: 5px;
-	max-width: 30px;
-	max-height: 30px;
+	padding: 3px;
+	max-width: 25px;
+	max-height: 25px;
 }
 
 .menuicon {
 	float: right;
-	padding: 5px;
-	max-width: 30px;
-	max-height: 30px;
+	padding: 3px;
+	max-width: 25px;
+	max-height: 25px;
 	cursor: pointer;
 }
 
 .deleteresource {
 	float: right;
-	padding: 5px;
-	max-width: 30px;
-	max-height: 30px;
+	padding: 3px;
+	max-width: 25px;
+	max-height: 25px;
 }
 
 /*Menu styling for drop-down functionality*/

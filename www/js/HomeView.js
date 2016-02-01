@@ -2,6 +2,9 @@ var HomeView = function (loginService, passwordsService) {
 
 	var resourceListView;
 
+	var admobtopbannerid = {};
+	var admobbottombannerid = {};
+
 	this.initialize = function () {
 		// Define a div wrapper for the view (used to attach events)
 		this.$el = $('<div/>');
@@ -22,8 +25,65 @@ var HomeView = function (loginService, passwordsService) {
 		passwordsService.getAllResources().done(function(data){
 			resourceListView.setResources(data);
 		});
+
+		// this object is created in onDeviceReady handler in app.js, so this will work:
+		if( /(android)/i.test(navigator.userAgent) ) {
+			admobtopbannerid = { // for android
+				banner: 'ca-app-pub-6141378478306258/9235092323',
+				interstitial: 'some other string we will not be using!!!'
+			};
+			admobbottombannerid = { // for android
+				banner: 'ca-app-pub-6141378478306258/7618758328',
+				interstitial: 'some other string we will not be using!!!'
+			};
+		} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+			admobtopbannerid = { // for android
+				banner: 'ca-app-pub-6141378478306258/9235092323',
+				interstitial: 'some other string we will not be using!!!'
+			};
+			admobbottombannerid = { // for android
+				banner: 'ca-app-pub-6141378478306258/7618758328',
+				interstitial: 'some other string we will not be using!!!'
+			};
+		} else {
+			admobtopbannerid = { // for android
+				banner: 'ca-app-pub-6141378478306258/9235092323',
+				interstitial: 'some other string we will not be using!!!'
+			};
+			admobbottombannerid = { // for android
+				banner: 'ca-app-pub-6141378478306258/7618758328',
+				interstitial: 'some other string we will not be using!!!'
+			};
+		}
+
+		// create top banner:
+		AdMob.createBanner({
+			adId: admobtopbannerid.banner,
+			position: AdMob.AD_POSITION.TOP_CENTER,
+			autoShow: true
+		});
+
+		// create bottom banner:
+		AdMob.createBanner({
+			adId: admobbottombannerid.banner,
+			position: AdMob.AD_POSITION.BOTTOM_CENTER,
+			autoShow: true
+		});
+
 		this.render();
 	};
+
+/*
+    <!-- ADMOB VALUES -->
+    <!--<string name="admob_id">TESTER</string>-->
+    <string name="admob_id" translatable="false">pub-6141378478306258</string>
+    <string name="main_activity_top_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/9235092323</string>
+    <string name="main_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/7618758328</string>
+    <string name="edit_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/9095491524</string>
+    <string name="new_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/4525691123</string>
+    <string name="test_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="primary_android_admob_test_device" translatable="false">03E2E4F5EE38F1A8EF3355F642CCBA94</string>
+*/
 
 	this.render = function() {
 		this.$el.html(this.template());
@@ -134,24 +194,7 @@ var HomeView = function (loginService, passwordsService) {
 		window.location.href="#";
 	}
 
-	// Close the dropdown menu if user clicks outside of it
-	// window.onClick = function(event) {
-	// 	alert("inside onClick event handler.");
-	// 	if(!event.target.matches('.menuicon')) {
-	// 		alert("clicked outside of menuicon");
-	// 		var dropdowns = document.getElementbyClassName("dropdown-content");
-	// 		var i;
-	// 		for (i = 0; i < dropdowns.length; i++) {
-	// 			var openDropdown = dropdowns[i];
-	// 			if(openDropdown.classList.contains('show')) {
-	// 				openDropdown.classList.remove('show');
-	// 			};
-	// 		};
-	// 	};
-	// };
-
 	this.initialize();
-
 }
 
 
