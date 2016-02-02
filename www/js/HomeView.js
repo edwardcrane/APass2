@@ -2,8 +2,6 @@ var HomeView = function (loginService, passwordsService) {
 
 	var resourceListView;
 
-	var admobbannerid = {};
-
 	this.initialize = function () {
 		// Define a div wrapper for the view (used to attach events)
 		this.$el = $('<div/>');
@@ -25,61 +23,22 @@ var HomeView = function (loginService, passwordsService) {
 			resourceListView.setResources(data);
 		});
 
-		// this object is created in onDeviceReady handler in app.js, so this will work:
-		console.log(navigator.userAgent);
-		if( /(android)/i.test(navigator.userAgent) ) {
-			admobbannerid = { // for android
-				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
-				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
-				interstitialafterlogin: 'ca-app-pub-6141378478306258/2165351127'
-			};
-		} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-			admobbannerid = { // for android
-				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
-				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
-				interstitialafterlogin: 'ca-app-pub-6141378478306258/2165351127'
-			};
-		} else {
-			admobbannerid = { // for android
-				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
-				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
-				interstitialafterlogin: 'ca-app-pub-6141378478306258/2165351127'
-			};
-		}
+		var admobids = this.prepareAdMobIDs();
 
 		// prepare the interstitial ad.
-		this.prepareInterstitialAd();
+		this.prepareInterstitialAd(admobids);
 		// once loaded, display the intersstitial.
 		document.addEventListener('onAdLoaded', function(e) {
 			if(e.adType == 'interstitial') {
 				console.log("calling AdMob.showInterstitial()");
 				AdMob.showInterstitial();
 			}
-		})
-
-		// create top banner:
-		AdMob.createBanner({
-			adId: admobbannerid.topbannerid,
-			position: AdMob.AD_POSITION.TOP_CENTER,
-			autoShow: true,
-			isTesting: false
 		});
 
+		this.setupBannerAds(admobids);
 
 		this.render();
 	};
-
-/*
-    <!-- ADMOB VALUES -->
-    <!--<string name="admob_id">TESTER</string>-->
-    <string name="admob_id" translatable="false">pub-6141378478306258</string>
-    <string name="main_activity_top_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/9235092323</string>
-    <string name="main_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/7618758328</string>
-    <string name="edit_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/9095491524</string>
-    <string name="new_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/4525691123</string>
-    <string name="test_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="primary_android_admob_test_device" translatable="false">03E2E4F5EE38F1A8EF3355F642CCBA94</string>
-*/
 
 	this.render = function() {
 		this.$el.html(this.template());
@@ -87,29 +46,57 @@ var HomeView = function (loginService, passwordsService) {
 		return this;
 	};
 
-	this.prepareInterstitialAd = function() {
-		var admobid = {};
-		if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon -fireos
-			admobid = {
-				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
-			};
-		} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
-			admobid = {
-				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
-			};
-		} else { // for Windows phone:
-			admobid = {
-				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
-			};
-		};
 
-		// display ad here:
-		if(AdMob) 
-		{
-			console.log("calling AdMob.prepareInterstitial()");
+	this.prepareAdMobIDs = function() {
+	    // <!-- ADMOB VALUES -->
+	    // <!--<string name="admob_id">TESTER</string>-->
+	    // <string name="admob_id" translatable="false">pub-6141378478306258</string>
+	    // <string name="edit_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/9095491524</string>
+	    // <string name="new_activity_bottom_banner_ad_unit_id" translatable="false">ca-app-pub-6141378478306258/4525691123</string>
+	    // <string name="test_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+	    // <string name="primary_android_admob_test_device" translatable="false">03E2E4F5EE38F1A8EF3355F642CCBA94</string>
+		var admobids = {};
+		if( /(android)/i.test(navigator.userAgent) ) {
+			admobids = { // for android
+				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
+				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
+				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
+			};
+		} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+			admobids = { // for iOS
+				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
+				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
+				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
+			};
+		} else {
+			admobids = { // for Windows phone
+				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
+				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
+				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
+			};
+		}
+		return admobids;
+	}
+
+	this.setupBannerAds = function(admobids) {
+		if(AdMob) {
+			AdMob.createBanner({
+				adId: admobids.topbannerid,
+				position: AdMob.AD_POSITION.TOP_CENTER,
+				autoShow: true,
+				isTesting: false
+			});
+		};
+	};
+
+	this.prepareInterstitialAd = function(admobids) {
+		// this function must be followed by AdMob.showInterstitial()
+		// when 'onAdLoaded' event is received (Event Handler).
+		if(AdMob) {
 			AdMob.prepareInterstitial( {
-				adId: admobid.afterlogininterstitialid,
-				autoShow: false
+				adId: admobids.afterlogininterstitialid,
+				autoShow: false,
+				isTesting: false
 			});
 		};
 	};
