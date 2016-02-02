@@ -2,8 +2,7 @@ var HomeView = function (loginService, passwordsService) {
 
 	var resourceListView;
 
-	var admobtopbannerid = {};
-	var admobbottombannerid = {};
+	var admobbannerid = {};
 
 	this.initialize = function () {
 		// Define a div wrapper for the view (used to attach events)
@@ -21,54 +20,47 @@ var HomeView = function (loginService, passwordsService) {
 
 		window.addEventListener("click", this.handleClick);
 
+		document.addEventListener('onAdDismiss', function(data) {
+			console.log("inside onAdDismiss event listener.  data: " + data);
+			window.setTimeout(this.showInterstitialAd, 5000);
+		});
+
 		resourceListView = new ResourceListView();
 		passwordsService.getAllResources().done(function(data){
 			resourceListView.setResources(data);
 		});
 
 		// this object is created in onDeviceReady handler in app.js, so this will work:
+		console.log(navigator.userAgent);
 		if( /(android)/i.test(navigator.userAgent) ) {
-			admobtopbannerid = { // for android
-				banner: 'ca-app-pub-6141378478306258/9235092323',
-				interstitial: 'some other string we will not be using!!!'
-			};
-			admobbottombannerid = { // for android
-				banner: 'ca-app-pub-6141378478306258/7618758328',
-				interstitial: 'some other string we will not be using!!!'
+			admobbannerid = { // for android
+				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
+				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
+				interstitialafterlogin: 'ca-app-pub-6141378478306258/2165351127'
 			};
 		} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-			admobtopbannerid = { // for android
-				banner: 'ca-app-pub-6141378478306258/9235092323',
-				interstitial: 'some other string we will not be using!!!'
-			};
-			admobbottombannerid = { // for android
-				banner: 'ca-app-pub-6141378478306258/7618758328',
-				interstitial: 'some other string we will not be using!!!'
+			admobbannerid = { // for android
+				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
+				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
+				interstitialafterlogin: 'ca-app-pub-6141378478306258/2165351127'
 			};
 		} else {
-			admobtopbannerid = { // for android
-				banner: 'ca-app-pub-6141378478306258/9235092323',
-				interstitial: 'some other string we will not be using!!!'
-			};
-			admobbottombannerid = { // for android
-				banner: 'ca-app-pub-6141378478306258/7618758328',
-				interstitial: 'some other string we will not be using!!!'
+			admobbannerid = { // for android
+				topbannerid: 'ca-app-pub-6141378478306258/9235092323',
+				bottombannerid: 'ca-app-pub-6141378478306258/7618758328',
+				interstitialafterlogin: 'ca-app-pub-6141378478306258/2165351127'
 			};
 		}
 
 		// create top banner:
 		AdMob.createBanner({
-			adId: admobtopbannerid.banner,
+			adId: admobbannerid.topbannerid,
 			position: AdMob.AD_POSITION.TOP_CENTER,
-			autoShow: true
+			autoShow: true,
+			isTesting: false
 		});
 
-		// create bottom banner:
-		AdMob.createBanner({
-			adId: admobbottombannerid.banner,
-			position: AdMob.AD_POSITION.BOTTOM_CENTER,
-			autoShow: true
-		});
+		window.setTimeout(this.showInterstitialAd, 5000);
 
 		this.render();
 	};
@@ -89,6 +81,36 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.html(this.template());
 		$('.content', this.$el).html(resourceListView.$el);
 		return this;
+	};
+
+	this.showInterstitialAd = function() {
+		var admobid = {};
+		if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon -fireos
+			admobid = {
+				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
+			};
+		} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+			admobid = {
+				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
+			};
+		} else { // for Windows phone:
+			admobid = {
+				afterlogininterstitialid: 'ca-app-pub-6141378478306258/2165351127'
+			};
+		};
+
+		// display ad here:
+		if(AdMob) 
+		{
+			console.log("calling AdMob.prepareInterstitial()");
+			AdMob.prepareInterstitial( {
+				adId: admobid.afterlogininterstitialid,
+				autoShow: true
+			});
+		};
+
+		console.log("calling AdMob.showInterstitial()");
+		if(AdMob) AdMob.showInterstitial();
 	};
 
 	this.findResources = function() {

@@ -155,6 +155,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	padding: 5px;
 	float: left;
 	color: #FFF;
+	margin: 2px;
 }
 
 .content{
