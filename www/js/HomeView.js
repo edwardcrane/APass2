@@ -20,11 +20,6 @@ var HomeView = function (loginService, passwordsService) {
 
 		window.addEventListener("click", this.handleClick);
 
-		document.addEventListener('onAdDismiss', function(data) {
-			console.log("inside onAdDismiss event listener.  data: " + data);
-			window.setTimeout(this.showInterstitialAd, 5000);
-		});
-
 		resourceListView = new ResourceListView();
 		passwordsService.getAllResources().done(function(data){
 			resourceListView.setResources(data);
@@ -52,6 +47,16 @@ var HomeView = function (loginService, passwordsService) {
 			};
 		}
 
+		// prepare the interstitial ad.
+		this.prepareInterstitialAd();
+		// once loaded, display the intersstitial.
+		document.addEventListener('onAdLoaded', function(e) {
+			if(e.adType == 'interstitial') {
+				console.log("calling AdMob.showInterstitial()");
+				AdMob.showInterstitial();
+			}
+		})
+
 		// create top banner:
 		AdMob.createBanner({
 			adId: admobbannerid.topbannerid,
@@ -60,7 +65,6 @@ var HomeView = function (loginService, passwordsService) {
 			isTesting: false
 		});
 
-		window.setTimeout(this.showInterstitialAd, 5000);
 
 		this.render();
 	};
@@ -83,7 +87,7 @@ var HomeView = function (loginService, passwordsService) {
 		return this;
 	};
 
-	this.showInterstitialAd = function() {
+	this.prepareInterstitialAd = function() {
 		var admobid = {};
 		if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon -fireos
 			admobid = {
@@ -105,12 +109,9 @@ var HomeView = function (loginService, passwordsService) {
 			console.log("calling AdMob.prepareInterstitial()");
 			AdMob.prepareInterstitial( {
 				adId: admobid.afterlogininterstitialid,
-				autoShow: true
+				autoShow: false
 			});
 		};
-
-		console.log("calling AdMob.showInterstitial()");
-		if(AdMob) AdMob.showInterstitial();
 	};
 
 	this.findResources = function() {
