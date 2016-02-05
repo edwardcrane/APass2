@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.airanza.apass2" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>APass2</name>
+    <icon src="www/img/a_icon_white_key_trans_border_96x96.png" />
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        APass is a Password Manager.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="info@airanza.com" href="http://www.airanza.com">
+        Airanza Team
     </author>
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />

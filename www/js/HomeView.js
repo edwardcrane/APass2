@@ -24,17 +24,14 @@ var HomeView = function (loginService, passwordsService) {
 		});
 
 		var admobids = this.prepareAdMobIDs();
-
-		// prepare the interstitial ad.
 		this.prepareInterstitialAd(admobids);
-		// once loaded, display the intersstitial.
+		// display intersstitial ad once loaded:
 		document.addEventListener('onAdLoaded', function(e) {
 			if(e.adType == 'interstitial') {
 				console.log("calling AdMob.showInterstitial()");
 				AdMob.showInterstitial();
-			}
+			};
 		});
-
 		this.setupBannerAds(admobids);
 
 		this.render();
@@ -145,7 +142,7 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onCSVFile = function(event) {
 		event.preventDefault();
-		passwordsService.exportCSV("export.csv");
+		passwordsService.exportCSV("export1.csv");
 
 		// NOW SEND EMAIL ATTACHMENT:		
         cordova.plugins.email.isAvailable(function(isAvailable) {
@@ -155,7 +152,7 @@ var HomeView = function (loginService, passwordsService) {
         			var emails = [];
 
         			emails.push(myemail);
-        			atts.push(cordova.file.externalDataDirectory + "export.csv");
+        			atts.push(cordova.file.externalDataDirectory + "export1.csv");
 
         			window.plugin.email.open({
         					to: emails,
@@ -169,7 +166,9 @@ var HomeView = function (loginService, passwordsService) {
         		 		this
         		 	);
         		});
-       		}
+       		} else {
+       			alert("Email Plugin is NOT Available.");
+       		};
         });
 	}
 
@@ -181,11 +180,24 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onSaveEncryptedFile = function(event) {
 		event.preventDefault();
-		alert("FEATURE NOT YET IMPLEMENTED");
+
+		// get filename of database file
+		passwordsService.encryptDB("MyPass.db", "outfile.apass");
+		passwordsService.copyDBFileOut("MyPass.db", "backup.apass");
+		// get output file name from user.
+		// use crypto.js to encrypt database file into output file.
 	}
 
 	this.onLoadEncryptedFile = function(event) {
 		event.preventDefault();
+
+		// get filename of encrypted user input file.
+		// use encrypted file to decrypt to temp file.
+		// ensure that databases are all closed
+		// copy unencrypted temp file to database file location.
+		// re-open database
+		// delete temp file.
+
 		alert("FEATURE NOT YET IMPLEMENTED");
 	}
 

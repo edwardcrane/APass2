@@ -2,11 +2,6 @@ var PasswordsService = function () {
 
     var logOb;
 
-    function fail(e) { 
-        console.log("FileSystem Error");
-        console.dir(e);
-    };
-
     this.init = function () {
         var deferred = $.Deferred();
 
@@ -242,16 +237,127 @@ var PasswordsService = function () {
         return csv;
     }
 
+    // copy DB file out to non-private app directory.
+    this.copyDBFileOut = function (infilename, outfilename) {
+        var pathToDBFile = cordova.file.dataDirectory + "/../databases/" + "MyPass.db";
+        window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
+            window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dirEntry) {
+                fileEntry.copyTo(dirEntry, outfilename, function() { console.log("succeeded");}, this.errorHandler);
+            });
+        });
+    };
+
+    this.encryptDB = function (filename, outfilename) {
+        var pathToDBFile = cordova.file.dataDirectory + "/../databases/" + filename;
+        window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
+            fileEntry.file(function(file) {
+
+                console.log(filename + " is " + fileEntry.length + " bytes");
+                // look at FileReader.readAsBinaryString(Blob|File): the result property will contain the file/blob's data as a binary string.
+                // asynchronous -> onload event is fired
+                var reader = new FileReader();
+
+                // Read file callback!  In here, setup asynchronous file write.
+                reader.onload = function (e) {
+
+                    // use CryptoJS library and the AES cypher to encrypt the contentsof the file,
+                    // held in e.target.result with the password
+                    console.log("ABOUT TO CALL AES.encrypt");
+
+                    var encrypted = CryptoJS.AES.encrypt(reader.result, "APassApp");
+//                    var encrypted = e.target.result;
+//                    var encrypted = reader.result;
+                    console.log("read " + encrypted.length + " bytes from " + filename);
+
+                    console.log("AFTER CALL TO AES.encrypt");
+                    // NOW WE MUST WRITE THIS DATA TO NEW FILE.
+                    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+                        var outfile;
+                        console.log("writing encrypted file to: " + cordova.file.externalDataDirectory + " " + dir.name + " " + outfilename);
+                        dir.getFile(outfilename, {create:true}, function(file){
+                            outfile = file;
+                            outfile.createWriter(function(fileWriter) {
+                                // if we wanted to append, we would uncomment the following:
+                                // fileWriter.seek(fileWriter.length);
+                                
+                                fileWriter.write(encrypted, "application/octet-stream");
+                                console.log("Successfully completed write: " + outfilename);
+                            }, this.errorHandler);
+                        });
+                    });
+                };
+
+                reader.readAsArrayBuffer(file);
+            });
+        });
+    };
+
+    // error handler callback for file system functions:
+    this.errorHandler = function (e) {  
+        var msg = '';
+
+        switch (e.code) {
+            case FileError.QUOTA_EXCEEDED_ERR:
+                msg = 'Storage quota exceeded';
+                break;
+            case FileError.NOT_FOUND_ERR:
+                msg = 'File not found';
+                break;
+            case FileError.SECURITY_ERR:
+                msg = 'Security error';
+                break;
+            case FileError.INVALID_MODIFICATION_ERR:
+                msg = 'Invalid modification';
+                break;
+            case FileError.INVALID_STATE_ERR:
+                msg = 'Invalid state';
+                break;
+            default:
+                msg = 'Unknown error';
+                break;
+        };
+
+        console.log('Error: ' + msg);
+    }
+
     this.exportCSV = function (filename) {
         var table = [];
         this.getAllResources().done(function (newTable) {
             table = newTable;
-            window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
-                dir.getFile(filename, {create:true}, function(file){
-                    logOb = file;
-                    writeStr(stringifyCSV(table));
+
+            if(device.platform === 'browser') {
+                // browser?
+
+                // Request storage usage and capacity left
+                // Choose either Temporary or Persistent
+                navigator.webkitPersistentStorage.queryUsageAndQuota ( 
+                    function(usedBytes, grantedBytes) {  
+                        console.log('we are using ', usedBytes, ' of ', grantedBytes, 'bytes');
+                    }, 
+                    function(e) { console.log('Error', e);  }
+                );
+
+
+                navigator.webkitPersistentStorage.requestQuota(1024*1024, function(grantedBytes) {
+                    console.log("webkitPersistentStorage granted bytes: " + grantedBytes);
+                    window.webkitResolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+                        dir.getFile(filename, {create:true}, function(file) {
+                            logOb = file;
+                            console.log("caling writeStr()");
+                            writeStr(stringifyCSV(table));
+                        });
+                    });
                 });
-            });
+            } else {
+                console.log(device.platform);
+                window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+                    console.log("writing CSV file to: " + cordova.file.externalDataDirectory + " " + dir + " " + filename);
+                    dir.getFile(filename, {create:true}, function(file){
+                        logOb = file;
+                        writeStr(stringifyCSV(table));
+                    });
+                });
+            };
         });
     }
 
@@ -277,6 +383,6 @@ var PasswordsService = function () {
             var blob = new Blob([str], {type:'text/plain'});
             fileWriter.write(blob);
             console.log("Successfully completed writeStr().");
-        }, fail);
+        }, this.errorHandler);
     }
 }
