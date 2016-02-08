@@ -2,6 +2,8 @@ var HomeView = function (loginService, passwordsService) {
 
 	var resourceListView;
 
+	var adsEnabled = false;
+
 	this.initialize = function () {
 		// Define a div wrapper for the view (used to attach events)
 		this.$el = $('<div/>');
@@ -23,16 +25,18 @@ var HomeView = function (loginService, passwordsService) {
 			resourceListView.setResources(data);
 		});
 
-		var admobids = this.prepareAdMobIDs();
-		this.prepareInterstitialAd(admobids);
-		// display intersstitial ad once loaded:
-		document.addEventListener('onAdLoaded', function(e) {
-			if(e.adType == 'interstitial') {
-				console.log("calling AdMob.showInterstitial()");
-				AdMob.showInterstitial();
-			};
-		});
-		this.setupBannerAds(admobids);
+		if(adsEnabled) {
+			var admobids = this.prepareAdMobIDs();
+			this.prepareInterstitialAd(admobids);
+			// display intersstitial ad once loaded:
+			document.addEventListener('onAdLoaded', function(e) {
+				if(e.adType == 'interstitial') {
+					console.log("calling AdMob.showInterstitial()");
+					AdMob.showInterstitial();
+				};
+			});
+			this.setupBannerAds(admobids);
+		}
 
 		this.render();
 	};
@@ -182,8 +186,9 @@ var HomeView = function (loginService, passwordsService) {
 		event.preventDefault();
 
 		// get filename of database file
-		passwordsService.encryptDB("MyPass.db", "outfile.apass");
-		passwordsService.copyDBFileOut("MyPass.db", "backup.apass");
+//		passwordsService.encryptDBBinaryString("MyPass.db", "outfile.apass");
+		passwordsService.encryptDBArrayBuffer("MyPass.db", "ab.apass");
+		passwordsService.copyDBFileOut("MyPass.db", "backup.db");
 		// get output file name from user.
 		// use crypto.js to encrypt database file into output file.
 	}
@@ -193,12 +198,12 @@ var HomeView = function (loginService, passwordsService) {
 
 		// get filename of encrypted user input file.
 		// use encrypted file to decrypt to temp file.
+		passwordsService.decryptDB("ab.apass", "decrypted.db");
 		// ensure that databases are all closed
 		// copy unencrypted temp file to database file location.
 		// re-open database
 		// delete temp file.
 
-		alert("FEATURE NOT YET IMPLEMENTED");
 	}
 
 	this.onChangeLogin = function(event) {
