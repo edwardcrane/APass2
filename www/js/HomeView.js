@@ -186,11 +186,10 @@ var HomeView = function (loginService, passwordsService) {
 		event.preventDefault();
 
 		// get filename of database file
-//		passwordsService.encryptDBBinaryString("MyPass.db", "outfile.apass");
-		passwordsService.encryptDBArrayBuffer("MyPass.db", "ab.apass");
-		passwordsService.copyDBFileOut("MyPass.db", "backup.db");
 		// get output file name from user.
 		// use crypto.js to encrypt database file into output file.
+		passwordsService.encryptDB("MyPass.db", "ab.apass");
+		// passwordsService.copyDBFileOut("MyPass.db", "backup.db");  // for troubleshooting encryption
 	}
 
 	this.onLoadEncryptedFile = function(event) {
@@ -203,7 +202,6 @@ var HomeView = function (loginService, passwordsService) {
 		// copy unencrypted temp file to database file location.
 		// re-open database
 		// delete temp file.
-
 	}
 
 	this.onChangeLogin = function(event) {
