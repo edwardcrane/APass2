@@ -275,66 +275,6 @@ var PasswordsService = function () {
         });
     };
 
-    // function ab2str(buf) {
-    //     var str = String.fromCharCode.apply(null, new Uint8Array(buf));
-    //     console.log(str);
-    //     return(str);
-    // };
-
-    // function str2ab(str) {
-    //     var buf = new ArrayBuffer(str.length);
-    //     var bufView = new Uint8Array(buf);
-    //     for (var i=0, strLen=str.length; i < strLen; i++) {
-    //         bufView[i] = str.charCodeAt(i);
-    //     }
-    //     return buf;
-    // }
-
-    // this.encryptDBBinaryString = function (filename, outfilename) {
-    //     var pathToDBFile = cordova.file.dataDirectory + "/../databases/" + filename;
-    //     window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
-    //         fileEntry.file(function(file) {
-
-    //             var reader = new FileReader();
-
-    //             reader.onload = function (e) {
-    //                 console.log("Encrypting: [" + reader.result.length + "] bytes.");
-    //                 var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Latin1.parse(reader.result), "APassApp");
-    //                 //console.log("encrypted is a WordArray? " + (encrypted instanceof CryptoJS.WordArray));
-    //                 console.log("encrypted length is  [" + encrypted.ciphertext.length + "] bytes.");
-    //                 console.log("encrypted.key:       " + encrypted.key);
-    //                 console.log("encrypted.iv:        " + encrypted.iv);
-    //                 console.log("encrypted.salt:      " + encrypted.salt);
-    //                 console.log("encrypted.ciphertext:" + encrypted.ciphertext);
-
-    //                 console.log(CryptoJS.AES.decrypt(encrypted, "APassApp").toString(CryptoJS.enc.Latin1));
-    //                 console.log("decrypted string is [" + CryptoJS.AES.decrypt(encrypted, "APassApp").toString(CryptoJS.enc.Latin1).length + "] bytes");
-
-    //                 // NOW WE MUST WRITE THIS DATA TO NEW FILE.
-    //                 window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
-    //                     var outfile;
-    //                     console.log("writing encrypted file to: " + cordova.file.externalDataDirectory + " " + dir.name + " " + outfilename);
-    //                     dir.getFile(outfilename, {create:true}, function(file){
-    //                         outfile = file;
-    //                         outfile.createWriter(function(fileWriter) {
-    //                             // CipherParam.ciphertext is a WordArray.
-    //                             console.log("convert WordArray to Utf8 string:");
-    //                             var utf8str = CryptoJS.enc.Utf16.stringify(encrypted.ciphertext);
-    //                             console.log("utf8str: "+ utf8str);
-
-    //                             var blob = new Blob([utf8str], {type:'text/plain'});
-    //                             fileWriter.write(blob);
-    //                             console.log("Successfully completed write: " + outfilename);
-    //                         }, this.errorHandler);
-    //                     });
-    //                 });
-    //             };
-
-    //             reader.readAsBinaryString(file);
-    //         });
-    //     });
-    // }
-
     this.encryptDB = function (filename, outfilename) {
         var pathToDBFile = cordova.file.dataDirectory + "/../databases/" + filename;
         window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
@@ -347,18 +287,13 @@ var PasswordsService = function () {
                     console.log("Encrypting: [" + strToEncrypt.length + "] bytes.");
                     var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Latin1.parse(strToEncrypt), "APassApp", { format: JsonFormatter });
 
-                    alert(encrypted);
-
                     var tmpstr = encrypted + "";
                     console.log("encrypted data is: ["+ tmpstr.length +"] bytes");
 
-                    // console.log(CryptoJS.AES.decrypt(encrypted, "APassApp").toString(CryptoJS.enc.Latin1));
-                    // console.log("decrypted string is [" + CryptoJS.AES.decrypt(encrypted, "APassApp").toString(CryptoJS.enc.Latin1).length + "] bytes");
-
-                    // NOW WE MUST WRITE THIS DATA TO NEW FILE.
+                    // WRITE TO NEW FILE.
                     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
                         var outfile;
-                        console.log("writing encrypted file to: " + cordova.file.externalDataDirectory + " " + dir.name + " " + outfilename);
+                        console.log("writing encrypted file to: " + cordova.file.externalDataDirectory + outfilename);
                         dir.getFile(outfilename, {create:true}, function(file){
                             outfile = file;
                             outfile.createWriter(function(fileWriter) {
@@ -375,35 +310,22 @@ var PasswordsService = function () {
         });
     }
 
-    function showCipherParams(cipherParams) {
-        console.log("cipherParams.key:               [" + cipherParams.key);
-        console.log("cipherParams.iv:                [" + cipherParams.iv);
-        console.log("cipherParams.salt:              [" + cipherParams.salt);
-        console.log("cipherParams.ciphertext:        [" + cipherParams.ciphertext);
-    }
-
     this.decryptDB = function(infilename, outfilename) {
         var pathToDBFile = cordova.file.externalDataDirectory + infilename;
-
-        console.log("infilename: " + infilename);
-        console.log("outfilename: " + outfilename);
-        console.log("pathToDBFile: " + pathToDBFile);
 
         window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
             fileEntry.file(function(file) {
 
                 var reader = new FileReader();
 
-                // Read file callback!  In here, setup asynchronous file write.
                 reader.onload = function (e) {
-                    alert(String.fromCharCode.apply(null, new Uint8Array(reader.result)));
                     cipherParamsJSON = String.fromCharCode.apply(null, new Uint8Array(reader.result));
-
-                    var encrypted = JsonFormatter.parse(cipherParamsJSON);
-
+                    console.log("read [" + cipherParamsJSON.length + "] from encrypted file.");
+                    var encrypted = JsonFormatter.parse(cipherParamsJSON); // into CipherParams Object
                     var decrypted = CryptoJS.AES.decrypt(encrypted,"APassApp").toString(CryptoJS.enc.Latin1);
 
-                    alert(decrypted.toString(CryptoJS.enc.Utf8)); // Message
+                    // alert(decrypted.length + " bytes: " + decrypted);
+                    // alert(decrypted.toString(CryptoJS.enc.Utf8).length + " bytes: " + decrypted.toString(CryptoJS.enc.Utf8)); // Message
 
                     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
                         var outfile;
@@ -411,7 +333,14 @@ var PasswordsService = function () {
                         dir.getFile(outfilename, {create:true}, function(file){
                             outfile = file;
                             outfile.createWriter(function(fileWriter) {
-                                var blob = new Blob([decrypted], {type:'text/plain'});
+
+                                // convert string to ArrayBuffer for binary file write:
+                                var buf = new ArrayBuffer(decrypted.length);
+                                var bufView = new Uint8Array(buf);
+                                for(var i=0, strLen = decrypted.length; i < strLen; i++) {
+                                    bufView[i] = decrypted.charCodeAt(i);
+                                }
+                                var blob = new Blob([buf], {type:'application/octet-stream'});
                                 fileWriter.write(blob);
                                 console.log("Successfully completed write: " + outfilename);
                             }, this.errorHandler);
