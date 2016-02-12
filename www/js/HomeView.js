@@ -18,6 +18,9 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
 		this.$el.on('click', '.menuitemabout', this.onAbout);
 
+		this.$el.on('change', '.encryptedfileinput', this.handleFileSelect);
+//		document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
 		window.addEventListener("click", this.handleClick);
 
 		resourceListView = new ResourceListView();
@@ -182,26 +185,31 @@ var HomeView = function (loginService, passwordsService) {
 		document.getElementById("advancedDropdown").classList.toggle("show");
 	}
 
+	this.handleFileSelect = function(event) {
+		console.log("Inside handleFileSelect");
+		var file = event.target.encryptedfilechooser; // FileList object
+
+		document.getElementById('list').innerHTML='<ul><li><strong>' + escape(file.name) + '</strong> (' + (file.type || 'n/a') + ') - ' +
+				file.size + ' bytes, last modified: ' + (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '</li>';
+
+		alert(cordova.file.documentsDirectory);
+		passwordsService.decryptDB("file.name", "decrypted.db");
+	};
+
 	this.onSaveEncryptedFile = function(event) {
 		event.preventDefault();
 
-		// get filename of database file
-		// get output file name from user.
 		// use crypto.js to encrypt database file into output file.
-		passwordsService.encryptDB("MyPass.db", "ab.apass");
-		// passwordsService.copyDBFileOut("MyPass.db", "backup.db");  // for troubleshooting encryption
+		passwordsService.encryptDB("encrypted.apass");
+		passwordsService.copyDBFileOut("backup.db");  // for troubleshooting encryption
 	}
 
 	this.onLoadEncryptedFile = function(event) {
 		event.preventDefault();
 
 		// get filename of encrypted user input file.
-		// use encrypted file to decrypt to temp file.
-		passwordsService.decryptDB("ab.apass", "decrypted.db");
-		// ensure that databases are all closed
-		// copy unencrypted temp file to database file location.
-		// re-open database
-		// delete temp file.
+
+		passwordsService.decryptDB("encrypted.apass");
 	}
 
 	this.onChangeLogin = function(event) {
@@ -211,7 +219,7 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onRemoveAds = function(event) {
 		event.preventDefault();
-		alert("FEATURE NOT YET IMPLEMENTED");
+		adsEnabled = false;
 	}
 
 	this.onAbout = function(event) {

@@ -5,15 +5,7 @@ var PasswordsService = function () {
     this.init = function () {
         var deferred = $.Deferred();
 
-
-        if(device.platform === 'browser') {
-            console.log("PasswordService running on platform "+ device.platform + ", using WebSQL");
-            this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 20000);
-        } else {
-            console.log("LoginService running on platform " + device.platform + ", using SQLitePlugin");
-            this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});            
-        }
-
+        this.openDatabaseFile();
         this.db.transaction(
             function (tx) {
                 createMyPassTable(tx);
@@ -31,6 +23,24 @@ var PasswordsService = function () {
         );
         return deferred.promise();
     }
+
+    this.getdbfilename = function () {
+        return "MyPass.db";
+    };
+
+    this.getdbdirectory = function() {
+        return cordova.file.applicationStorageDirectory + "databases/";
+    };
+
+    this.openDatabaseFile = function() {
+        if(device.platform === 'browser') {
+            console.log("PasswordsService running on platform "+ device.platform + ", using WebSQL");
+            this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 20000);
+        } else {
+            console.log("PasswordsService running on platform " + device.platform + ", using SQLitePlugin");
+            this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});            
+        }
+    };
 
     this.getAllResources = function() {
         var deferred = $.Deferred();
@@ -266,18 +276,16 @@ var PasswordsService = function () {
     }
 
     // copy DB file out to non-private app directory.
-    this.copyDBFileOut = function (infilename, outfilename) {
-        var pathToDBFile = cordova.file.dataDirectory + "/../databases/" + "MyPass.db";
-        window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
-            window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dirEntry) {
+    this.copyDBFileOut = function (outfilename) {
+        window.resolveLocalFileSystemURL(this.getdbdirectory() + this.getdbfilename(), function (fileEntry) {
+            window.resolveLocalFileSystemURL((cordova.file.externalDataDirectory || cordova.file.documentsDirectory), function(dirEntry) {
                 fileEntry.copyTo(dirEntry, outfilename, function() { console.log("copyDBFileOut() succeeded");}, this.errorHandler);
             });
         });
     };
 
-    this.encryptDB = function (filename, outfilename) {
-        var pathToDBFile = cordova.file.dataDirectory + "/../databases/" + filename;
-        window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
+    this.encryptDB = function (outfilename) {
+        window.resolveLocalFileSystemURL(this.getdbdirectory() + this.getdbfilename(), function (fileEntry) {
             fileEntry.file(function(file) {
 
                 var reader = new FileReader();
@@ -291,7 +299,7 @@ var PasswordsService = function () {
                     console.log("encrypted data is: ["+ tmpstr.length +"] bytes");
 
                     // WRITE TO NEW FILE.
-                    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+                    window.resolveLocalFileSystemURL((cordova.file.externalDataDirectory || cordova.file.documentsDirectory), function (dir) {
                         var outfile;
                         console.log("writing encrypted file to: " + cordova.file.externalDataDirectory + outfilename);
                         dir.getFile(outfilename, {create:true}, function(file){
@@ -310,27 +318,33 @@ var PasswordsService = function () {
         });
     }
 
-    this.decryptDB = function(infilename, outfilename) {
-        var pathToDBFile = cordova.file.externalDataDirectory + infilename;
+    this.decryptDB = function(infilename) {
+        var pathToEncryptedFile = (cordova.file.externalDataDirectory || cordova.file.documentsDirectory) + infilename;
 
-        window.resolveLocalFileSystemURL(pathToDBFile, function (fileEntry) {
+        var dbDir = this.getdbdirectory();
+//        var dbDir = cordova.file.dataDirectory + "../databases/";
+        var dbFile = this.getdbfilename();
+        var localDB = this.db;
+        var localDBOpenerFunction = this.openDatabaseFile;
+        var localErrorHandler = this.errorHandler;
+
+        localDB.close();
+
+        window.resolveLocalFileSystemURL(pathToEncryptedFile, function (fileEntry) {
             fileEntry.file(function(file) {
 
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
                     cipherParamsJSON = String.fromCharCode.apply(null, new Uint8Array(reader.result));
-                    console.log("read [" + cipherParamsJSON.length + "] from encrypted file.");
+                    console.log("read [" + cipherParamsJSON.length + "] from " + pathToEncryptedFile);
                     var encrypted = JsonFormatter.parse(cipherParamsJSON); // into CipherParams Object
                     var decrypted = CryptoJS.AES.decrypt(encrypted,"APassApp").toString(CryptoJS.enc.Latin1);
 
-                    // alert(decrypted.length + " bytes: " + decrypted);
-                    // alert(decrypted.toString(CryptoJS.enc.Utf8).length + " bytes: " + decrypted.toString(CryptoJS.enc.Utf8)); // Message
-
-                    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+                    window.resolveLocalFileSystemURL(dbDir, function(dir) {
                         var outfile;
-                        console.log("writing decrypted file to: " + cordova.file.externalDataDirectory + " " + dir.name + " " + outfilename);
-                        dir.getFile(outfilename, {create:true}, function(file){
+                        console.log("writing decrypted file to: " + dbDir + dbFile);
+                        dir.getFile(dbFile, {create:true}, function(file){
                             outfile = file;
                             outfile.createWriter(function(fileWriter) {
 
@@ -342,10 +356,12 @@ var PasswordsService = function () {
                                 }
                                 var blob = new Blob([buf], {type:'application/octet-stream'});
                                 fileWriter.write(blob);
-                                console.log("Successfully completed write: " + outfilename);
-                            }, this.errorHandler);
-                        });
-                    });
+                                console.log("Successfully wrote: " + dbDir + dbFile);
+//                                fileWriter.close();
+                                localDBOpenerFunction();
+                            }, localErrorHandler);
+                        }, localErrorHandler);
+                    }, localErrorHandler);
                 };
 
                 reader.onerror = this.errorHandler;
@@ -353,7 +369,7 @@ var PasswordsService = function () {
                 reader.readAsArrayBuffer(file);
             });
         }, this.errorHandler);
-    }
+    };
 
     //     var encrypted = CryptoJS.AES.encrypt("Message", "Secret Passphrase", { format: JsonFormatter }); 
     //     alert(encrypted); 
