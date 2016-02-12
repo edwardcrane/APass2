@@ -19,7 +19,6 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.on('click', '.menuitemabout', this.onAbout);
 
 		this.$el.on('change', '.encryptedfileinput', this.handleFileSelect);
-//		document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 		window.addEventListener("click", this.handleClick);
 
@@ -207,9 +206,12 @@ var HomeView = function (loginService, passwordsService) {
 	this.onLoadEncryptedFile = function(event) {
 		event.preventDefault();
 
-		// get filename of encrypted user input file.
+		// TODO: get filename of encrypted user input file.
 
-		passwordsService.decryptDB("encrypted.apass");
+		passwordsService.decryptDB("encrypted.apass", function() {
+			// trigger keyup event as callback, which forces refresh:
+            $('.search-key').keyup();
+		});
 	}
 
 	this.onChangeLogin = function(event) {

@@ -5,7 +5,14 @@ var PasswordsService = function () {
     this.init = function () {
         var deferred = $.Deferred();
 
-        this.openDatabaseFile();
+        if(device.platform === 'browser') {
+            console.log("PasswordsService running on platform "+ device.platform + ", using WebSQL");
+            this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 20000);
+        } else {
+            console.log("PasswordsService running on platform " + device.platform + ", using SQLitePlugin");
+            this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});            
+        }
+
         this.db.transaction(
             function (tx) {
                 createMyPassTable(tx);
@@ -30,16 +37,6 @@ var PasswordsService = function () {
 
     this.getdbdirectory = function() {
         return cordova.file.applicationStorageDirectory + "databases/";
-    };
-
-    this.openDatabaseFile = function() {
-        if(device.platform === 'browser') {
-            console.log("PasswordsService running on platform "+ device.platform + ", using WebSQL");
-            this.db = window.openDatabase("PasswordsDB", "1.0", "Passwords DB", 20000);
-        } else {
-            console.log("PasswordsService running on platform " + device.platform + ", using SQLitePlugin");
-            this.db = sqlitePlugin.openDatabase({name: "MyPass.db", location: 2});            
-        }
     };
 
     this.getAllResources = function() {
@@ -318,14 +315,13 @@ var PasswordsService = function () {
         });
     }
 
-    this.decryptDB = function(infilename) {
+    this.decryptDB = function(infilename, optionalcallback) {
         var pathToEncryptedFile = (cordova.file.externalDataDirectory || cordova.file.documentsDirectory) + infilename;
 
         var dbDir = this.getdbdirectory();
-//        var dbDir = cordova.file.dataDirectory + "../databases/";
         var dbFile = this.getdbfilename();
         var localDB = this.db;
-        var localDBOpenerFunction = this.openDatabaseFile;
+        var localDBOpenerFunction = this.init;
         var localErrorHandler = this.errorHandler;
 
         localDB.close();
@@ -357,8 +353,11 @@ var PasswordsService = function () {
                                 var blob = new Blob([buf], {type:'application/octet-stream'});
                                 fileWriter.write(blob);
                                 console.log("Successfully wrote: " + dbDir + dbFile);
-//                                fileWriter.close();
-                                localDBOpenerFunction();
+                                localDBOpenerFunction().done(function() {
+                                    if(optionalcallback) {
+                                        optionalcallback();
+                                    }
+                                });
                             }, localErrorHandler);
                         }, localErrorHandler);
                     }, localErrorHandler);
