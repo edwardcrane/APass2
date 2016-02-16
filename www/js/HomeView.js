@@ -10,15 +10,15 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.on('keyup', '.search-key', this.findResources);
 		this.$el.on('click', '.newresource', this.newResource);
 		this.$el.on('click', '.menuicon', this.menuClicked);
-		this.$el.on('click', '.menuitememailcsvfile', this.onCSVFile);
+		this.$el.on('click', '.menuitemexportcsvfile', this.onExportCSVFile);
+		this.$el.on('click', '.menuitemimportcsvfile', this.onImportCSVFile);
+		this.$el.on('click', '.menuitememailcsvfile', this.onEmailCSVFile);
 		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
 		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
 		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
 		this.$el.on('click', '.menuitemchangelogin', this.onChangeLogin);
 		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
 		this.$el.on('click', '.menuitemabout', this.onAbout);
-
-		this.$el.on('change', '.encryptedfileinput', this.handleFileSelect);
 
 		window.addEventListener("click", this.handleClick);
 
@@ -48,7 +48,6 @@ var HomeView = function (loginService, passwordsService) {
 		$('.content', this.$el).html(resourceListView.$el);
 		return this;
 	};
-
 
 	this.prepareAdMobIDs = function() {
 	    // <!-- ADMOB VALUES -->
@@ -146,9 +145,19 @@ var HomeView = function (loginService, passwordsService) {
 		};
 	};
 
-	this.onCSVFile = function(event) {
+	this.onExportCSVFile = function(event) {
 		event.preventDefault();
-		passwordsService.exportCSV("export1.csv");
+		passwordsService.exportCSV("export.csv");
+	}
+
+	this.onImportCSVFile = function(event) {
+		event.preventDefault();
+		alert("IMPORT CSV FILE NOT YET IMPLEMENTED.");
+	}
+
+	this.onEmailCSVFile = function(event) {
+		event.preventDefault();
+		passwordsService.exportCSV("export.csv");
 
 		// NOW SEND EMAIL ATTACHMENT:		
         cordova.plugins.email.isAvailable(function(isAvailable) {
@@ -158,7 +167,7 @@ var HomeView = function (loginService, passwordsService) {
         			var emails = [];
 
         			emails.push(myemail);
-        			atts.push(cordova.file.externalDataDirectory + "export1.csv");
+        			atts.push(cordova.file.externalDataDirectory + "export.csv");
 
         			window.plugin.email.open({
         					to: emails,
@@ -184,23 +193,12 @@ var HomeView = function (loginService, passwordsService) {
 		document.getElementById("advancedDropdown").classList.toggle("show");
 	}
 
-	this.handleFileSelect = function(event) {
-		console.log("Inside handleFileSelect");
-		var file = event.target.encryptedfilechooser; // FileList object
-
-		document.getElementById('list').innerHTML='<ul><li><strong>' + escape(file.name) + '</strong> (' + (file.type || 'n/a') + ') - ' +
-				file.size + ' bytes, last modified: ' + (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '</li>';
-
-		alert(cordova.file.documentsDirectory);
-		passwordsService.decryptDB("file.name", "decrypted.db");
-	};
-
 	this.onSaveEncryptedFile = function(event) {
 		event.preventDefault();
 
 		// use crypto.js to encrypt database file into output file.
 		passwordsService.encryptDB("encrypted.apass");
-		passwordsService.copyDBFileOut("backup.db");  // for troubleshooting encryption
+		// passwordsService.copyDBFileOut("backup.db");  // for troubleshooting encryption
 	}
 
 	this.onLoadEncryptedFile = function(event) {

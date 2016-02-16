@@ -274,14 +274,40 @@ var PasswordsService = function () {
 
     // copy DB file out to non-private app directory.
     this.copyDBFileOut = function (outfilename) {
+        var storageDir = this.getStorageDirectory();
+
         window.resolveLocalFileSystemURL(this.getdbdirectory() + this.getdbfilename(), function (fileEntry) {
-            window.resolveLocalFileSystemURL((cordova.file.externalDataDirectory || cordova.file.documentsDirectory), function(dirEntry) {
+            window.resolveLocalFileSystemURL(storageDir, function(dirEntry) {
                 fileEntry.copyTo(dirEntry, outfilename, function() { console.log("copyDBFileOut() succeeded");}, this.errorHandler);
             });
         });
     };
 
+    /**
+    *   The platfom-specific file locations require that the program will export encrypted files to:
+    *   ANDROID     Device Storage / Android/data/com.airanza.apass2/files/encrypted.apass:
+    *               cordova.file.externalDataDirectory - Where to put app-specific data files on external storage. (Android)
+    *   IOS         cordova.file.documentsDirectory - Files private to the app, but that are meaningful 
+    *               to other application (e.g. Office files). Note that for OSX this is the user's ~/Documents directory. (iOS, OSX)
+    *
+    */
+    this.getStorageDirectory = function() {
+//        window.resolveLocalFileSystemURL((cordova.file.externalDataDirectory || cordova.file.documentsDirectory), function (dir) {
+        var storageDir;
+        if(cordova.file.externalDataDirectory) {
+            storageDir = cordova.file.externalDataDirectory;
+        } else if(cordova.file.documentsDirectory) {
+            storageDir = cordova.file.documentsDirectory;
+        } else {
+            storageDir = cordova.file.externalRootDirectory;
+        }
+
+        return storageDir;
+    }
+
     this.encryptDB = function (outfilename) {
+        var storageDir = this.getStorageDirectory();
+
         window.resolveLocalFileSystemURL(this.getdbdirectory() + this.getdbfilename(), function (fileEntry) {
             fileEntry.file(function(file) {
 
@@ -296,9 +322,9 @@ var PasswordsService = function () {
                     console.log("encrypted data is: ["+ tmpstr.length +"] bytes");
 
                     // WRITE TO NEW FILE.
-                    window.resolveLocalFileSystemURL((cordova.file.externalDataDirectory || cordova.file.documentsDirectory), function (dir) {
+                    window.resolveLocalFileSystemURL(storageDir, function(dir) {
                         var outfile;
-                        console.log("writing encrypted file to: " + cordova.file.externalDataDirectory + outfilename);
+                        console.log("writing encrypted file to: " + storageDir + outfilename);
                         dir.getFile(outfilename, {create:true}, function(file){
                             outfile = file;
                             outfile.createWriter(function(fileWriter) {
@@ -315,8 +341,14 @@ var PasswordsService = function () {
         });
     }
 
+    /**
+    *  accepts two arguments: infilename is the name of the encrypted file to decrypt and copy into the existing
+    * database location.
+    * The second argument is an optional callback to notify, such as a UI update.  
+    *
+    */
     this.decryptDB = function(infilename, optionalcallback) {
-        var pathToEncryptedFile = (cordova.file.externalDataDirectory || cordova.file.documentsDirectory) + infilename;
+        var pathToEncryptedFile = this.getStorageDirectory() + infilename;
 
         var dbDir = this.getdbdirectory();
         var dbFile = this.getdbfilename();
@@ -414,6 +446,8 @@ var PasswordsService = function () {
 
     this.exportCSV = function (filename) {
         var table = [];
+        var storageDir = this.getStorageDirectory();
+
         this.getAllResources().done(function (newTable) {
             table = newTable;
 
@@ -432,7 +466,7 @@ var PasswordsService = function () {
 
                 navigator.webkitPersistentStorage.requestQuota(1024*1024, function(grantedBytes) {
                     console.log("webkitPersistentStorage granted bytes: " + grantedBytes);
-                    window.webkitResolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
+                    window.webkitResolveLocalFileSystemURL(storageDir, function (dir) {
                         dir.getFile(filename, {create:true}, function(file) {
                             logOb = file;
                             console.log("caling writeStr()");
@@ -442,8 +476,8 @@ var PasswordsService = function () {
                 });
             } else {
                 console.log(device.platform);
-                window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (dir) {
-                    console.log("writing CSV file to: " + cordova.file.externalDataDirectory + " " + dir + " " + filename);
+                window.resolveLocalFileSystemURL(storageDir, function (dir) {
+                    console.log("writing CSV file to: " + storageDir + " " + dir + " " + filename);
                     dir.getFile(filename, {create:true}, function(file){
                         logOb = file;
                         writeStr(stringifyCSV(table));
