@@ -147,16 +147,36 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onExportCSVFile = function(event) {
 		event.preventDefault();
-		passwordsService.exportCSV("export.csv");
+		var r = confirm("Export CSV File to " + passwordsService.getStorageDirectory() + "export.csv?");
+		if(r) {
+			passwordsService.exportCSV("export.csv");
+		} else {
+			alert("Export canceled");
+		}
 	}
 
 	this.onImportCSVFile = function(event) {
 		event.preventDefault();
-		alert("IMPORT CSV FILE NOT YET IMPLEMENTED.");
+		var r = confirm("Importing CSV File from " + passwordsService.getStorageDirectory() + 
+			"export.csv will overwrite all data in APass with data from the file.  Do you wish to continue?");
+		if(r) {
+			alert("IMPORT CSV FILE NOT YET IMPLEMENTED.");
+			// passwordsService.importCSV("export.csv");
+		} else {
+			alert("Import canceled");
+		}
 	}
 
 	this.onEmailCSVFile = function(event) {
 		event.preventDefault();
+
+		var r = confirm("Emailing passwords in clear-text Comma Separated format may leave your passwords open to hackers.  " + 
+			"Do you want to accept this risk and continue?");
+		if(r == false) {
+			alert("Emailing CSV File Canceled.");
+			return;
+		}
+
 		passwordsService.exportCSV("export.csv");
 
 		// NOW SEND EMAIL ATTACHMENT:		
@@ -196,20 +216,29 @@ var HomeView = function (loginService, passwordsService) {
 	this.onSaveEncryptedFile = function(event) {
 		event.preventDefault();
 
-		// use crypto.js to encrypt database file into output file.
-		passwordsService.encryptDB("encrypted.apass");
-		// passwordsService.copyDBFileOut("backup.db");  // for troubleshooting encryption
+		var r = confirm("Do you wish to save all data to encrypted file " + passwordsService.getStorageDirectory() + "encrypted.apass?");
+		if(r) {
+			// use crypto.js to encrypt database file into output file.
+			passwordsService.encryptDB("encrypted.apass");
+			// passwordsService.copyDBFileOut("backup.db");  // for troubleshooting encryption
+		} else {
+			alert("Exporting data to encrypted file was canceled.");
+		}
 	}
 
 	this.onLoadEncryptedFile = function(event) {
 		event.preventDefault();
 
-		// TODO: get filename of encrypted user input file.
-
-		passwordsService.decryptDB("encrypted.apass", function() {
-			// trigger keyup event as callback, which forces refresh:
-            $('.search-key').keyup();
-		});
+		var r = confirm("Loading data from encrypted file " + passwordsService.getStorageDirectory() + 
+			"encrypted.apass will overwrite all data in APass with data from the file.  Do you wish to continue?");
+		if(r) {
+			passwordsService.decryptDB("encrypted.apass", function() {
+				// trigger keyup event as callback, which forces refresh:
+        	    $('.search-key').keyup();
+			});
+		} else {
+			alert("Importing data from encrypted file was canceled.");
+		}
 	}
 
 	this.onChangeLogin = function(event) {
