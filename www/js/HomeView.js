@@ -248,7 +248,12 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onRemoveAds = function(event) {
 		event.preventDefault();
-		adsEnabled = false;
+		// adsEnabled = false;
+		store.order("turn_off_ads");
+	}
+
+	this.setAdsEnabled = function(bAdsEnabled) {
+		adsEnabled = bAdsEnabled;
 	}
 
 	this.onAbout = function(event) {
