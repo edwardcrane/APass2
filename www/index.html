@@ -32,7 +32,7 @@
 					</td>
 				</tr>
 			</table>
-			<input type="password" class="loginpassword" name="password" id="login-tpl-password" placeholder="Password">
+			<input type="password" class="loginpassword" name="password" id="login-tpl-password" placeholder="Password".toLocaleString()>
 			<a class="loginshowpasswordhint" href="#passwordhint/{{ username }}">Show Password Hint</a>
 		</form>
 	</header>
@@ -91,6 +91,7 @@
 							<a class="menuitemexportcsvfile" href="#menu">Export CSV File</a>
 							<a class="menuitemimportcsvfile" href="#menu">Import CSV File</a>
 							<a class="menuitememailcsvfile" href="#menu">Email CSV File</a>
+							<a class="menuitememailencryptedfile" href="#menu">Email Encrypted File</a>
 							<a class="menuitemadvanced" href="#menu">Advanced...</a>
 							<a class="menuitemchangelogin" href="#menu">Change Login...</a>
 							<a class="menuitemremoveads" href="#menu">Remove Ads...</a>
@@ -228,6 +229,7 @@
 <script src="js/HomeView.js"></script>
 <script src="js/ResourceView.js"></script>
 <script src="js/ResourceListView.js"></script>
+<script src="js/l10n.js"></script>
 <script src="js/app.js"></script>
 
 </body>

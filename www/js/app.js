@@ -13,11 +13,15 @@
 
     var homeView;
 
+    var usersLanguage = 'en-US-DEFAULT';
+
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
         // register FastClick fix for 300ms delay on IOS devices:
         FastClick.attach(document.body);
+
+        usersLanguage = setLang();
 
         document.addEventListener("backbutton", onBackKeyDown, false);
 
@@ -186,6 +190,26 @@
         }
     };
 
-
+    function setLang() {
+        var ourLang = 'en-US';
+        // cordova globalization plugin:
+        if(navigator.globalization !== undefined) {
+            navigator.globalization.getPreferredLanguage(function(language) {
+                usersLanguage = language.value;
+                ourLang = language.value;
+            },
+            function() { alert('Error getting language');}
+            );
+            return ourLang;
+        } else if (navigator.languages != undefined) {
+            return navigator.languages[0]; 
+        } else {
+            return navigator.language;
+        }
+    }
 
 }());
+
+var l = function(string) {
+    return "* " + string.toLocaleString();
+};

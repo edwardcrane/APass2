@@ -5,6 +5,7 @@ var HomeView = function (loginService, passwordsService) {
 	var adsEnabled = false;
 
 	this.initialize = function () {
+
 		// Define a div wrapper for the view (used to attach events)
 		this.$el = $('<div/>');
 		this.$el.on('keyup', '.search-key', this.findResources);
@@ -13,6 +14,7 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.on('click', '.menuitemexportcsvfile', this.onExportCSVFile);
 		this.$el.on('click', '.menuitemimportcsvfile', this.onImportCSVFile);
 		this.$el.on('click', '.menuitememailcsvfile', this.onEmailCSVFile);
+		this.$el.on('click', '.menuitememailencryptedfile', this.onEmailEncryptedFile);
 		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
 		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
 		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
@@ -147,33 +149,32 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onExportCSVFile = function(event) {
 		event.preventDefault();
-		var r = confirm("Export CSV File to " + passwordsService.getStorageDirectory() + "export.csv?");
+		var r = confirm(l("Export CSV File to") + " " + passwordsService.getStorageDirectory() + "export.csv?");
 		if(r) {
 			passwordsService.exportCSV("export.csv");
 		} else {
-			alert("Export canceled");
+			alert(l("Action Canceled.  No unencrypted CSV file was created."));
 		}
 	}
 
 	this.onImportCSVFile = function(event) {
 		event.preventDefault();
-		var r = confirm("Importing CSV File from " + passwordsService.getStorageDirectory() + 
-			"export.csv will overwrite all data in APass with data from the file.  Do you wish to continue?");
+		var r = confirm(l("Importing CSV File from") + " " + passwordsService.getStorageDirectory() + 
+			"export.csv" + " " + l("will overwrite all data in APass with data from the file.  Do you wish to continue?"));
 		if(r) {
 			alert("IMPORT CSV FILE NOT YET IMPLEMENTED.");
 			// passwordsService.importCSV("export.csv");
 		} else {
-			alert("Import canceled");
+			alert(l("Data Load Canceled.  No changes have been made."));
 		}
 	}
 
 	this.onEmailCSVFile = function(event) {
 		event.preventDefault();
 
-		var r = confirm("Emailing passwords in clear-text Comma Separated format may leave your passwords open to hackers.  " + 
-			"Do you want to accept this risk and continue?");
+		var r = confirm(l("Unencrypted CSV files may pose a security risk if accessible to hackers.  Do you wish to continue anyway?"));
 		if(r == false) {
-			alert("Emailing CSV File Canceled.");
+			alert(l("Action Canceled.  No unencrypted CSV file was created."));
 			return;
 		}
 
@@ -192,8 +193,8 @@ var HomeView = function (loginService, passwordsService) {
         			window.plugin.email.open({
         					to: emails,
     	    				attachments: atts,
-        					subject: "APass CSV Export File",
-        					body: "This is the latest CSV Export File from APass."
+        					subject: l("APass Backup File"),
+        					body: l("Backup of Entries in APass.")
         				},
 						function() {
 							console.log('email view dismissed');
@@ -202,7 +203,46 @@ var HomeView = function (loginService, passwordsService) {
         		 	);
         		});
        		} else {
-       			alert("Email Plugin is NOT Available.");
+       			alert(l("Email Plugin is NOT Available."));
+       		};
+        });
+	}
+
+	this.onEmailEncryptedFile = function(event) {
+		event.preventDefault();
+
+		var r = confirm(l("Are you sure you want to email encrypted data?"));
+		if(r == false) {
+			alert(l("Action Canceled.  No encrypted file was created."));
+			return;
+		}
+
+		passwordsService.encryptDB("encrypted.apass");
+
+		// NOW SEND EMAIL ATTACHMENT:		
+        cordova.plugins.email.isAvailable(function(isAvailable) {
+        	if(isAvailable) {
+        		loginService.getEmail(loginService.getLoggedInUser()).done(function (myemail) {
+        			var atts = [];
+        			var emails = [];
+
+        			emails.push(myemail);
+        			atts.push(passwordsService.getStorageDirectory() + "encrypted.apass");
+
+        			window.plugin.email.open({
+        					to: emails,
+    	    				attachments: atts,
+        					subject: l("APass Backup File"),
+        					body: l("Backup of Entries in APass")
+        				},
+						function() {
+							console.log('email view dismissed');
+        		 		},
+        		 		this
+        		 	);
+        		});
+       		} else {
+       			alert(l("Email Plugin is NOT Available."));
        		};
         });
 	}
@@ -216,28 +256,29 @@ var HomeView = function (loginService, passwordsService) {
 	this.onSaveEncryptedFile = function(event) {
 		event.preventDefault();
 
-		var r = confirm("Do you wish to save all data to encrypted file " + passwordsService.getStorageDirectory() + "encrypted.apass?");
+		var r = confirm(l("Do you wish to save all data to encrypted file") + " " + passwordsService.getStorageDirectory() + "encrypted.apass?");
 		if(r) {
 			// use crypto.js to encrypt database file into output file.
 			passwordsService.encryptDB("encrypted.apass");
 			// passwordsService.copyDBFileOut("backup.db");  // for troubleshooting encryption
 		} else {
-			alert("Exporting data to encrypted file was canceled.");
+			alert(l("Action Canceled.  No encrypted file was created."));
 		}
 	}
 
 	this.onLoadEncryptedFile = function(event) {
 		event.preventDefault();
 
-		var r = confirm("Loading data from encrypted file " + passwordsService.getStorageDirectory() + 
-			"encrypted.apass will overwrite all data in APass with data from the file.  Do you wish to continue?");
+		var r = confirm(l("Loading data will DISCARD EXISTING RECORDS.  You may wish to create a backup file first.  Do you wish to continue?"));
+		// var r = confirm("Loading data from encrypted file " + passwordsService.getStorageDirectory() + 
+		// 	"encrypted.apass will overwrite all data in APass with data from the file.  Do you wish to continue?");
 		if(r) {
 			passwordsService.decryptDB("encrypted.apass", function() {
 				// trigger keyup event as callback, which forces refresh:
         	    $('.search-key').keyup();
 			});
 		} else {
-			alert("Importing data from encrypted file was canceled.");
+			alert(l("Data Load Canceled.  No changes have been made."));
 		}
 	}
 
