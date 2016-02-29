@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+<!--     <meta charset="utf-8">
+ -->
+	<meta http-equiv="Content-Type" content="text/html;charset-UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<!-- Good default declaration:
     	* gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
@@ -21,7 +23,7 @@
 <body>
 <script id="login-tpl" type="text/template">
 	<header class="bar bar-nav">
-		<h3 class="pagetitle">Login to APass</h3>
+		<h3 id="logintitle" class="pagetitle">Login to APass</h3>
 		<form>
 			<input type="text" class="loginusername" name="username" placeholder="User Name" autocapitalize="off" id="login-tpl-username" value={{username}}>
 			<table class="loginrememberusernametable">
@@ -88,21 +90,21 @@
 
 					<div class="dropdown">
 						<div id="myDropdown" class="dropdown-content">
-							<a class="menuitemexportcsvfile" href="#menu">Export CSV File</a>
-							<a class="menuitemimportcsvfile" href="#menu">Import CSV File</a>
-							<a class="menuitememailcsvfile" href="#menu">Email CSV File</a>
-							<a class="menuitememailencryptedfile" href="#menu">Email Encrypted File</a>
-							<a class="menuitemadvanced" href="#menu">Advanced...</a>
-							<a class="menuitemchangelogin" href="#menu">Change Login...</a>
-							<a class="menuitemremoveads" href="#menu">Remove Ads...</a>
-							<a class="menuitemabout" href="#menu">About...</a>
+							<a class="menuitem menuitemexportcsvfile" href="#menu">Export CSV File</a>
+							<a class="menuitem menuitemimportcsvfile" href="#menu">Import CSV File</a>
+							<a class="menuitem menuitememailcsvfile" href="#menu">Email CSV File</a>
+							<a class="menuitem menuitememailencryptedfile" href="#menu">Email Encrypted File</a>
+							<a class="menuitem menuitemadvanced" href="#menu">Advanced...</a>
+							<a class="menuitem menuitemchangelogin" href="#menu">Change Login...</a>
+							<a class="menuitem menuitemremoveads" href="#menu">Remove Ads...</a>
+							<a class="menuitem menuitemabout" href="#menu">About...</a>
 						</div>
 					</div>
 
 					<div class="advanced-dropdown">
 						<div id="advancedDropdown" class="advanced-dropdown-content">
-							<a class="menuitemsaveencryptedfile" href="#menu">Save Encrypted File...</a>
-							<a class="menuitemloadencryptedfile" href="#menu">Load Encrypted File...</a>
+							<a class="menuitem menuitemsaveencryptedfile" href="#menu">Save Encrypted File...</a>
+							<a class="menuitem menuitemloadencryptedfile" href="#menu">Load Encrypted File...</a>
 						</div>
 					</div>
 
@@ -124,9 +126,9 @@
 	</a>
 	<table class="splash-links">
 		<tr>
-		    <td class="terms-of-use"><a href="http://www.airanza.com/products/apass/tou">Terms of Use</a></td>
-			<td class="corporate-link"><a href="http://www.airanza.com">www.airanza.com</a></td>
-		    <td class="privacy-policy"><a href="http://www.airanza.com/products/apass/privacy">Privacy Policy</a></td
+		    <td class="terms-of-use"><a class=toulink href="http://www.airanza.com/products/apass/tou">Terms of Use</a></td>
+			<td class="corporate-link"><a class=airanzalink href="http://www.airanza.com">www.airanza.com</a></td>
+		    <td class="privacy-policy"><a class=privacypolicylink href="http://www.airanza.com/products/apass/privacy">Privacy Policy</a></td
 		</tr>
 	</table>
 </script>
@@ -224,12 +226,14 @@
 <script src="js/services/sqlite/PasswordsService.js"></script>
 <script src="lib/handlebars.js"></script>
 <script src="js/RegisterView.js"></script>
+<script src="js/ChangeRegistrationView.js"></script>
 <script src="js/LoginView.js"></script>
 <script src="js/SplashView.js"></script>
 <script src="js/HomeView.js"></script>
 <script src="js/ResourceView.js"></script>
 <script src="js/ResourceListView.js"></script>
 <script src="js/l10n.js"></script>
+<script src="js/localization.js"></script>
 <script src="js/app.js"></script>
 
 </body>

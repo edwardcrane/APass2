@@ -9,12 +9,13 @@ var LoginView = function (loginService) {
 		// this.render();
 
 		var lastuser = loginService.getRememberedLastUser().done(function(lastuser) {
-				if(lastuser != null) {
+			if(lastuser != null) {
 				$('.loginusername').val(lastuser);
 				$('.loginrememberusername').prop('checked', true);
 				$('.loginpassword').focus();
 			}
 		});
+
 		this.render();
 	};
 
@@ -37,7 +38,8 @@ var LoginView = function (loginService) {
 
 	this.showPasswordHint = function() {
 		loginService.getPasswordHint($('.loginusername').val()).done(function(gotPasswordHint){
-			alert("Password Hint: " + gotPasswordHint);
+//			alert("Password Hint: " + gotPasswordHint);
+			alert(sprintf(l("Password Hint: [%s]"), gotPasswordHint));
 		});
 	}
 
@@ -48,7 +50,6 @@ var LoginView = function (loginService) {
 	};
 
 	this.initialize();
-
 }
 
 

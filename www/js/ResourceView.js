@@ -32,11 +32,13 @@ var ResourceView = function(service, resource) {
 	};
 
 	this.deleteResource = function() {
-		if(confirm("Are you sure you want to delete " + $('.resource_resourcename').val() + "?")) {
+		if(confirm(l("Are you sure you want to delete this?"))) {
 			if($('.resource_id').val() > 0) {
 				service.deleteResource( $('.resource_id').val());
 			}
 			window.history.back();
+		} else {
+			alert(sprintf(l("Resource [%s] NOT DELETED."), $('.resource_resourcename').val()));
 		}
 	};
 

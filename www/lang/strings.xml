@@ -34,7 +34,10 @@
     <string name="button_cancel">Cancel</string>
 
     <!-- Menu Strings -->
+    <string name="action_export_csv_file">Export CSV File</string>
+    <string name="action_import_csv_file">Import CSV File</string>
     <string name="action_email_csv_file">Email CSV File</string>
+    <string name="action_email_encrypted_file">Email Encrypted File</string>
     <string name="action_advanced">Advanced…</string>
     <string name="action_save_encrypted_file">Save Encrypted File…</string>
     <string name="action_load_encrypted_file">Load Encrypted File…</string>
@@ -87,6 +90,8 @@
 
     <!-- SPLASH DIALOG VALUES -->
     <string name="splash_version">version:</string>
+    <string name="terms_of_use_text">Terms of Use</string>
+    <string name="privacy_policy_text">Privacy Policy</string>
 
     <!-- CHANGE REGISTRATION DIALOG VALUES -->
     <string name="change_registration_title">Change Login Info</string>

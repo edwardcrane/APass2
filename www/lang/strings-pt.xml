@@ -24,10 +24,13 @@
     <string name="button_cancel">Cancelar</string>
 
     <!-- Menu de cordas -->
+    <string name="action_export_csv_file">Salvar Arquivo CSV</string>
+    <string name="action_import_csv_file">Carregar Arquivo CSV</string>
     <string name="action_email_csv_file">E-mail do Arquivo CSV</string>
-    <string name="action_advanced">Avançado …</string>
-    <string name="action_save_encrypted_file">Salvar arquivo criptografado …</string>
-    <string name="action_load_encrypted_file">Carregar arquivo criptografado …</string>
+    <string name="action_email_encrypted_file">E-mail Arquivo Criptografado</string>
+    <string name="action_advanced">Avançado…</string>
+    <string name="action_save_encrypted_file">Salvar Arquivo Criptografado …</string>
+    <string name="action_load_encrypted_file">Carregar Arquivo Criptografado …</string>
     <string name="action_change_login">Alterar autênticação (login) …</string>
     <string name="action_show_splash">Sobre …</string>
     <string name="action_add_resource">Adicionar</string>
@@ -81,6 +84,8 @@
     <string name="airanza_url">&lt;a href="http://www.airanza.com"&gt;www.airanza.com&lt;/a&gt;</string>
     <string name="terms_of_use_url">&lt;a href="http://www.airanza.com/products/apass/tou"&gt;Termos de Uso&lt;/a&gt;</string>
     <string name="privacy_policy_url">&lt;a href="http://www.airanza.com/products/apass/privacy"&gt;Privacidade&lt;/a&gt;</string>
+    <string name="terms_of_use_text">Termos de Uso</string>
+    <string name="privacy_policy_text">Privacidade</string>
 
     <!-- <string name="admob_id">TESTER</string>-->
     <string name="unencrypted_risk_dialog_message">Arquivos CSV não criptografados podem representar um risco de segurança se acessível a hackers, tambem conhecidos por piratas informáticos. Deseja continuar mesmo assim?</string>

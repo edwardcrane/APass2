@@ -284,7 +284,7 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onChangeLogin = function(event) {
 		event.preventDefault();
-		alert("FEATURE NOT YET IMPLEMENTED");
+		window.location.href="#changeregistration";
 	}
 
 	this.onRemoveAds = function(event) {

@@ -8,6 +8,9 @@
     SplashView.prototype.template = Handlebars.compile($("#splash-tpl").html());
     LoginView.prototype.template = Handlebars.compile($("#login-tpl").html());
     RegisterView.prototype.template = Handlebars.compile($("#register-tpl").html());
+    ChangeRegistrationView.prototype.template = Handlebars.compile($("#change-registration-tpl").html());
+
+    String.locale='pt-BR';
 
     var slider = new PageSlider($('body'));
 
@@ -41,27 +44,37 @@
 
             router.addRoute('login', function() {
                 slider.slidePage(new LoginView(loginService).render().$el);
+                localizeStrings();
             });
 
             router.addRoute('home', function() {
                 slider.slidePage(homeView.render().$el);
 //                slider.slidePage(new HomeView(loginService, passwordsService).render().$el);
+                localizeStrings();
             });
 
             router.addRoute('resources/:id', function(id) {
                 passwordsService.findById(parseInt(id)).done(function(resource) {
                     slider.slidePage(new ResourceView(passwordsService, resource).render().$el);
+                    localizeStrings();
                 })
             });
 
             router.addRoute('', function() {
                 slider.slidePage(new SplashView(loginService).render().$el);
+                localizeStrings();
             });
 
             router.addRoute('register', function() {
                 console.log(loginService);
                 slider.slidePage(new RegisterView(loginService).render().$el);
+                localizeStrings();
             });
+
+            router.addRoute('changeregistration', function() {
+                slider.slidePage(new ChangeRegistrationView(loginService).render().$el);
+                localizeStrings();
+            })
 
             router.start();
 
@@ -74,6 +87,48 @@
 
 
     /* ---------------------------------- Local Functions ---------------------------------- */
+
+
+    function localizeStrings() {
+        // change the existing text of H3 elements (titles):
+        $(document).find("h3").each(function(ev) {
+            $(this).text(l($(this).text()));
+        });
+
+        // change the placeholders on all input objects, if one exists:
+        $(document).find("input[type=text], input[type=search], input[type=textarea], input[type=password], textarea").each(function(ev) {
+            if($(this).attr("placeholder")) {
+                var oldPH = $(this).attr("placeholder");
+                $(this).attr("placeholder", l(oldPH));
+            }
+        });
+
+        // change text of remember my User Name checkbox label:
+        $('.login-tpl-rememberusernamelabel').text(l($('.login-tpl-rememberusernamelabel').text()));
+
+        // change text of "Show Password Hint" link:
+        $('.loginshowpasswordhint').text(l($('.loginshowpasswordhint').text()));
+
+        $('.toulink').text(l($('.toulink').text()));
+        // $('.airanzalink').text(l($('.airanzalink').text()));
+        $('.privacypolicylink').text(l($('.privacypolicylink').text()));
+
+        $(document).find(".menuitem").each(function(ev) {
+            var mytxt = $(this).text();
+            $(this).text(l(mytxt));
+        });
+
+        // $(document).find("a").not(':has(img)').each(function(ev) {
+        //     var mytxt = $(this).text();
+        //     $(this).text(l(mytxt));
+        // });
+
+        // // change the text of checkboxes:
+        // $(document).find("input[type=checkbox]").each(function(ev) {
+        //     var myText = $(this).next('label').text();
+        //     alert(myText);
+        // });
+    }
 
     /**
      * our in-app purchases include only turn_off_ads as of 2/2016.
@@ -207,9 +262,71 @@
             return navigator.language;
         }
     }
-
 }());
 
 var l = function(string) {
     return "* " + string.toLocaleString();
 };
+
+function sprintf(){
+    var toBase = function(value, base){
+        //converts to the required bases
+        return (parseInt(value, 10) || 0).toString(base);
+    };
+    var map = {
+        s: function(value){
+            return value.toString();
+        },
+        d: function(value){
+            return toBase(value, 10);
+        },
+        i: function(value){
+            return this.d(value);
+        },
+        b: function(value){
+            //binary conversion
+            return toBase(value, 2);
+        },
+        o: function(value){
+            //octal conversion
+            return toBase(value, 8);
+        },
+        x: function(value){
+            //hexadecimal conversion
+            return toBase(value, 16);
+        },
+        X: function(value){
+            //HEXADECIMAL CONVERSION IN CAPITALS
+            return toBase(value, 16).toUpperCase();
+        },
+        e: function(value){
+            //scientific notation
+            return (parseFloat(value, 10) || 0).toExponential();
+        },
+        E: function(value){
+            return this.e(value, 10).toUpperCase();
+        },
+        f: function(value){
+            //floating point
+            return (parseFloat(value, 10) || '0.0').toString();
+        }
+    };
+
+    //crude way to extract the keys
+    var keys = '';
+    for(var k in map)
+    {
+        keys += k;
+    }
+    var args = Array.prototype.slice.call(arguments).slice();
+
+    return args.shift().toString().replace(new RegExp('%([' + keys + '])','g'),function(_, type){
+        if(!args.length)
+        {
+            throw new Error('Too few elements');//appropriate type here?
+        }
+
+        return map[type](args.shift());
+
+    });
+}
