@@ -113,6 +113,8 @@
         // $('.airanzalink').text(l($('.airanzalink').text()));
         $('.privacypolicylink').text(l($('.privacypolicylink').text()));
 
+        $('.version_number').text(l($('.version_number').text()));
+
         $(document).find(".menuitem").each(function(ev) {
             var mytxt = $(this).text();
             $(this).text(l(mytxt));
@@ -238,6 +240,9 @@
             } else {
                 console.log(device.platform + " does not support navigator.app.exitApp()");
             }
+            return false;
+        } else if(window.location.href.indexOf("#resources") > -1) {
+            window.location.href="#home";
             return false;
         } else {
             window.history.back();

@@ -40,8 +40,8 @@
 
     <!-- VALORES DI�LOGO DE AUTENTICA��o-->
     <string name="login_username_hint">Usuário</string>
+    <string name="login_remember_user_name_hint">Lembrar nome do usuário?</string>
     <string name="login_password_hint">Senha</string>
-    <string name="login_remember_my_username">Salvar nome do usuário?</string>
     <string name="login_show_password_hint">Mostrar dica de senha</string>
     <string name="login_signup_for_apass">Inscreva-se no APass</string>
 
@@ -92,12 +92,11 @@
     <string name="unencrypted_risk_dialog_message">Arquivos CSV não criptografados podem representar um risco de segurança se acessível a hackers, tambem conhecidos por piratas informáticos. Deseja continuar mesmo assim?</string>
     <string name="register_create_login_title">Criar Registro</string>
     <string name="register_password_and_confirm_do_not_match">A senha e a confirmação não coincidem! Digite novamente.</string>
-    <string name="splash_version">versão:</string>
+    <string name="splash_version">APass Versão: 2.000</string>
     <string name="register_fields_must_be_completed">Todos os campos devem ser preenchidos. Por favor, tente novamente.</string>
     <string name="register_user_already_exists">Usuário [%s] já existe. Por favor, tente novamente.</string>
     <string name="register_user_was_not_created">USUÁRIO [%s] não foi criado. Por favor, tente novamente.</string>
     <string name="no_matching_records_found">Registros correspondentes não foram encontrados \"%s\".</string>
-    <string name="login_remember_user_name_hint">Lembrar meu nome de usuário?</string>
     <string name="login_display_password_hint">Dica de Senha: [%s]</string>
     <string name="login_password_hint_enter_valid_username">Por favor, especifique Nome de Usuário válido.</string>
     <string name="login_title">Registrar APass</string>
