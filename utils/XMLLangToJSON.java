@@ -167,6 +167,8 @@ public class XMLLangToJSON {
 				if (c < ' ') {
 					t = "000" + Integer.toHexString(c);
 					sb.append("\\u" + t.substring(t.length() - 4));
+				//WARNING:  THE ORIGINAL ACCENTED CHARS DISPLAY PROPERLY IN BROWSER,
+				// BUT MUST BE ESCAPED WITH \\U + CODE FOR ANDROID.  UGH!!!
 				} else if((160 <= (int)c) && ((int)c <= 255)) {
 					t = "000" + Integer.toHexString(c);
 					sb.append("\\u" + t.substring(t.length() - 4));

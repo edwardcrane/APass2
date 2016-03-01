@@ -265,7 +265,7 @@
 }());
 
 var l = function(string) {
-    return "* " + string.toLocaleString();
+    return string.toLocaleString();
 };
 
 function sprintf(){

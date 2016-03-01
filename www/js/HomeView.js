@@ -256,7 +256,8 @@ var HomeView = function (loginService, passwordsService) {
 	this.onSaveEncryptedFile = function(event) {
 		event.preventDefault();
 
-		var r = confirm(l("Do you wish to save all data to encrypted file") + " " + passwordsService.getStorageDirectory() + "encrypted.apass?");
+		var r = confirm(sprintf(l("Save Encrypted File [%s]?"), passwordsService.getStorageDirectory() + "encrypted.apass"));
+//		var r = confirm(l("Do you wish to save all data to encrypted file") + " " + passwordsService.getStorageDirectory() + "encrypted.apass?");
 		if(r) {
 			// use crypto.js to encrypt database file into output file.
 			passwordsService.encryptDB("encrypted.apass");
@@ -268,6 +269,12 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onLoadEncryptedFile = function(event) {
 		event.preventDefault();
+
+		var r = confirm(sprintf(l("Load Encrypted File [%s]?"), passwordsService.getStorageDirectory() + "encrypted.apass"));
+		if(!r) {
+			alert(l("Data Load Canceled.  No changes have been made."));
+			return;
+		}
 
 		var r = confirm(l("Loading data will DISCARD EXISTING RECORDS.  You may wish to create a backup file first.  Do you wish to continue?"));
 		// var r = confirm("Loading data from encrypted file " + passwordsService.getStorageDirectory() + 

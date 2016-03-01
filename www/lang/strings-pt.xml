@@ -67,6 +67,7 @@
     <string name="unencrypted_risk_dialog_positive_button_text">Aceitar o risco e continuar</string>
     <string name="unencrypted_risk_dialog_negative_button_text">Cancelar</string>
     <string name="unencrypted_risk_dialog_user_declined_message">Ação cancelada. O arquivo CSV não criptografado não foi criado.</string>
+    <string name="encrypted_file_user_declined_message">Ação cancelada. O arquivo criptografado não foi criado.</string>
     <string name="unencrypted_risk_dialog_user_accepted_message">Risco de criação do arquivo CSV não criptografado foi aceito. Enviando.</string>
 
     <!-- RISCO DE DI�LOGO DE SUBSTITUI��o DE DADOS -->
@@ -118,6 +119,8 @@
     <string name="email_encrypted_file_body">Cópia de segurança de entradas no APass.</string>
     <string name="email_encrypted_file_no_email_clients_configured">Não há clientes de e-mail instalados.</string>
     <string name="email_encrypted_file_subject">Cópia de segurança do arquivo APass</string>
+    <string name="file_save_confirm">Salvar Arquivo Criptografado [%s]?</string>
+    <string name="file_load_confirm">Carregar Arquivo Criptografado [%s]?</string>
     <string name="file_load_failed">ARQUIVO %1$s CARGA FALHOU: %2$s</string>
     <string name="file_loaded_successfully">Arquivo %s carregado com êxito</string>
     <string name="file_save_failed">ARQUIVO %1$s SALVO FALHOU: %2$s</string>
