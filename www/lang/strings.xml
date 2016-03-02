@@ -35,6 +35,7 @@
 
     <!-- Menu Strings -->
     <string name="action_export_csv_file">Export CSV File</string>
+    <string name="action_export_csv_file_confirm">Export CSV File to [%s]?</string>
     <string name="action_import_csv_file">Import CSV File</string>
     <string name="action_email_csv_file">Email CSV File</string>
     <string name="action_email_encrypted_file">Email Encrypted File</string>
@@ -161,6 +162,7 @@
     <string name="file_load_failed">FILE %1$s LOAD FAILED: %2$s</string>
 
     <!-- EMAIL FILE VALUES -->
+    <string name="email_encrypted_file_confirm">Are you sure you want to email encrypted data?</string>
     <string name="email_encrypted_file_subject">APass Backup File</string>
     <string name="email_encrypted_file_body">Backup of Entries in APass.</string>
     <string name="email_encrypted_file_attaching">ATTACHING: %s</string>

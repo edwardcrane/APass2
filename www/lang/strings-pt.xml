@@ -25,6 +25,7 @@
 
     <!-- Menu de cordas -->
     <string name="action_export_csv_file">Salvar Arquivo CSV</string>
+    <string name="action_export_csv_file_confirm">Salvar Arquivo CSV [%s]?</string>
     <string name="action_import_csv_file">Carregar Arquivo CSV</string>
     <string name="action_email_csv_file">E-mail do Arquivo CSV</string>
     <string name="action_email_encrypted_file">E-mail Arquivo Criptografado</string>
@@ -113,6 +114,7 @@
     <string name="change_registration_password_hint_new_password">Nova dica de senha deve ser especificada para a nova senha.</string>
     <string name="export_email_address_missing">ERRO: Não há um endereço de e-mail para o usuário [%s]. Usando o endereço de email padrão.</string>
     <string name="export_exported_value_count">Exportados %1$d registros para %2$s</string>
+    <string name="email_encrypted_file_confirm">Tem certeza de que deseja enviar e-mail com arquivo criptografado?</string>
     <string name="email_encrypted_file_attaching">ANEXANDO: %s</string>
     <string name="email_encrypted_file_attachment_error">ERRO DE ANEXO! Existe: [%1$b] canRead: [%2$b].</string>
     <string name="email_encrypted_file_body">Cópia de segurança de entradas no APass.</string>

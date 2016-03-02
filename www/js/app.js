@@ -50,7 +50,10 @@
             router.addRoute('home', function() {
                 slider.slidePage(homeView.render().$el);
 //                slider.slidePage(new HomeView(loginService, passwordsService).render().$el);
+                homeView.setupEventMapping();
                 localizeStrings();
+                // force search to refresh:
+                $('.search-key').keyup();
             });
 
             router.addRoute('resources/:id', function(id) {
@@ -208,9 +211,10 @@
 
     function onBackKeyDown() {
         if(window.location.href.endsWith("#home")) {
-            // first, if menus are visible, get rid of them and do nothing else:
-            if(document.getElementById("myDropdown").classList.contains('show') || 
-                document.getElementById("advancedDropdown").classList.contains('show')) {
+            // first, if menus are non-null & visible, get rid of them and do nothing else:
+            if((document.getElementById("myDropdown") && document.getElementById("advancedDropdown")) && 
+                (document.getElementById("myDropdown").classList.contains('show') || 
+                document.getElementById("advancedDropdown").classList.contains('show'))) {
                 if(document.getElementById("myDropdown").classList.contains('show')){
                     document.getElementById("myDropdown").classList.remove('show');
                 };
@@ -268,6 +272,14 @@
         }
     }
 }());
+
+var debuglog = "debug";
+
+var dlog = function(string) {
+    if(debuglog==="debug") {
+        console.log(string);
+    }
+}
 
 var l = function(string) {
     return string.toLocaleString();

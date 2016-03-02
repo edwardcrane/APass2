@@ -8,19 +8,6 @@ var HomeView = function (loginService, passwordsService) {
 
 		// Define a div wrapper for the view (used to attach events)
 		this.$el = $('<div/>');
-		this.$el.on('keyup', '.search-key', this.findResources);
-		this.$el.on('click', '.newresource', this.newResource);
-		this.$el.on('click', '.menuicon', this.menuClicked);
-		this.$el.on('click', '.menuitemexportcsvfile', this.onExportCSVFile);
-		this.$el.on('click', '.menuitemimportcsvfile', this.onImportCSVFile);
-		this.$el.on('click', '.menuitememailcsvfile', this.onEmailCSVFile);
-		this.$el.on('click', '.menuitememailencryptedfile', this.onEmailEncryptedFile);
-		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
-		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
-		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
-		this.$el.on('click', '.menuitemchangelogin', this.onChangeLogin);
-		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
-		this.$el.on('click', '.menuitemabout', this.onAbout);
 
 		window.addEventListener("click", this.handleClick);
 
@@ -120,19 +107,29 @@ var HomeView = function (loginService, passwordsService) {
 		window.location.href="#resources/0";
 	};
 
-
-	// When user clicks on menu icon, toggle between hiding and showing the dropdown content:
-	this.menuClicked = function () {
+	/**
+	 * When user clicks on menu icon, toggle between hiding and showing the dropdown content:
+	 */
+	this.menuClicked = function (event) {
+		if(document.getElementById("advancedDropdown").classList.contains('show')) {
+			document.getElementById("advancedDropdown").classList.toggle("show");
+		}
 		document.getElementById("myDropdown").classList.toggle("show");
 	};
 
+	/**
+	 * handle clicks outside of menu or icons to clear/reset menus.
+	 */
 	this.handleClick = function(event) {
-		if((!event.target.matches('.menuicon')) && (!event.target.matches('.menuitemadvanced'))) {
+		if((!event.target.matches('.menuicon')) && 
+			(!event.target.matches('.menuitemadvanced')) &&
+			(!event.target.matches('.newresource'))) {
 			var dropdowns = document.getElementsByClassName("dropdown-content");
 			var i;
 			for (i = 0; i < dropdowns.length; i++) {
 				var openDropdown = dropdowns[i];
 				if(openDropdown.classList.contains('show')) {
+					event.preventDefault();
 					openDropdown.classList.remove('show');
 				};
 			};
@@ -141,15 +138,41 @@ var HomeView = function (loginService, passwordsService) {
 			for (i = 0; i < advanceddropdowns.length; i++) {
 				var openDropdown = advanceddropdowns[i];
 				if(openDropdown.classList.contains('show')) {
+					event.preventDefault();
 					openDropdown.classList.remove('show');
 				};
 			};
+			return true;
 		};
 	};
 
+	/**
+	 * setup event handling: clicks, keystrokes in search box
+	 * called from app.js after rendering seems to work best.
+	 */
+	this.setupEventMapping = function() {
+		this.$el.on('keyup', '.search-key', this.findResources);
+
+		this.$el.on('click', '.newresource', this.newResource);
+		this.$el.on('click', '.menuicon', this.menuClicked);
+
+		this.$el.on('click', '.menuitemexportcsvfile', this.onExportCSVFile);
+		this.$el.on('click', '.menuitemimportcsvfile', this.onImportCSVFile);
+		this.$el.on('click', '.menuitememailcsvfile', this.onEmailCSVFile);
+		this.$el.on('click', '.menuitememailencryptedfile', this.onEmailEncryptedFile);
+
+		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
+
+		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
+		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
+		this.$el.on('click', '.menuitemchangelogin', this.onChangeLogin);
+		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
+		this.$el.on('click', '.menuitemabout', this.onAbout);
+	}
+
 	this.onExportCSVFile = function(event) {
 		event.preventDefault();
-		var r = confirm(l("Export CSV File to") + " " + passwordsService.getStorageDirectory() + "export.csv?");
+		var r = confirm(sprintf(l("Export CSV File to [%s]?"), passwordsService.getStorageDirectory() + "export.csv?"));
 		if(r) {
 			passwordsService.exportCSV("export.csv");
 		} else {
@@ -257,7 +280,6 @@ var HomeView = function (loginService, passwordsService) {
 		event.preventDefault();
 
 		var r = confirm(sprintf(l("Save Encrypted File [%s]?"), passwordsService.getStorageDirectory() + "encrypted.apass"));
-//		var r = confirm(l("Do you wish to save all data to encrypted file") + " " + passwordsService.getStorageDirectory() + "encrypted.apass?");
 		if(r) {
 			// use crypto.js to encrypt database file into output file.
 			passwordsService.encryptDB("encrypted.apass");
@@ -277,8 +299,6 @@ var HomeView = function (loginService, passwordsService) {
 		}
 
 		var r = confirm(l("Loading data will DISCARD EXISTING RECORDS.  You may wish to create a backup file first.  Do you wish to continue?"));
-		// var r = confirm("Loading data from encrypted file " + passwordsService.getStorageDirectory() + 
-		// 	"encrypted.apass will overwrite all data in APass with data from the file.  Do you wish to continue?");
 		if(r) {
 			passwordsService.decryptDB("encrypted.apass", function() {
 				// trigger keyup event as callback, which forces refresh:

@@ -296,6 +296,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	padding: 3px;
 	max-width: 25px;
 	max-height: 25px;
+	cursor: pointer;
 }
 
 .menuicon {

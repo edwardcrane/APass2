@@ -6,6 +6,15 @@ var ResourceView = function(service, resource) {
 		this.$el.on('click', '.deleteresource', this.deleteResource);
 		this.$el.on('click', '.newresource', this.newResource);
 		this.$el.on('click', '.showhiddenpasswordicon', this.showPassword);
+
+		this.$el.on('focus', '.resource_password', function(ev) {
+			// if new record, let user see password as they type:
+			if($('.resource_id').val() == 0) {
+				$('.resource_password').type = "text";
+				// trigger the keyboard to appear because it went away with focus handler:
+				$('.resource_password').trigger('click');
+			};
+		});
 	};
 
 	this.render = function() {
@@ -28,7 +37,7 @@ var ResourceView = function(service, resource) {
 									$('.resource_description').val()
 			);
 		}
-		window.history.back();
+		window.location.href="#home";
 	};
 
 	this.deleteResource = function() {
@@ -36,7 +45,7 @@ var ResourceView = function(service, resource) {
 			if($('.resource_id').val() > 0) {
 				service.deleteResource( $('.resource_id').val());
 			}
-			window.history.back();
+			window.location.href="#home";
 		} else {
 			alert(sprintf(l("Resource [%s] NOT DELETED."), $('.resource_resourcename').val()));
 		}
