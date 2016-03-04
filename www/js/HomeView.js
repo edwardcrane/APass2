@@ -182,11 +182,14 @@ var HomeView = function (loginService, passwordsService) {
 
 	this.onImportCSVFile = function(event) {
 		event.preventDefault();
-		var r = confirm(l("Importing CSV File from") + " " + passwordsService.getStorageDirectory() + 
-			"export.csv" + " " + l("will overwrite all data in APass with data from the file.  Do you wish to continue?"));
+		var r = confirm(sprintf(l("Importing CSV File from [%s] will overwrite all data in APass with data from the file.  Do you wish to continue?"), 
+			passwordsService.getStorageDirectory() + "export.csv"));
+//		var r = confirm(l("Importing CSV File from") + " " + passwordsService.getStorageDirectory() + 
+//			"export.csv" + " " + l("will overwrite all data in APass with data from the file.  Do you wish to continue?"));
 		if(r) {
-			alert("IMPORT CSV FILE NOT YET IMPLEMENTED.");
-			// passwordsService.importCSV("export.csv");
+			passwordsService.importCSV("export.csv");
+			// trigger keyup event as callback, which forces refresh:
+       	    $('.search-key').keyup();
 		} else {
 			alert(l("Data Load Canceled.  No changes have been made."));
 		}

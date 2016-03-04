@@ -32,7 +32,7 @@
     <string name="action_advanced">Avançado…</string>
     <string name="action_save_encrypted_file">Salvar Arquivo Criptografado …</string>
     <string name="action_load_encrypted_file">Carregar Arquivo Criptografado …</string>
-    <string name="action_change_login">Alterar autênticação (login) …</string>
+    <string name="action_change_login">Alterar autenticação (login) …</string>
     <string name="action_show_splash">Sobre …</string>
     <string name="action_add_resource">Adicionar</string>
     <string name="action_cancel">Cancelar</string>
@@ -72,6 +72,7 @@
     <string name="unencrypted_risk_dialog_user_accepted_message">Risco de criação do arquivo CSV não criptografado foi aceito. Enviando.</string>
 
     <!-- RISCO DE DI�LOGO DE SUBSTITUI��o DE DADOS -->
+    <string name="overwrite_data_csv_import">Carregar estes dados do [%s] irá descartar registros existentes.  Você pode criar um arquivo de cópia de segurança em primeiro lugar. Você deseja continuar?</string>
     <string name="overwrite_data_dialog_title">AVISO DE SUBSTITUIÇÃO DE DADOS</string>
     <string name="overwrite_data_dialog_message">Carregar estes dados irá descartar registros existentes. Você pode criar um arquivo de cópia de segurança em primeiro lugar. Você deseja continuar?</string>
     <string name="overwrite_data_dialog_positive_button_text">Sim por favor, continue</string>
@@ -103,7 +104,7 @@
     <string name="login_title">Registrar APass</string>
     <string name="new_title">Novo</string>
     <string name="edit_title">Editar</string>
-    <string name="change_registration_title">Alterar autênticação (login)</string>
+    <string name="change_registration_title">Alterar autenticação (login)</string>
     <string name="change_registration_username_password_invalid">Usuário e senha devem ser válidos!</string>
     <string name="change_registration_username_not_updated">USUÁRIO [%s] não foi atualizado. Por favor, tente novamente.</string>
     <string name="change_registration_username_updated_successfully">Usuário [%s] foi atualizado com sucesso!</string>

@@ -77,7 +77,7 @@
             router.addRoute('changeregistration', function() {
                 slider.slidePage(new ChangeRegistrationView(loginService).render().$el);
                 localizeStrings();
-            })
+            });
 
             router.start();
 

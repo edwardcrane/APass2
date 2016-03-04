@@ -133,6 +133,7 @@
     <string name="unencrypted_risk_dialog_user_accepted_message">Unencrypted CSV File Risk Accepted.  Sending.</string>
 
     <!-- OVERWRITE DATA RISK DIALOG -->
+    <string name="overwrite_data_csv_import">Importing CSV File from [%s] will overwrite all data in APass with data from the file.  Do you wish to continue?</string>
     <string name="overwrite_data_dialog_title">OVERWRITE DATA WARNING</string>
     <string name="overwrite_data_dialog_message">Loading data will DISCARD EXISTING RECORDS.  You may wish to create a backup file first.  Do you wish to continue?</string>
     <string name="overwrite_data_dialog_positive_button_text">I Understand, Please Continue</string>

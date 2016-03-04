@@ -219,28 +219,30 @@ var PasswordsService = function () {
     this.errorHandler = function (e) {  
         var msg = '';
 
-        switch (e.code) {
-            case FileError.QUOTA_EXCEEDED_ERR:
-                msg = 'Storage quota exceeded';
-                break;
-            case FileError.NOT_FOUND_ERR:
-                msg = 'File not found';
-                break;
-            case FileError.SECURITY_ERR:
-                msg = 'Security error';
-                break;
-            case FileError.INVALID_MODIFICATION_ERR:
-                msg = 'Invalid modification';
-                break;
-            case FileError.INVALID_STATE_ERR:
-                msg = 'Invalid state';
-                break;
-            default:
-                msg = 'Unknown error';
-                break;
-        };
+        console.log("ERROR: [" + e.name + "]:[" + e.message + "]");
 
-        console.log('Error: ' + msg);
+        // noted that FileError is deprecated, so commented out the following:
+        // switch (e.code) {
+        //     case FileError.QUOTA_EXCEEDED_ERR:
+        //         msg = 'Storage quota exceeded';
+        //         break;
+        //     case FileError.NOT_FOUND_ERR:
+        //         msg = 'File not found';
+        //         break;
+        //     case FileError.SECURITY_ERR:
+        //         msg = 'Security error';
+        //         break;
+        //     case FileError.INVALID_MODIFICATION_ERR:
+        //         msg = 'Invalid modification';
+        //         break;
+        //     case FileError.INVALID_STATE_ERR:
+        //         msg = 'Invalid state';
+        //         break;
+        //     default:
+        //         msg = 'Unknown error';
+        //         break;
+        // };
+        // console.log('Error: ' + msg);
     }
 
     var stringifyCSV = function(table) {
@@ -443,6 +445,42 @@ var PasswordsService = function () {
             return cipherParams;
         }
     };
+
+    this.importCSV = function(filename) {
+        var pathToCSVFile = this.getStorageDirectory() + filename;
+        var localPasswordsService = this;  // localized as must be called from callback.
+        var localErrorHandler = this.errorHandler;
+        var i = 0;
+
+        // open the file
+        window.resolveLocalFileSystemURL(pathToCSVFile, function (fileEntry) {
+            fileEntry.file(function(file) {
+                console.log("importing CSV data from ["+ pathToCSVFile + "]");
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // returns array of arrays:
+                    var inArrays = CSVToArray(reader.result);
+                    console.log("read [" + inArrays.length + "] records from " + pathToCSVFile);
+                    // we must check the format of the specified file.
+                    // we should not assume anything about what our parsing code returns.
+                    for(i = 0; i < inArrays.length; i++) {
+                        // now create a query and do the insert:
+                        // this.createResource(name, username, password, description);
+                        if(inArrays[i][1]) {  // if the name is defined, we create the record.
+                            console.log("creating resource: " + inArrays[i][1]);
+                            localPasswordsService.createResource(inArrays[i][1], inArrays[i][3], inArrays[i][4], inArrays[i][2]);
+                        }
+                    }
+                };
+
+                reader.onerror = this.errorHandler;
+
+                reader.readAsText(file);
+            });
+        }, this.errorHandler);
+    }
 
     this.exportCSV = function (filename) {
         var table = [];

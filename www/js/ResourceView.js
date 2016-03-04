@@ -10,9 +10,8 @@ var ResourceView = function(service, resource) {
 		this.$el.on('focus', '.resource_password', function(ev) {
 			// if new record, let user see password as they type:
 			if($('.resource_id').val() == 0) {
-				$('.resource_password').type = "text";
-				// trigger the keyboard to appear because it went away with focus handler:
-				$('.resource_password').trigger('click');
+				document.getElementById("resource-tpl-password").type = "text";
+				document.getElementById("resource-tpl-password").click();
 			};
 		});
 	};
