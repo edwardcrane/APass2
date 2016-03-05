@@ -446,7 +446,7 @@ var PasswordsService = function () {
         }
     };
 
-    this.importCSV = function(filename) {
+    this.importCSV = function(filename, optionalcallback) {
         var pathToCSVFile = this.getStorageDirectory() + filename;
         var localPasswordsService = this;  // localized as must be called from callback.
         var localErrorHandler = this.errorHandler;
@@ -470,7 +470,11 @@ var PasswordsService = function () {
                         // this.createResource(name, username, password, description);
                         if(inArrays[i][1]) {  // if the name is defined, we create the record.
                             console.log("creating resource: " + inArrays[i][1]);
-                            localPasswordsService.createResource(inArrays[i][1], inArrays[i][3], inArrays[i][4], inArrays[i][2]);
+                            localPasswordsService.createResource(inArrays[i][1], inArrays[i][3], inArrays[i][4], inArrays[i][2]).done( function(){
+                                if(optionalcallback) {
+                                    optionalcallback();
+                                }
+                            });
                         }
                     }
                 };

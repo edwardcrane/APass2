@@ -184,12 +184,11 @@ var HomeView = function (loginService, passwordsService) {
 		event.preventDefault();
 		var r = confirm(sprintf(l("Importing CSV File from [%s] will overwrite all data in APass with data from the file.  Do you wish to continue?"), 
 			passwordsService.getStorageDirectory() + "export.csv"));
-//		var r = confirm(l("Importing CSV File from") + " " + passwordsService.getStorageDirectory() + 
-//			"export.csv" + " " + l("will overwrite all data in APass with data from the file.  Do you wish to continue?"));
 		if(r) {
-			passwordsService.importCSV("export.csv");
-			// trigger keyup event as callback, which forces refresh:
-       	    $('.search-key').keyup();
+			passwordsService.importCSV("export.csv", function() {
+				// trigger keyup event as callback, which forces refresh:
+				$('.search-key').keyup();
+			});
 		} else {
 			alert(l("Data Load Canceled.  No changes have been made."));
 		}
