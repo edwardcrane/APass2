@@ -89,23 +89,23 @@ input:focus {
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
-    color:    #FFF;
+    color:    #DDD;
 }
 input:-moz-placeholder, textarea:-moz-placeholder { 
-    color:    #FFF;
+    color:    #DDD;
 }
 input::-moz-placeholder, textarea::-moz-placeholder { 
-    color:    #FFF;
+    color:    #DDD;
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
-    color:    #FFF;
+    color:    #DDD;
 }
 
 .saveregistration {
 	float: right;
 	padding: 3px;
-	max-width: 25px;
-	max-height: 25px;
+	max-width: 32px;
+	max-height: 32px;
 }
 
 .registerusername {
