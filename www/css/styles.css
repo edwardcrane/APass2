@@ -80,6 +80,7 @@ input {
 	color: #FFF;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	margin-bottom: 5px;
 }
 
 input:focus {
@@ -181,17 +182,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	font-weight: bold;
 	font-size: larger;
 	float: left;
-	display: block;
 	color: #FFF;
 }
 
 .resource-list-tpl-description {
 	width: 100%;
-	float: left;
-	display: block;
-	color: #FFF;
-	border-bottom: 1px solid #FFF;
-	margin-bottom: 5px;
+/*	float: left; /* MAJOR PERFORMANCE ISSUE */*/
 }
 
 .table-view {
@@ -212,22 +208,21 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	font-family: "Arial Black", Gadget, sans-serif;
 	font-weight: bold;
 	font-size: larger;
+	padding: 5px;
 }
 
 .resource_username {
 	width: 100%;
 	font-family: "Arial Black", Gadget, sans-serif;
 	font-size: large;
+	padding: 5px;
 }
 
 .resource_password {
 	width: 100%;
 	font-family: "Arial Black", Gadget, sans-serif;
 	font-size: large;
-}
-
-.resource-tpl-passwordicon-td {
-	width: 25px;
+	padding: 5px;
 }
 
 .resource_description {
@@ -240,6 +235,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	color: #FFF;
 	min-height: 100px;
 	height: 100%;
+	padding: 5px;
 }
 
 .resource_description:focus {
@@ -251,7 +247,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .loginusername {
 	width:100%;
-	padding: 0px;
+	padding: 5px;
 	font-size: large;
 }
 
@@ -259,6 +255,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 /*	width:100%;
 	font-size:smaller;
 */}
+
 
 .loginrememberusername {
 	width:100%;
@@ -274,7 +271,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .loginpassword {
 	width: 100%;
-	padding: 0px;
+	padding: 5px;
 	font-size: large;
 }
 
@@ -288,39 +285,39 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .showhiddenpasswordicon {
 	float: right;
-	max-width: 25px;
-	max-height: 25px;
+	max-width: 32px;
+	max-height: 32px;
 	border: 1px solid #FFF;
 }
 
 .saveresource {
 	float: right;
 	padding: 3px;
-	max-width: 25px;
-	max-height: 25px;
+	max-width: 32px;
+	max-height: 32px;
 }
 
 .newresource {
 	float: right;
 	padding: 3px;
-	max-width: 25px;
-	max-height: 25px;
+	max-width: 32px;
+	max-height: 32px;
 	cursor: pointer;
 }
 
 .menuicon {
 	float: right;
 	padding: 3px;
-	max-width: 25px;
-	max-height: 25px;
+	max-width: 32px;
+	max-height: 32px;
 	cursor: pointer;
 }
 
 .deleteresource {
 	float: right;
 	padding: 3px;
-	max-width: 25px;
-	max-height: 25px;
+	max-width: 32px;
+	max-height: 32px;
 }
 
 /*Menu styling for drop-down functionality*/
