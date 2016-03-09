@@ -209,6 +209,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	font-weight: bold;
 	font-size: larger;
 	padding: 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .resource_username {
@@ -216,6 +219,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	font-family: "Arial Black", Gadget, sans-serif;
 	font-size: large;
 	padding: 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .resource_password {
@@ -223,6 +229,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	font-family: "Arial Black", Gadget, sans-serif;
 	font-size: large;
 	padding: 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .resource_description {
@@ -236,6 +245,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	min-height: 100px;
 	height: 100%;
 	padding: 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .resource_description:focus {
@@ -249,6 +261,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	width:100%;
 	padding: 5px;
 	font-size: large;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .loginrememberusernametable {
@@ -273,6 +288,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	width: 100%;
 	padding: 5px;
 	font-size: large;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .loginshowpasswordhint {
