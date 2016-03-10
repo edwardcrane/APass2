@@ -152,6 +152,7 @@ var HomeView = function (loginService, passwordsService) {
 	 */
 	this.setupEventMapping = function() {
 		this.$el.on('keyup', '.search-key', this.findResources);
+//		this.$el.on('input', '.search-key', this.findResources);
 
 		this.$el.on('click', '.newresource', this.newResource);
 		this.$el.on('click', '.menuicon', this.menuClicked);
