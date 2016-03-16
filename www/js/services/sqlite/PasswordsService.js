@@ -305,6 +305,30 @@ var PasswordsService = function () {
         return storageDir;
     }
 
+    this.encryptedBlob = function (callback) {
+        var encBlob;
+
+        window.resolveLocalFileSystemURL(this.getdbdirectory() + this.getdbfilename(), function(fileEntry) {
+            fileEntry.file(function(file) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var strToEncrypt = String.fromCharCode.apply(null, new Uint8Array(reader.result));
+                    console.log("Encrypting: [" + strToEncrypt.length + "] bytes.");
+                    var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Latin1.parse(strToEncrypt), "APassApp", { format: JsonFormatter });
+
+                    var tmpstr = encrypted + "";
+                    console.log("encrypted data is: [" + tmpstr.length + "] bytes");
+
+                    encBlob = new Blob([encrypted], {type:'text/plain'});
+                    callback(encBlob);
+                }
+
+                reader.readAsArrayBuffer(file);
+            });
+        });
+    }
+
     this.encryptDB = function (outfilename) {
         var storageDir = this.getStorageDirectory();
 

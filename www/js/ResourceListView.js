@@ -30,6 +30,9 @@ var ResourceListView = function() {
 		this.$el.html(this.template(resources));
 
 		// prevent toolbar & search box scrolling away:
+		scrollableHeight = $(window).height() -
+			$('.bar-nav').height() -
+			$('.bar-standard').height();
 		$('.resource-list-ul').height(scrollableHeight);
 		return this;
 	};

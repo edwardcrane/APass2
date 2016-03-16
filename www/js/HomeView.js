@@ -165,10 +165,38 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
 
 		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
+		// CLICK DOESN'T WORK ON createObjectURL() it seems:
+		// this.$el.on('click', '.menuitemsaveencryptedfile', this.onDownloadEncryptedFile);
 		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
 		this.$el.on('click', '.menuitemchangelogin', this.onChangeLogin);
 		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
 		this.$el.on('click', '.menuitemabout', this.onAbout);
+	}
+
+	this.onDownloadEncryptedFile = function (event) {
+
+		alert("IMPMENTATION INCOMPLETE.  URL CLICK DOESN'T WORK IN CORDOVA WEBVIEW REVERT TO ONSAVEENCRYPTEDFILE");
+		passwordsService.encryptedBlob(function(encBlob) {
+			if(encBlob) {
+				console.log("encBlob is [" + encBlob.size + "] bytes");
+
+				var url = URL.createObjectURL(encBlob);
+				console.log(url);
+				var a = document.createElement('a');
+				a.download = "backup.apass";
+				a.href = url;
+				a.textContext = "Download backup.apass";
+				a.addEventListener('click', function(event) {
+					alert("inside click on a, so should start downloading...");
+				});
+
+				// FOR SOME REASON THIS CLICK TRIGGERS THE EVENT LISTENER AND
+				// TRIGGERS THE ALERT, BUT IT DOES NOT DOWNLOAD THE FILE, EVEN THOUGH THIS FIDDLE
+				// WORKS ON ANDROID: http://jsfiddle.net/qnYk4/48/ FROM WITHIN CHROME
+				alert("I AM SORRY BUT THIS FUNCTION HAS NOT BEEN IMPLEMENTED YET, SO YOU CANNOT DOWNLOAD YOUR ENCRYPTED FILE TODAY.");
+				a.click();
+			};
+		});
 	}
 
 	this.onExportCSVFile = function(event) {
