@@ -143,6 +143,34 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	font-weight: bold;
 }
 
+.changeregistrationusername {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.changeregistrationpassword {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.changeregistrationpasswordhint {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.changeregistrationemail {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: larger;
+	font-weight: bold;
+}
+
 .logo-footer {
 	display: block;
 	position: absolute;

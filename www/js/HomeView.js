@@ -167,6 +167,8 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
 		// CLICK DOESN'T WORK ON createObjectURL() it seems:
 		// this.$el.on('click', '.menuitemsaveencryptedfile', this.onDownloadEncryptedFile);
+		// suspected cause is File plugin: 
+		// http://stackoverflow.com/questions/30539839/createobjecturl-of-javascript-file-object-from-cordova-camera
 		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
 		this.$el.on('click', '.menuitemchangelogin', this.onChangeLogin);
 		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);

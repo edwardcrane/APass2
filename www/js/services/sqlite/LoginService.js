@@ -138,6 +138,11 @@ var LoginService = function () {
                 deferred.reject("Transaction Error: " + error.message);
             }
         );
+
+        if(loggedInUser === oldUsername) {
+            loggedInUser = newUsername;
+        };
+
         return deferred.promise();
     }
 
@@ -162,7 +167,7 @@ var LoginService = function () {
         var deferred = $.Deferred();
         this.db.transaction(
             function(tx) {
-                var sql = "UPDATE login SET password_hint = \'" + newPasswordHunt + "\'"
+                var sql = "UPDATE login SET password_hint = \'" + newPasswordHint + "\'"
                             " WHERE username = \'" + username + "\';";
                 tx.executeSql(sql, null, function(tx, results) {
                         deferred.resolve();  // resolve what?
