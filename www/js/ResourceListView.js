@@ -11,9 +11,11 @@ var ResourceListView = function() {
 		window.addEventListener('resize', this.onResize);
 
 		this.render();
+
 	};
 
 	this.onResize = function(event) {
+		// console.log("in onResize: " + $(window).height() + " " + $('.bar-nav').height() + " " + $('.bar-standard').height());
 		// prevent toolbar & search field scrolling away:
 		scrollableHeight = $(window).height() -
 			$('.bar-nav').height() -
@@ -29,6 +31,7 @@ var ResourceListView = function() {
 	this.render = function() {
 		this.$el.html(this.template(resources));
 
+		// console.log("in render(): " + $(window).height() + " " + $('.bar-nav').height() + " " + $('.bar-standard').height());
 		// prevent toolbar & search box scrolling away:
 		scrollableHeight = $(window).height() -
 			$('.bar-nav').height() -

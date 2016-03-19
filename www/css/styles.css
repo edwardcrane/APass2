@@ -145,30 +145,42 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .changeregistrationusername {
 	width: 100%;
+	padding: 5px;
 	margin-bottom: 10px;
-	font-size: larger;
-	font-weight: bold;
+	font-size: large;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .changeregistrationpassword {
 	width: 100%;
+	padding: 5px;
 	margin-bottom: 10px;
-	font-size: larger;
-	font-weight: bold;
+	font-size: large;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .changeregistrationpasswordhint {
 	width: 100%;
+	padding: 5px;
 	margin-bottom: 10px;
-	font-size: larger;
-	font-weight: bold;
+	font-size: large;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .changeregistrationemail {
 	width: 100%;
+	padding: 5px;
 	margin-bottom: 10px;
-	font-size: larger;
-	font-weight: bold;
+	font-size: large;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .logo-footer {
@@ -289,8 +301,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	border-bottom: 1px solid lime;
 }
 
-
-
 .loginusername {
 	width:100%;
 	padding: 5px;
@@ -304,7 +314,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 /*	width:100%;
 	font-size:smaller;
 */}
-
 
 .loginrememberusername {
 	width:100%;

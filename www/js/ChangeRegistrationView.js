@@ -70,19 +70,19 @@ var ChangeRegistrationView = function (loginService) {
 		var newPassword;
 		var confirmNewPassword;
 
-		var oldPassword = prompt("Change Password", "Old Password");
+		var oldPassword = prompt("Enter Old Password");
 		var uName = $('.changeregistrationusername').val();
 		// check if old password is correct
 
 		loginService.getPassword(uName).done(function(oldPwd) {
-			if(oldPwd === oldPassword) {
-				var newPassword = prompt("Change Password", "New Password");
-				if(isValidPassword(newPassword)) {
-					var confirmNewPassword = prompt("Change Password", "Confirm New Password");
+			if(oldPassword && (oldPwd === oldPassword)) {
+				var newPassword = prompt("Enter New Password:");
+				if(newPassword && isValidPassword(newPassword)) {
+					var confirmNewPassword = prompt("Confirm New Password:");
 					if(newPassword === confirmNewPassword) {
 						loginService.changePassword(uName, newPassword);
 						$('.changeregistrationpassword').val(newPassword);
-						var newPasswordHint = prompt("Change Password", "New Password Hint");
+						var newPasswordHint = prompt("Enter New Password Hint:");
 						if(newPasswordHint) {
 							loginService.changePasswordHint(uName, newPasswordHint);
 							$('.changeregistrationpasswordhint').val(newPasswordHint);
@@ -100,10 +100,14 @@ var ChangeRegistrationView = function (loginService) {
 		});
 	}
 
+	var startSmsPrompt = function(enteredTxt) {
+		alert(enteredTxt);
+	}
+
 	var changeEmail = function() {
-		var newEmail = prompt("Change Email", "Enter New Email");
-		if(isValidEmail(newEmail)) {
-			var confirmEmail = prompt("Change Email", "Confirm New Email");
+		var newEmail = prompt("Enter New Email:");
+		if(newEmail && isValidEmail(newEmail)) {
+			var confirmEmail = prompt("Confirm New Email:");
 			if(newEmail === confirmEmail) {
 				loginService.changeEmail(loginService.getLoggedInUser(), $('.changeregistrationemail').val());
 				$('.changeregistrationemail').val(newEmail);
@@ -114,11 +118,6 @@ var ChangeRegistrationView = function (loginService) {
 			alert("Invalid Email Entered [" + newEmail + "].  Please enter a valid email.");
 		}
 
-	}
-
-	var validateRegistration = function() {
-		console.log("THIS IS A STUB THAT MUST BE IMPLEMENTED!!!");
-		return true;
 	}
 
 	this.render = function() {
