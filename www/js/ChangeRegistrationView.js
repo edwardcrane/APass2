@@ -34,7 +34,7 @@ var ChangeRegistrationView = function (loginService) {
 	};
 
 	var changeUsername = function() {
-		var retVal = prompt("Change Username", $('.changeregistrationusername').val());
+		var retVal = prompt(l("Change Username"), $('.changeregistrationusername').val());
 		// now do something with it!!!
 		if(loginService.isValidUsername(retVal)) {
 			loginService.changeUsername($('.changeregistrationusername').val(), retVal);
@@ -48,32 +48,32 @@ var ChangeRegistrationView = function (loginService) {
 		var newPassword;
 		var confirmNewPassword;
 
-		var oldPassword = prompt("Enter Old Password");
+		var oldPassword = prompt(l("Old Password") + ":");
 		var uName = $('.changeregistrationusername').val();
 		// check if old password is correct
 
 		loginService.getPassword(uName).done(function(oldPwd) {
 			if(oldPassword && (oldPwd === oldPassword)) {
-				var newPassword = prompt("Enter New Password:");
+				var newPassword = prompt(l("New Password") + ":");
 				if(newPassword && loginService.isValidPassword(newPassword)) {
-					var confirmNewPassword = prompt("Confirm New Password:");
+					var confirmNewPassword = prompt(l("Confirm New Password") + ":");
 					if(newPassword === confirmNewPassword) {
 						loginService.changePassword(uName, newPassword);
 						$('.changeregistrationpassword').val(newPassword);
-						var newPasswordHint = prompt("Enter New Password Hint:");
+						var newPasswordHint = prompt(l("Password Hint") + ":");
 						if(newPasswordHint) {
 							loginService.changePasswordHint(uName, newPasswordHint);
 							$('.changeregistrationpasswordhint').val(newPasswordHint);
 						} else {
-							alert("Please specify a valid Password Hint.  If you misplace your password, there is no way to recover your data!");
+							alert(l("Please specify a valid Password Hint.  If you misplace your password, there is no way to recover your data!"));
 						}
 					} else {
-						alert("New Password and Confirmation do not match.");
+						alert(l("New Password and Confirmation do not match!  Please re-enter."));
 						return;
 					}
 				}
 			} else {
-				alert("Incorrect password entered.");
+				alert(l("Incorrect password entered."));
 			}
 		});
 	}
@@ -83,24 +83,23 @@ var ChangeRegistrationView = function (loginService) {
 	}
 
 	var changeEmail = function() {
-		var newEmail = prompt("Enter New Email:");
+		var newEmail = prompt(l("Email") + ":");
 		if(newEmail && loginService.isValidEmail(newEmail)) {
-			var confirmEmail = prompt("Confirm New Email:");
+			var confirmEmail = prompt(l("Confirm Email") + ":");
 			if(newEmail === confirmEmail) {
 				loginService.changeEmail(loginService.getLoggedInUser(), newEmail);
 				$('.changeregistrationemail').val(newEmail);
 			} else {
-				alert("New Email and Confirmation do not match.");
+				alert(l("New Email and Confirmation do not match!  Please re-enter."));
 			}
 		} else {
 			if(newEmail) {
-				alert("Invalid Email Entered [" + newEmail + "].  Please enter a valid email.");
+				alert(sprintf(l("Invalid Email Entered [%s].  Please enter a valid email."), newEmail));
 			} else {
 				// just return here, as user simply canceled.
 				return;
 			}
 		}
-
 	}
 
 	this.render = function() {

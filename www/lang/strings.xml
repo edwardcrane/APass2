@@ -112,6 +112,7 @@
     <string name="change_registration_new_password_hint">New Password</string>
     <string name="change_registration_confirm_new_password_hint">Confirm New Password</string>
     <string name="change_registration_password_hint_hint">Password Hint</string>
+    <string name="change_registration_password_hint_invalid_hint">Please specify a valid Password Hint.  If you misplace your password, there is no way to recover your data!</string>
     <string name="change_registration_email_hint">Email</string>
     <string name="change_registration_confirm_email_hint">Confirm Email</string>
     <string name="change_registration_username_password_invalid">Username and Password must be valid!</string>
@@ -122,6 +123,9 @@
     <string name="change_registration_username_updated_successfully">USERNAME [%s] WAS UPDATED SUCCESSFULLY!</string>
     <string name="change_registration_password_update_successful">PASSWORD WAS UPDATED SUCCESSFULLY!</string>
     <string name="change_registration_password_update_failed">PASSWORD WAS NOT UPDATED.  Please try again.</string>
+    <string name="change_registration_invalid_email_specified">Invalid Email Entered [%s].  Please enter a valid email.</string>
+    <string name="change_registration_incorrect_password_entered">Incorrect password entered.</string>
+
 
     <!-- ACCEPT UNENCRYPTED DATA RISK DIALOG -->
     <string name="unencrypted_risk_dialog_title">SECURITY WARNING</string>

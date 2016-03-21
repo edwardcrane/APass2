@@ -60,8 +60,11 @@
     <string name="change_registration_new_password_hint">Senha nova</string>
     <string name="change_registration_confirm_new_password_hint">Confirmar senha nova</string>
     <string name="change_registration_password_hint_hint">Dica de Senha</string>
-    <string name="change_registration_email_hint">Dica de email</string>
+    <string name="change_registration_incorrect_password_entered">Senha inserida incorreta.</string>
+    <string name="change_registration_password_hint_invalid_hint">Por favor, especifique uma dica de senha válida. Se você perder sua senha, não há maneira de recuperar seus dados!</string>
+    <string name="change_registration_email_hint">Email</string>
     <string name="change_registration_confirm_email_hint">Confirmar e-mail</string>
+    <string name="change_registration_invalid_email_specified">Inválido e-mail inserido [%s]. Por favor digite um email válido.</string>
 
     <!-- RISCO DE DI�LOGO DE ACEITAR RISCO DE CRIA��o DE DADOS N�o CRIPTOGRAFADOS -->
     <string name="unencrypted_risk_dialog_title">AVISO DE SEGURANÇA</string>
