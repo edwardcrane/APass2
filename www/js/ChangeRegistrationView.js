@@ -33,36 +33,36 @@ var ChangeRegistrationView = function (loginService) {
 		});
 	};
 
-	var isValidEmail = function(email) {
-	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		if(email && email != '') {
-			return re.test(email);
-		}
-		return false;
-	}
+	// var isValidEmail = function(email) {
+	//     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	// 	if(email && email != '') {
+	// 		return re.test(email);
+	// 	}
+	// 	return false;
+	// }
 
 	var changeUsername = function() {
 		var retVal = prompt("Change Username", $('.changeregistrationusername').val());
 		// now do something with it!!!
-		if(isValidUsername(retVal)) {
+		if(loginService.isValidUsername(retVal)) {
 			loginService.changeUsername($('.changeregistrationusername').val(), retVal);
 			$('.changeregistrationusername').val(retVal);
 		}
 	}
 
-	var isValidPassword = function(password) {
-		if(password && password != '') {
-			return true;
-		}
-		return false;
-	}
+	// var isValidPassword = function(password) {
+	// 	if(password && password != '') {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
-	var isValidUsername = function(username) {
-		if(username && username != '') {
-			return true;
-		}
-		return false;
-	}
+	// var isValidUsername = function(username) {
+	// 	if(username && username != '') {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 	var changePassword = function() {
 		var retVal;
@@ -77,7 +77,7 @@ var ChangeRegistrationView = function (loginService) {
 		loginService.getPassword(uName).done(function(oldPwd) {
 			if(oldPassword && (oldPwd === oldPassword)) {
 				var newPassword = prompt("Enter New Password:");
-				if(newPassword && isValidPassword(newPassword)) {
+				if(newPassword && loginService.isValidPassword(newPassword)) {
 					var confirmNewPassword = prompt("Confirm New Password:");
 					if(newPassword === confirmNewPassword) {
 						loginService.changePassword(uName, newPassword);
@@ -106,7 +106,7 @@ var ChangeRegistrationView = function (loginService) {
 
 	var changeEmail = function() {
 		var newEmail = prompt("Enter New Email:");
-		if(newEmail && isValidEmail(newEmail)) {
+		if(newEmail && loginService.isValidEmail(newEmail)) {
 			var confirmEmail = prompt("Confirm New Email:");
 			if(newEmail === confirmEmail) {
 				loginService.changeEmail(loginService.getLoggedInUser(), newEmail);

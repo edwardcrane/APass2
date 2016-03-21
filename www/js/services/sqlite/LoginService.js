@@ -309,4 +309,28 @@ var LoginService = function () {
         );
         return deferred.promise();
     };
+
+    this.isValidEmail = function(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(email && email != '') {
+            return re.test(email);
+        }
+        return false;
+    }
+
+    this.isValidPassword = function(password) {
+        if(password && password != '') {
+            return true;
+        }
+        return false;
+    }
+
+    this.isValidUsername = function(username) {
+        if(username && username != '') {
+            return true;
+        }
+        return false;
+    }
+
+
 }
