@@ -248,6 +248,9 @@
         } else if(window.location.href.indexOf("#resources") > -1) {
             window.location.href="#home";
             return false;
+        } else if(window.location.href.endsWith('#changeregistration')) {
+            window.location.href="#home";
+            return false;
         } else {
             window.history.back();
             return(true);
