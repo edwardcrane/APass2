@@ -109,13 +109,18 @@ var ChangeRegistrationView = function (loginService) {
 		if(newEmail && isValidEmail(newEmail)) {
 			var confirmEmail = prompt("Confirm New Email:");
 			if(newEmail === confirmEmail) {
-				loginService.changeEmail(loginService.getLoggedInUser(), $('.changeregistrationemail').val());
+				loginService.changeEmail(loginService.getLoggedInUser(), newEmail);
 				$('.changeregistrationemail').val(newEmail);
 			} else {
 				alert("New Email and Confirmation do not match.");
 			}
 		} else {
-			alert("Invalid Email Entered [" + newEmail + "].  Please enter a valid email.");
+			if(newEmail) {
+				alert("Invalid Email Entered [" + newEmail + "].  Please enter a valid email.");
+			} else {
+				// just return here, as user simply canceled.
+				return;
+			}
 		}
 
 	}
