@@ -1,0 +1,21 @@
+Lessons learned:
+1.  There are lots of problems trying to read files in JavaScript, even when there is File API support.  The files, if binary, should be loaded as ByteArrays using readAsArrayBuffer, otherwise, readAsText for text files.
+
+2.  Trying to do binary file encryption is not trivial.  There is special usage of the Crypto.js library
+
+3.  Using the HTML 5 saveAs functionality is non-trivial.  I have found it easier for the time being to 
+	educate the user to place their files in the following locations, rather than using "saveAs":
+[file:///storage/emulated/0/Android/data/com.airanza.apass2/files/export.csv
+via Android Device Monitor: mnt/shell/emulated/0/Android/data/com.airanza.apass2/files/export.csv
+via Windows Explorer:  Computer\SCH-I545\Phone\Android\data\com.airanza.apass2\files\export.csv
+
+4.  Performance problems with unordered list (<ul>) when the numbers increase beyond ~300 passwords.
+
+5.  Easy to debug using Chrome Browser -> Developer Tools -> More Tools -> Inspect Devices...  Run the app on the connected device, and it will be recognized automatically.  I've read that any WebView-based app would be 
+detected.
+
+6.  Must look into other tools including GapDebug, an emulator called GenyMotion (paid), VisualStudio!!!, 
+
+7.  Profiling is needed for >250 rows.  However...   Will look into eliminating CSS as an issue first.
+
+8.  Users sometimes lose, forget and just screw up their login information, and they are not likely to call or email support out of embarassment.  We need to make an anonymous method for changing password tht is still secure, but doesn't call us a fortune by requiring us to have a server.  Step one is a click-combination that prompt for a new username, password, confirmation, and hint.

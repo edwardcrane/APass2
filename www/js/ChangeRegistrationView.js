@@ -33,14 +33,6 @@ var ChangeRegistrationView = function (loginService) {
 		});
 	};
 
-	// var isValidEmail = function(email) {
-	//     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	// 	if(email && email != '') {
-	// 		return re.test(email);
-	// 	}
-	// 	return false;
-	// }
-
 	var changeUsername = function() {
 		var retVal = prompt("Change Username", $('.changeregistrationusername').val());
 		// now do something with it!!!
@@ -49,20 +41,6 @@ var ChangeRegistrationView = function (loginService) {
 			$('.changeregistrationusername').val(retVal);
 		}
 	}
-
-	// var isValidPassword = function(password) {
-	// 	if(password && password != '') {
-	// 		return true;
-	// 	}
-	// 	return false;
-	// }
-
-	// var isValidUsername = function(username) {
-	// 	if(username && username != '') {
-	// 		return true;
-	// 	}
-	// 	return false;
-	// }
 
 	var changePassword = function() {
 		var retVal;
