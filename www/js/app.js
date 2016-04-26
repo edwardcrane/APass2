@@ -69,7 +69,6 @@
             });
 
             router.addRoute('register', function() {
-                console.log(loginService);
                 slider.slidePage(new RegisterView(loginService).render().$el);
                 localizeStrings();
             });
@@ -80,7 +79,7 @@
             });
 
             router.start();
-
+            
             initializeStore();
         });
 
