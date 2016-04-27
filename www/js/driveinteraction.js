@@ -16,8 +16,7 @@
 				client_id: options.client_id,
 				redirect_uri: options.redirect_uri,
 				response_type: 'code',
-				scope: options.scope,
-				prompt: 'select_account'
+				scope: options.scope
 			});
 			console.log("authUrl: " + authUrl);
             var authWindow = window.open(authUrl, "_blank", "location=no,toolbar=no");  // for iOS add 'toolbar=no'
@@ -53,12 +52,10 @@
 						// use the token we got back from oauth to setup the api.
 						gapi.auth.setToken(data);
 						// load the drive api.
-						gapi.client.load('drive', 'v2', testUploadFile);
-//						gapi.client.load('drive', 'v2', uploadDatabaseToGoogleDrive("enc.apass"));
+						gapi.client.load('drive', 'v2', new function() {
+							uploadToGoogleDrive("file:///storage/emulated/0/Android/data/com.airanza.apass2/files/enc.apass");
+						});
 //						gapi.client.load('drive', 'v2', listFiles);
-						// gapi.client.load('drive', 'v2', function(arg) {
-						// 	console.log('inside gapi.client.load callback.  arg: ' + arg);
-						// });
 						deferred.resolve(data); 
 					}).fail(function(response) { 
 						deferred.reject(response.responseJSON); 
@@ -94,51 +91,8 @@
 				'client_id' : CLIENT_ID,
 				'client_secret' : CLIENT_SECRET,
 				'redirect_uri' : REDIRECT_URI,
-				'scope' : SCOPES.join(' '),
-				'prompt' : 'select_account'
+				'scope' : SCOPES.join(' ')
 			}, handleAuthResult);
-			// if handleAuthResult doesn't work properly on Android, use this code:
-			//
-	        // googleapi.authorize({
-	        //     client_id: CLIENT_ID,
-	        //     client_secret: CLIENT_SECRET,
-	        //     redirect_uri: REDIRECT_URI,
-	        //     scope: SCOPES.join(' ')
-	        // }).done(function(data) {
-	        //     console.log("data.access_token:" + data.access_token);
-	        //     // TODO:  SOMEHOW SETUP THE API TO DEAL WITH READING & WRITING FILES HERE
-	        //     // TODO:  Seems like we should change menu item here to allow user to "unauth".
-	        // }).fail(function(data) {
-	        //     console.log("data.error:" + data.error);
-	        // });
-		}
-	}
-
-	/**
-	 * Handle response from authorization server.
-	 *
-	 * @param {Object} authResult Authorization result.
-	 */
-	function handleAuthResult(authResult) {
-		var authMenuItem = document.getElementById("menuitemenablegoogledrivebackup");
-		if (authResult && !authResult.error) {
-			// If already authorized, change menu option to allow user to deny Authorization
-			authMenuItem.innerHTML = l("Disable Google Drive Backup");
-			loadDriveApi();
-		} else {
-			console.log("inside handleAuthResult, authResult.error: " + authResult.error);
-
-			// Show auth menu item, allowing the user to initiate authorization
-			authMenuItem.innerHTML = l("Enable Google Drive Backup");
-			// use the InAppBrowser to display the authorization window:
-			// var authWindow = window.open(authUrl, '_blank', 'location=no,toolbar=no');
-			// or?
-			// gapi.auth.authorize(
-			// 	{
-			// 		client_id: CLIENT_ID,
-			// 		scope: SCOPES.join(' '),
-			// 		immediate: false
-			// 	}, handleAuthResult)
 		}
 	}
 
@@ -160,11 +114,41 @@
 	}
 
 	/**
+	 * Handle response from authorization server.
+	 *
+	 * @param {Object} authResult Authorization result.
+	 */
+	function handleAuthResult(authResult) {
+		var authMenuItem = document.getElementById("menuitemenablegoogledrivebackup");
+		if (authResult && !authResult.error) {
+			// If already authorized, change menu option to allow user to deny Authorization
+			authMenuItem.innerHTML = l("Disable Google Drive Backup");
+			loadDriveApi();
+		} else {
+			alert("Authorization Error: " + authResult.error);
+			console.log("inside handleAuthResult, authResult.error: " + authResult.error);
+
+			// Show auth menu item, allowing the user to initiate authorization
+			authMenuItem.innerHTML = l("Enable Google Drive Backup");
+			// use the InAppBrowser to display the authorization window:
+			// var authWindow = window.open(authUrl, '_blank', 'location=no,toolbar=no');
+			// or?
+			// gapi.auth.authorize(
+			// 	{
+			// 		client_id: CLIENT_ID,
+			// 		scope: SCOPES.join(' '),
+			// 		immediate: false
+			// 	}, handleAuthResult)
+		}
+	}
+
+	/**
 	 * Load Drive API client library.
 	 */
 	function loadDriveApi() {
-//		gapi.client.load('drive', 'v2', listAppDataFiles);
-		gapi.client.load('drive', 'v2', testUploadFile);
+		gapi.client.load('drive', 'v2', new function() {
+			uploadToGoogleDrive("file:///storage/emulated/0/Android/data/com.airanza.apass2/files/enc.apass");
+		});
 	}
 
 	function listFiles() {
@@ -187,21 +171,14 @@
 		})
 	}
 
-	function testUploadFile() {
-		window.resolveLocalFileSystemURL("file:///storage/emulated/0/Android/data/com.airanza.apass2/files/enc.apass", function(fileEntry) {
-			fileEntry.file(insertFile);
-		});
-	}
-
 	/**
 	 * Upload file specified by fullPath to Google Drive
 	 */
-	function uploadDatabaseToGoogleDrive(fullPath) {
+	function uploadToGoogleDrive(fullPath) {
 		window.resolveLocalFileSystemURL(fullPath, function (fileEntry) {
-			fileEntry.file(insertFile);
+			fileEntry.file(insertAppDataFile);
 		});
 	}
-
 
 	/**
 	 * Insert new file.
@@ -209,7 +186,7 @@
 	 * @param {File} fileData File object to read data from.
 	 * @param {Function} callback Function to call when the request is complete.
 	 */
-	function insertFile(fileData, callback) {
+	function insertAppDataFile(fileData, callback) {
 		const boundary = '-------314159265358979323846';
 		const delimiter = "\r\n--" + boundary + "\r\n";
 		const close_delim = "\r\n--" + boundary + "--";
@@ -220,7 +197,10 @@
 			var contentType = fileData.type || 'application/octet-stream';
 			var fName = fileData.fileName || fileData.name;
 			var metadata = {
+				'name' : fName,
 				'title': fName,
+				'parents': [{id: 'appdata'}],
+				'appDataContents': 'true',
 				'mimeType': contentType
 			};
 
@@ -250,6 +230,103 @@
 				};
 			}
 			request.execute(callback);
+		}
+	}
+
+	/**
+	 * Delete filename from Google Drive appData
+	 */
+	function deleteDriveFilename(filename) {
+		// first get file ID
+		getAppDataFileId(filename).done(function(fileId) {
+			// then delete based on ID:
+			var request = gapi.client.drive.files.delete({
+				'fileId': fileId
+			});
+			request.execute(function(resp) { console.log(resp); } );
+		})
+	}
+
+	function downloadDriveFilename(filename, callback) {
+		getAppDataFile(filename).done(function(file) {
+			downloadDriveFile(file, callback);
+		});
+	}
+
+	function getAppDataFile(filename) {
+		var deferred = $.Deferred();
+		var resultFiles = [];
+		var request = gapi.client.drive.files.list({
+			spaces: 'appDataFolder',
+			maxResults: 100
+		});
+
+		request.execute(function(resp) {
+			var files = resp.items;
+			if(files && files.length > 0) {
+				for(var i=0; i < files.length; i++) {
+					var file = files[i];
+					if(file.name === filename || file.title === filename) {
+						resultFiles.push(file);
+					}
+				}
+				deferred.resolve(resultFiles.length > 0 ? resultFiles[0] : null);
+			} else {
+				deferred.reject("No files matching [" + filename + "] found.");
+			}
+		})
+		return deferred.promise();
+	}
+
+	function getAppDataFileId(filename) {
+		var deferred = $.Deferred();
+
+		var resultFiles = [];
+
+		var request = gapi.client.drive.files.list({
+			spaces: 'appDataFolder',
+			maxResults: 100
+			// fields: 'nextPageToken, files(id, name)',
+			// pageSize: 100
+		});
+
+		request.execute(function(resp) {
+			var files = resp.items;
+			if(files && files.length > 0) {
+				for(var i = 0; i < files.length; i++) {
+					var file = files[i];
+					if(file.name === filename || file.title === filename) {
+						resultFiles.push(file);
+					}
+				}
+				deferred.resolve(resultFiles.length > 0 ? resultFiles[0].id : null);
+			} else {
+				console.log("no files found in Google Drive appDataFolder");
+				deferred.reject("No apass files found in Google Drive appDataFolder.");
+			}
+		})
+		return deferred.promise();
+	}
+
+	/**
+	 * Download a Drive files's content
+	 *
+	 */
+	function downloadDriveFile(file, callback) {
+		if (file.downloadUrl) {
+			var accessToken = gapi.auth.getToken().access_token;
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', file.downloadUrl);
+			xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+			xhr.onload = function() {
+				callback(xhr.responseText);
+			};
+			xhr.onerror = function() {
+				callback(null);
+			};
+			xhr.send();
+		} else {
+			callback(null);
 		}
 	}
 

@@ -164,6 +164,8 @@ var HomeView = function (loginService, passwordsService) {
 
 		this.$el.on('click', '.menuitemgoogledrivebackup', this.onEnableGoogleDriveBackup);
 
+		this.$el.on('click', '.menuitemrestoregoogledrive', this.onRestoreGoogleDrive);
+
 		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
 
 		this.$el.on('click', '.menuitemsaveencryptedfile', this.onSaveEncryptedFile);
@@ -313,6 +315,19 @@ var HomeView = function (loginService, passwordsService) {
 		// of course the user must have a google account and must authorize this app to copy files to their drive.
 		console.log("user chose to enable Google Drive backups.");
 		passwordsService.encryptDB(encryptedFile);
+		if(device.platform === 'browser') {
+			handleAuthClick(event);
+		} else {
+			checkAuth();
+		}
+	}
+
+	this.onRestoreGoogleDrive = function(event) {
+		event.preventDefault();
+
+		var encryptedFile = "enc.apass";
+
+		// of course user must have google account and authorize app to download.
 		if(device.platform === 'browser') {
 			handleAuthClick(event);
 		} else {
