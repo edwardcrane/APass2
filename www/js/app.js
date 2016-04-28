@@ -51,6 +51,7 @@
                 slider.slidePage(homeView.render().$el);
 //                slider.slidePage(new HomeView(loginService, passwordsService).render().$el);
                 homeView.setupEventMapping();
+                homeView.setupMenuDisplayOptions();
                 localizeStrings();
                 // force search to refresh:
                 $('.search-key').keyup();
@@ -79,7 +80,7 @@
             });
 
             router.start();
-            
+
             initializeStore();
         });
 

@@ -29,6 +29,14 @@ var HomeView = function (loginService, passwordsService) {
 			this.setupBannerAds(admobids);
 		}
 
+		var lastuser = loginService.getRememberedLastUser().done(function(lastuser) {
+			if(lastuser != null) {
+				$('.loginusername').val(lastuser);
+				$('.loginrememberusername').prop('checked', true);
+				$('.loginpassword').focus();
+			}
+		});
+
 		this.render();
 	};
 
@@ -146,6 +154,18 @@ var HomeView = function (loginService, passwordsService) {
 		};
 	};
 
+	this.setupMenuDisplayOptions = function() {
+		if(gapi.auth.getToken() == null) {
+			$('.menuitemgoogledrivebackup').show();
+			$('.menuitembackuptogoogledrive').hide();
+			$('.menuitemrestoregoogledrive').hide();
+		} else {
+			$('.menuitemgoogledrivebackup').hide();
+			$('.menuitembackuptogoogledrive').show();
+			$('.menuitemrestoregoogledrive').show();
+		}
+	};
+
 	/**
 	 * setup event handling: clicks, keystrokes in search box
 	 * called from app.js after rendering seems to work best.
@@ -163,8 +183,8 @@ var HomeView = function (loginService, passwordsService) {
 		this.$el.on('click', '.menuitememailencryptedfile', this.onEmailEncryptedFile);
 
 		this.$el.on('click', '.menuitemgoogledrivebackup', this.onEnableGoogleDriveBackup);
-
-		this.$el.on('click', '.menuitemrestoregoogledrive', this.onRestoreGoogleDrive);
+		this.$el.on('click', '.menuitembackuptogoogledrive', this.onBackupToGoogleDrive);
+		this.$el.on('click', '.menuitemrestoregoogledrive', this.onRestoreFromGoogleDrive);
 
 		this.$el.on('click', '.menuitemadvanced', this.onAdvanced);
 
@@ -310,29 +330,62 @@ var HomeView = function (loginService, passwordsService) {
 	this.onEnableGoogleDriveBackup = function(event) {
 		event.preventDefault();
 
-		var encryptedFile = "enc.apass";
-
 		// of course the user must have a google account and must authorize this app to copy files to their drive.
 		console.log("user chose to enable Google Drive backups.");
-		passwordsService.encryptDB(encryptedFile);
 		if(device.platform === 'browser') {
 			handleAuthClick(event);
 		} else {
 			checkAuth();
 		}
+
+		//if authorized, enable the backup and restore menu items, and hide this one.
+		$('.menuitemgoogledrivebackup').hide();
+		$('.menuitembackuptogoogledrive').show();
+		$('.menuitemrestoregoogledrive').show();
 	}
 
-	this.onRestoreGoogleDrive = function(event) {
+	/**
+	* PRECONDITIONS:  User must have authorized google API and access code stored in gapi.
+	*/
+	this.onBackupToGoogleDrive = function(event) {
 		event.preventDefault();
 
 		var encryptedFile = "enc.apass";
+		var encryptedFileFullPath = passwordsService.getStorageDirectory() + encryptedFile;
 
-		// of course user must have google account and authorize app to download.
-		if(device.platform === 'browser') {
-			handleAuthClick(event);
-		} else {
-			checkAuth();
+		passwordsService.encryptDB(encryptedFile);
+
+		// TODO: we might have to use the gapi.client.load callback to do this.
+		updateGoogleDriveFile(encryptedFileFullPath, encryptedFile);
+	}
+
+	/**
+	* PRECONDITIONS:  User must have authorized Google API & access code stored in gapi.
+	*/
+	this.onRestoreFromGoogleDrive = function(event) {
+		event.preventDefault();
+
+		var r = confirm(l("Loading data will DISCARD EXISTING RECORDS.  You may wish to create a backup file first.  Do you wish to continue?"));
+		if(!r) {
+			alert(l("Data Load Canceled.  No changes have been made."));
+			return;
 		}
+
+		var encryptedFile = "enc.apass";
+		var encryptedFileFullPath = passwordsService.getStorageDirectory() + encryptedFile;
+
+		// TODO:  we may need to use the gapi.client.load callback to do this.
+		getAppDataFile(encryptedFile).done(function(f) {
+			downloadDriveFile(f, function(f) {
+				console.log("calling writeDataToFile()");
+				writeDataToFile(passwordsService.getStorageDirectory(), encryptedFile, f);
+				console.log("calling passwordsService.decryptDB");
+				passwordsService.decryptDB(encryptedFile, function() {
+					// trigger keyup event as callback, which forces refresh:
+					$('.search-key').keyup();
+				})
+			});
+		});
 	}
 
 	this.onAdvanced = function(event) {

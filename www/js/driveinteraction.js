@@ -5,9 +5,10 @@
 	var CLIENT_ID = '1062372605568-bhqm5ibm437a7u9kt205rnh6rphrdgms.apps.googleusercontent.com';
 	var CLIENT_SECRET = 'iilSb1anq_ntKmKymF7mr3tp';
 	var REDIRECT_URI = 'http://localhost';
-	var SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
-					'https://www.googleapis.com/auth/drive.appdata',
-					'https://www.googleapis.com/auth/drive.file'];
+	var SCOPES = ['https://www.googleapis.com/auth/drive.appdata'];
+	// var SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
+	// 				'https://www.googleapis.com/auth/drive.appdata',
+	// 				'https://www.googleapis.com/auth/drive.file'];
 
 	var googleapi = {
 		authorize: function(options) {
@@ -52,10 +53,9 @@
 						// use the token we got back from oauth to setup the api.
 						gapi.auth.setToken(data);
 						// load the drive api.
-						gapi.client.load('drive', 'v2', new function() {
-							uploadToGoogleDrive("file:///storage/emulated/0/Android/data/com.airanza.apass2/files/enc.apass");
+						gapi.client.load('drive', 'v2', function() {
+							listAppDataFiles();
 						});
-//						gapi.client.load('drive', 'v2', listFiles);
 						deferred.resolve(data); 
 					}).fail(function(response) { 
 						deferred.reject(response.responseJSON); 
@@ -147,28 +147,77 @@
 	 */
 	function loadDriveApi() {
 		gapi.client.load('drive', 'v2', new function() {
-			uploadToGoogleDrive("file:///storage/emulated/0/Android/data/com.airanza.apass2/files/enc.apass");
+			console.log("called gapi.client.load('drive', 'v2') :" + gapi.client.drive);
+//			updateGoogleDriveFile("file:///storage/emulated/0/Android/data/com.airanza.apass2/files/enc.apass", "enc.apass");
 		});
 	}
 
-	function listFiles() {
-		var request = gapi.client.drive.files.list({
-			'maxResults': 100
-		});
-
-		var outString = "";
-
-		request.execute(function(resp) {
-			var files = resp.items;
-			if(files && files.length > 0) {
-				for (var i = 0; i < files.length; i++) {
-					var file = files[i];
-					outString += (file.title + " (" + file.id + ")\r\n");
+	function updateGoogleDriveFile(fullpath, filename) {
+		// first ensure the drive is authenticated and loaded.
+		gapi.client.load('drive', 'v2', new function() {
+			getAppDataFileId(filename).done(function(fId) {
+				if(fId) {
+					window.resolveLocalFileSystemURL(fullpath, function(fileEntry) {
+						fileEntry.file(function(fileData) {
+							updateGoogleAppDataFile(fId,
+								null, // fileMetadata
+								fileData, // fileData
+								function(f) { console.log(f); });
+						});
+					});
+				} else {
+					uploadToGoogleDrive(fullpath);
 				}
-				console.log(outString);
-				alert(outString);
+			})
+		});
+	}
+
+	/**
+	 * Update existing Google Drive File
+	 * Update an existing file's metadata and content.
+	 *
+	 * @param {String} fileId ID of the file to update.
+	 * @param {Object} fileMetadata existing Drive file's metadata.
+	 * @param {File} fileData File object to read data from.
+	 * @param {Function} callback Callback function to call when the request is complete.
+	 */
+	function updateGoogleAppDataFile(fileId, fileMetadata, fileData, callback) {
+		const boundary = '-------314159265358979323846';
+		const delimiter = "\r\n--" + boundary + "\r\n";
+		const close_delim = "\r\n--" + boundary + "--";
+
+		var reader = new FileReader();
+		reader.readAsBinaryString(fileData);
+		reader.onload = function(e) {
+			var contentType = fileData.type || 'application/octet-stream';
+			// Updating the metadata is optional and you can instead use the value from drive.files.get.
+			var base64Data = btoa(reader.result);
+			var multipartRequestBody =
+				delimiter +
+				'Content-Type: application/json\r\n\r\n' +
+				JSON.stringify(fileMetadata) +
+				delimiter +
+				'Content-Type: ' + contentType + '\r\n' +
+				'Content-Transfer-Encoding: base64\r\n' +
+				'\r\n' +
+				base64Data +
+				close_delim;
+
+			var request = gapi.client.request({
+				'path': '/upload/drive/v2/files/' + fileId,
+				'method': 'PUT',
+				'params': {'uploadType': 'multipart', 'alt': 'json'},
+				'headers': {
+					'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+				},
+				'body': multipartRequestBody});
+			if (!callback) {
+				callback = function(file) {
+					console.log(file)
+				};
 			}
-		})
+			request.execute(callback);
+		}
 	}
 
 	/**
@@ -253,6 +302,11 @@
 		});
 	}
 
+	/**
+	* returns the Google API File Object of file matching "filename".
+	*  WARNING:  IF there is more than 1 with the same filename on Drive,
+	* This function will return the first one.
+	*/
 	function getAppDataFile(filename) {
 		var deferred = $.Deferred();
 		var resultFiles = [];
@@ -302,7 +356,7 @@
 				deferred.resolve(resultFiles.length > 0 ? resultFiles[0].id : null);
 			} else {
 				console.log("no files found in Google Drive appDataFolder");
-				deferred.reject("No apass files found in Google Drive appDataFolder.");
+				deferred.resolve();
 			}
 		})
 		return deferred.promise();
@@ -319,15 +373,58 @@
 			xhr.open('GET', file.downloadUrl);
 			xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 			xhr.onload = function() {
+				// callback should most likely write data to a file:
 				callback(xhr.responseText);
 			};
-			xhr.onerror = function() {
-				callback(null);
+			xhr.onerror = function(e) {
+				console.log("in downloadDriveFile(), xhr.error: " + e.error);
 			};
 			xhr.send();
 		} else {
-			callback(null);
+			console.log("in downloadDriveFile(), the specified file has no downloadUrl");
+//			callback(null);
 		}
+	}
+
+	function writeDataToFile(storageDir, outFilename, responseText) {
+		window.resolveLocalFileSystemURL(storageDir, function(dir) {
+			var outfile;
+			console.log("writing downloaded encrypted file to: " + storageDir + outFilename);
+			dir.getFile(outFilename, {create:true}, function(file) {
+				outfile = file;
+				outfile.createWriter(function(fileWriter) {
+					fileWriter.write(responseText);
+					console.log("Successfully completed write: " + outFilename);
+				}, diErrorHandler);
+			});
+		});
+	}
+
+	function diErrorHandler(e) {
+	        var msg = '';
+
+        switch (e.code) {
+            case FileError.QUOTA_EXCEEDED_ERR:
+                msg = 'QUOTA_EXCEEDED_ERR';
+                break;
+            case FileError.NOT_FOUND_ERR:
+                msg = 'NOT_FOUND_ERR';
+                break;
+            case FileError.SECURITY_ERR:
+                msg = 'SECURITY_ERR';
+                break;
+            case FileError.INVALID_MODIFICATION_ERR:
+                msg = 'INVALID_MODIFICATION_ERR';
+                break;
+            case FileError.INVALID_STATE_ERR:
+                msg = 'INVALID_STATE_ERR';
+                break;
+            default:
+                msg = 'Unknown Error';
+                break;
+        };
+        console.log('Error: ' + msg);
+        console.log("ERROR: [" + e.name + "]:[" + e.message + "]");
 	}
 
 	function createAppDataFile(filename) {
@@ -353,6 +450,25 @@
 		});
 	}
 
+	function listFiles() {
+		var request = gapi.client.drive.files.list({
+			'maxResults': 100
+		});
+
+		var outString = "";
+
+		request.execute(function(resp) {
+			var files = resp.items;
+			if(files && files.length > 0) {
+				for (var i = 0; i < files.length; i++) {
+					var file = files[i];
+					outString += (file.title + " (" + file.id + ")\r\n");
+				}
+				console.log(outString);
+			}
+		})
+	}
+
 	function listAppDataFiles() {
 		var request = gapi.client.drive.files.list({
 			spaces: 'appDataFolder',
@@ -370,7 +486,6 @@
 					outString += (file.title + " (" + file.id + ")\n");
 				}
 				console.log(outString);
-				alert(outString);
 			} else {
 				console.log("no files found in Google Drive appDataFolder");
 			}

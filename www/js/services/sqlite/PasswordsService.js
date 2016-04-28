@@ -419,11 +419,11 @@ var PasswordsService = function () {
                     }, localErrorHandler);
                 };
 
-                reader.onerror = this.errorHandler;
+                reader.onerror = localErrorHandler;
 
                 reader.readAsArrayBuffer(file);
             });
-        }, this.errorHandler);
+        }, localErrorHandler);
     };
 
     //     var encrypted = CryptoJS.AES.encrypt("Message", "Secret Passphrase", { format: JsonFormatter }); 
