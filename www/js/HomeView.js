@@ -378,12 +378,14 @@ var HomeView = function (loginService, passwordsService) {
 		getAppDataFile(encryptedFile).done(function(f) {
 			downloadDriveFile(f, function(f) {
 				console.log("calling writeDataToFile()");
-				writeDataToFile(passwordsService.getStorageDirectory(), encryptedFile, f);
-				console.log("calling passwordsService.decryptDB");
-				passwordsService.decryptDB(encryptedFile, function() {
-					// trigger keyup event as callback, which forces refresh:
-					$('.search-key').keyup();
-				})
+				// TODO:  writeDataToFile is asynchronous, so decryptDB is called before file is actually written.
+				writeDataToFile(passwordsService.getStorageDirectory(), encryptedFile, f, function() {
+					console.log("calling passwordsService.decryptDB");
+					passwordsService.decryptDB(encryptedFile, function() {
+						// trigger keyup event as callback, which forces refresh:
+						$('.search-key').keyup();
+					})
+				});
 			});
 		});
 	}

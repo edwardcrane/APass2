@@ -355,7 +355,7 @@
 				}
 				deferred.resolve(resultFiles.length > 0 ? resultFiles[0].id : null);
 			} else {
-				console.log("no files found in Google Drive appDataFolder");
+				console.log("No files found in Google Drive appDataFolder");
 				deferred.resolve();
 			}
 		})
@@ -377,24 +377,24 @@
 				callback(xhr.responseText);
 			};
 			xhr.onerror = function(e) {
-				console.log("in downloadDriveFile(), xhr.error: " + e.error);
+				console.log("Error in downloadDriveFile(), xhr.error: " + e.error);
 			};
 			xhr.send();
 		} else {
-			console.log("in downloadDriveFile(), the specified file has no downloadUrl");
-//			callback(null);
+			console.log("Error in downloadDriveFile(), specified file has no downloadUrl");
 		}
 	}
 
-	function writeDataToFile(storageDir, outFilename, responseText) {
+	function writeDataToFile(storageDir, outFilename, responseText, callback) {
 		window.resolveLocalFileSystemURL(storageDir, function(dir) {
 			var outfile;
-			console.log("writing downloaded encrypted file to: " + storageDir + outFilename);
+			console.log("Writing: " + storageDir + outFilename);
 			dir.getFile(outFilename, {create:true}, function(file) {
 				outfile = file;
 				outfile.createWriter(function(fileWriter) {
 					fileWriter.write(responseText);
 					console.log("Successfully completed write: " + outFilename);
+					callback();
 				}, diErrorHandler);
 			});
 		});
