@@ -10,7 +10,7 @@
     RegisterView.prototype.template = Handlebars.compile($("#register-tpl").html());
     ChangeRegistrationView.prototype.template = Handlebars.compile($("#change-registration-tpl").html());
 
-    String.locale='pt-BR';
+//    String.locale='pt-BR';
 
     var slider = new PageSlider($('body'));
 

@@ -2,7 +2,7 @@ var HomeView = function (loginService, passwordsService) {
 
 	var resourceListView;
 
-	var adsEnabled = false;
+	var adsEnabled = true;
 
 	this.initialize = function () {
 
