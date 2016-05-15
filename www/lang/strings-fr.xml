@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (c) 2015.
+ *
+ * AIRANZA, INC. _____________ *
+ * [En 2015] - [$ {ANNÉE}] Adobe Systems Incorporated
+ * Tous droits réservés.
+ *
+ * AVIS: Toutes les informations contenues dans ce document sont, et permanecero propriété Airanza, Inc. et ses fournisseurs, le cas échéant. Intellectuels de concepts contenus dans ce document sont la propriété de Airanza Inc. et de ses fournisseurs et peuvent être couverts par des brevets américains et étrangers, les brevets de procédé, eso protégées par le secret commercial ou droit d'auteur ~ A la divulgation de ces informations ou la reproduction de ce matériel est strictement interdite sans autorisation écrite préalable et doit être obtenue par la société Airanza Inc.
+-->
+
+<resources>
+    <string name="app_name">Apass</string>
+    <string name="resource_name">Enregistrez le nom</string>
+    <string name="username">Utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="description">Description</string>
+    <string name="findString">Rechercher</string>
+    <string name="button_save">Enregistrer</string>
+    <string name="button_find_resource">Trouver</string>
+    <string name="button_new_resource">Nouveau record ...</string>
+    <string name="button_cancel">Annuler</string>
+
+    <!-- Menu Strings -->
+    <string name="action_export_csv_file">Enregistrer le fichier CSV</string>
+    <string name="action_export_csv_file_confirm">Enregistrer le fichier CSV [% s]?</string>
+    <string name="action_import_csv_file">Télécharger le fichier CSV</string>
+    <string name="action_email_csv_file">fichier CSV E-mail</string>
+    <string name="action_email_encrypted_file">E-mail Encrypted File</string>
+    <string name="action_advanced">Avancé ...</string>
+    <string name="action_save_encrypted_file">Enregistrer le fichier crypté ...</string>
+    <string name="action_load_encrypted_file">Charger fichiers cryptés ...</string>
+    <string name="action_change_login">Modifier l'authentification (login) ...</string>
+    <string name="action_show_splash">A propos de ...</string>
+    <string name="action_add_resource">Ajouter</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_delete">Supprimer</string>
+    <string name="action_save">Enregistrer</string>
+
+    <!-- valeurs du dialogue Auth -->
+    <string name="login_username_hint">Utilisateur</string>
+    <string name="login_remember_user_name_hint">Rappelez-vous le nom d'utilisateur?</string>
+    <string name="login_password_hint">Mot de passe</string>
+    <string name="login_show_password_hint">Afficher le mot de passe indice</string>
+    <string name="login_signup_for_apass">Inscrivez-vous Apass</string>
+
+    <!-- VALEURS dialogue INSCRIPTION -->
+    <string name="register_username_hint">Utilisateur</string>
+    <string name="register_password_hint">Mot de passe</string>
+    <string name="register_confirm_password_hint">Confirmer mot de passe</string>
+    <string name="register_password_hint_hint">Mot de passe Astuce</string>
+    <string name="register_email_hint">Email</string>
+    <string name="register_confirm_email_hint">Vérifier Email</string>
+
+    <!-- INCRIo VALEURS DE CHANGEMENT DE dialogue -->
+    <string name="change_registration_username_hint">Utilisateur</string>
+    <string name="change_registration_password_hint">Mot de passe</string>
+    <string name="change_registration_new_password_hint">Nouveau mot de passe</string>
+    <string name="change_registration_confirm_new_password_hint">Confirmer le nouveau mot de passe</string>
+    <string name="change_registration_password_hint_hint"> Mot de passe Astuce</string>
+    <string name="change_registration_incorrect_password_entered">Mot de passe incorrect est entré.</string>
+    <string name="change_registration_password_hint_invalid_hint">S'il vous plaît spécifier un mot de passe valide soupçon. Si vous perdez votre mot de passe, il n'y a aucun moyen de récupérer vos données!</string>
+    <string name="change_registration_email_hint">Email</string>
+    <string name="change_registration_confirm_email_hint">Vérifier Email</string>
+    <string name="change_registration_invalid_email_specified">email invalide inséré [% s]. S'il vous plaît entrer une adresse e-mail valide.</string>
+
+    <!-- ACCEPTER DATA dialogue RISQUE CREATION DE RISQUE En Encrypted -->
+    <string name="unencrypted_risk_dialog_title">SÉCURITÉ AVERTISSEMENT</string>
+    <string name="unencrypted_risk_dialog_positive_button_text">Accepter le risque et continuer </string>
+    <string name="unencrypted_risk_dialog_negative_button_text">Annuler</string>
+    <string name="unencrypted_risk_dialog_user_declined_message">Action annulée. Le fichier CSV clair n'a pas été créé.</string>
+    <string name="encrypted_file_user_declined_message">Action annulée. Le fichier crypté est pas créé.</string>
+    <string name="unencrypted_risk_dialog_user_accepted_message">fichier CSV création risque clair a été acceptée. Envoi.</string>
+
+    <!-- DONNÉES DE RISQUE dialogue de remplacement -->
+    <string name="overwrite_data_csv_import">Chargez ces données [% s] se défaire des enregistrements existants. Vous pouvez d'abord créer un fichier de sauvegarde. Voulez-vous continuer?</string>
+    <string name="overwrite_data_dialog_title">REMPLACEMENT DE DONNÉES AVERTISSEMENT</string>
+    <string name="overwrite_data_dialog_message">Chargez ces données se défaire des enregistrements existants. Vous pouvez d'abord créer un fichier de sauvegarde. Voulez-vous continuer?</string>
+    <string name="overwrite_data_dialog_positive_button_text">Oui s'il vous plaît continuer</string>
+    <string name="overwrite_data_dialog_negative_button_text">Annuler</string>
+    <string name="overwrite_data_dialog_user_declined_message">Le chargement de données annulée. Aucun changement n'a été apporté.</string>
+    <string name="overwrite_data_dialog_user_accepted_message">L'utilisateur a choisi d'importer tous les enregistrements existants seront supprimés.</string>
+    <string name="list_default_value">Valeur par défaut Liste</string>
+    <string name="delete_resource_dialog_positive_button_text">OK</string>
+    <string name="delete_resource_dialog_negative_button_text">Annuler</string>
+    <string name="delete_resource_confirm_title">Confirmer la suppression ...</string>
+    <string name="delete_resource_confirm_message">Etes-vous sûr de vouloir supprimer ce?</string>
+    <string name="airanza_url">&lt;a href="http://www.airanza.com"&gt;www.airanza.com&lt;/a&gt;</string>
+    <string name="terms_of_use_url">&lt;a href="http://www.airanza.com/products/apass/tou"&gt;Conditions d'utilisation&lt;/a&gt;</string>
+    <string name="privacy_policy_url">&lt;a href="http://www.airanza.com/products/apass/privacy"&gt;Privacy&lt;/a&gt;</string>
+    <string name="terms_of_use_text">Conditions d'utilisation</string>
+    <string name="privacy_policy_text">Confidentialité</string>
+
+    <!-- <string name="de admob_id"> TESTER</string> -->
+    <string name="unencrypted_risk_dialog_message">CSV fichiers non cryptés peuvent poser un risque de sécurité si accessible aux pirates, aussi connu par les pirates. Continuer de toute façon?</string>
+    <string name="register_create_login_title">Inscription Créer</string>
+    <string name="register_password_and_confirm_do_not_match">Le mot de passe et la confirmation ne correspondent pas! Entrez à nouveau.</string>
+    <string name="splash_version">APass Version: 2.000</string>
+    <string name="register_fields_must_be_completed">Tous les champs doivent être remplis. S'il vous plaît essayer à nouveau.</string>
+    <string name="register_user_already_exists">l'utilisateur [%s] existe déjà. S'il vous plaît essayer à nouveau.</string>
+    <string name="register_user_was_not_created">USER [%s] n'a pas été créé. S'il vous plaît essayer à nouveau.</string>
+    <string name="no_matching_records_found">​enregistrements correspondants sont introuvables \"%s\".</string>
+    <string name="login_display_password_hint">Mot de passe Conseil: [%s]</string>
+    <string name="login_password_hint_enter_valid_username">S'il vous plaît spécifier valide Nom d'utilisateur.</string>
+    <string name="login_title">Enregistrer APass</string>
+    <string name="new_title">Nouveau</string>
+    <string name="edit_title">Modifier</string>
+    <string name="change_registration_title">Modifier l'authentification (login)</string>
+    <string name="change_registration_username_password_invalid">utilisateur et mot de passe doit être valide!</string>
+    <string name="change_registration_username_not_updated">USER [%s] n'a pas été mis à jour. S'il vous plaît essayer à nouveau.</string>
+    <string name="change_registration_username_updated_successfully">L'utilisateur [%s] a été mis à jour avec succès!</string>
+    <string name="new_saved_successfully">À moins [%s]</string>
+    <string name="edit_resource_updated">Mise à jour des ressources [%s]</string>
+    <string name="change_registration_email_confirm_do_not_match">Nouveau courriel et la confirmation ne correspondent pas! Entrez à nouveau.</string>
+    <string name="change_registration_password_confirm_do_not_match">Nouveau mot de passe et la confirmation ne correspondent pas! Entrez à nouveau.</string>
+    <string name="change_registration_password_hint_new_password">Nouveau mot de passe indice doit être spécifié pour le nouveau mot de passe.</string>
+    <string name="export_email_address_missing">ERROR: Il y a une adresse e-mail pour l'utilisateur [%s]. Utilisation de l'adresse e-mail par défaut.</string>
+    <string name="export_exported_value_count">Exporté %1$d records pour %2$s</string>
+    <string name="email_encrypted_file_confirm">Êtes-vous sûr de vouloir envoyer un e-mail avec un fichier crypté?</string>
+    <string name="email_encrypted_file_attaching">FIXER: %s</string>
+    <string name="email_encrypted_file_attachment_error">ERROR ANNEXE! Il est: [%1$b] canRead :. [%2$b]</string>
+    <string name="email_encrypted_file_body">entrées de sauvegarde dans Apass.</string>
+    <string name="email_encrypted_file_no_email_clients_configured">Aucun client e-mail installé.</string>
+    <string name="email_encrypted_file_subject">File Backup Apass</string>
+    <string name="file_save_confirm">Enregistrer le fichier Encrypted [%s]?</string>
+    <string name="file_load_confirm">Load Encrypted File [%s]?</string>
+    <string name="file_load_failed">FILE %1$s LOAD MANQUE: %2$s</string>
+    <string name="file_loaded_successfully">chargé avec succès</string> de fichier%
+    <string name="file_save_failed">FILE %1$s ENREGISTRÉ ECHEC: %2$s</string>
+    <string name="file_saved_successfully">Fichier %s de sauvé avec succès!</string>
+    <string name="logged_in_as_message">Enregistré en tant que %s</string>
+    <string name="apprater_rate_cancel">Non Merci</string>
+    <string name="apprater_rate_later">Rappelez-moi plus tard</string>
+    <string name="apprater_rate_message">Si vous voulez utiliser cette application %s, cela vous dérangerait évaluer? Merci pour le soutien!</string>
+    <string name="apprater_rate_now">Oui, évaluation %s</string>
+    <string name="apprater_rate_title">Évaluation %s</string>
+    <string name="edit_resource_deleted">Exclus ressources [%s].</string>
+    <string name="edit_resource_not_deleted">Fonction non exclus [%s].</string>
+    <string name="change_registration_change_username_button_text">Changer d'utilisateur</string>
+    <string name="change_registration_change_username_dialog_button_ok">OK</string>
+    <string name="change_registration_change_username_dialog_button_cancel">Annuler</string>
+    <string name="change_registration_change_password_dialog_button_cancel">Annuler</string>
+    <string name="change_registration_change_password_dialog_button_ok">OK</string>
+    <string name="change_registration_change_password_text">Changer mot de passe</string>
+    <string name="change_registration_password_update_failed">MOT DE PASSE n'a pas été mis à jour. S'il vous plaît essayer à nouveau</string>
+    <string name="change_registration_password_update_successful">Mot de passe a été mis à jour avec succès!</string>
+    <string name="change_registration_old_password_hint">Ancien mot de passe</string>
+    <string name="change_registration_change_username_successful">L'utilisateur a été mis à jour avec succès</string>
+    <string name="change_registration_change_email_successful">E-mail a été correctement mis à jour</string>
+    <string name="change_registration_change_email_text">Modifier E-mail</string>
+    <string name="change_registration_username_already_exists">Vous ne pouvez pas changer. L'utilisateur existe déjà.</string>
+    <string name="action_remove_ads">Supprimer annonces.</string>
+    <string name="iap_billing_setup_problem">In-App-facturation problème de configuration:</string>
+    <string name="iap_error_purchasing">Erreur lors de l'achat:</string>
+    <string name="iap_error_purchasing_authentication">Erreur lors de l'achat. vérification de l'authenticité a échoué.</string>
+    <string name="iap_failed_to_query_inventory">Impossible d'interroger l'inventaire.</string>
+    <string name="iap_turn_off_ads_already_purchased">Pas besoin d'éteindre les annonces, car ils sont déjà off!</string>
+    <string name="iap_turn_off_ads_thank_you">Merci pour la mise à niveau "Aucune annonce"</string>
+    <string name="iap_purchase_successful">Acheté avec succès.</string>
+</resources>
