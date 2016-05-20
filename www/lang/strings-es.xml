@@ -39,6 +39,9 @@
     <string name="action_import_csv_file">Importar archivo CSV</string>
     <string name="action_email_csv_file">Correo electrónico Archivo CSV</string>
     <string name="action_email_encrypted_file">correo electrónico cifrado de archivos</string>
+    <string name="enable_google_drive_backup">Habilitar Google Drive Backup</string>
+    <string name="backup_to_google_drive">Copia de seguridad en Google Drive</string>
+    <string name="restore_from_google_drive">Restaurar de Google Drive</string>
     <string name="action_advanced">Opciones avanzadas ...</string>
     <string name="action_save_encrypted_file">Guardar cifrado de archivos ...</string>
     <string name="action_load_encrypted_file">Carga de archivos cifrados ...</string>

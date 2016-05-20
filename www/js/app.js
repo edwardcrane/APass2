@@ -11,6 +11,7 @@
     ChangeRegistrationView.prototype.template = Handlebars.compile($("#change-registration-tpl").html());
 
 //    String.locale='pt-BR';
+//    String.locale='es';
 
     var slider = new PageSlider($('body'));
 
@@ -264,6 +265,7 @@
             navigator.globalization.getPreferredLanguage(function(language) {
                 usersLanguage = language.value;
                 ourLang = language.value;
+                console.log("usersLanguage: [" + usersLanguage + "] ourLang: [" + ourLang + "]");
             },
             function() { alert('Error getting language');}
             );

@@ -39,6 +39,9 @@
     <string name="action_import_csv_file">Import CSV File</string>
     <string name="action_email_csv_file">Email CSV File</string>
     <string name="action_email_encrypted_file">Email Encrypted File</string>
+    <string name="enable_google_drive_backup">Enable Google Drive Backup</string>
+    <string name="backup_to_google_drive">Backup To Google Drive</string>
+    <string name="restore_from_google_drive">Restore From Google Drive</string>
     <string name="action_advanced">Advanced…</string>
     <string name="action_save_encrypted_file">Save Encrypted File…</string>
     <string name="action_load_encrypted_file">Load Encrypted File…</string>

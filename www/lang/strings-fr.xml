@@ -27,6 +27,9 @@
     <string name="action_import_csv_file">Télécharger le fichier CSV</string>
     <string name="action_email_csv_file">fichier CSV E-mail</string>
     <string name="action_email_encrypted_file">E-mail Encrypted File</string>
+    <string name="enable_google_drive_backup">Activer Google Drive Backup</string>
+    <string name="backup_to_google_drive">La Sauvegarde Pour Google Drive</string>
+    <string name="restore_from_google_drive">Restaurer à partir de Google Drive</string>
     <string name="action_advanced">Avancé ...</string>
     <string name="action_save_encrypted_file">Enregistrer le fichier crypté ...</string>
     <string name="action_load_encrypted_file">Charger fichiers cryptés ...</string>

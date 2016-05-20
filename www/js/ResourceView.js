@@ -6,6 +6,7 @@ var ResourceView = function(service, resource) {
 		this.$el.on('click', '.deleteresource', this.deleteResource);
 		this.$el.on('click', '.newresource', this.newResource);
 		this.$el.on('click', '.showhiddenpasswordicon', this.showPassword);
+		this.$el.on('click', '.editlabel', this.goback);
 
 		this.$el.on('focus', '.resource_password', function(ev) {
 			// if new record, let user see password as they type:
@@ -19,6 +20,10 @@ var ResourceView = function(service, resource) {
 	this.render = function() {
 		this.$el.html(this.template(resource));
 		return this;
+	};
+
+	this.goback = function() {
+		window.location.href="#home";
 	};
 
 	this.saveResource = function() {

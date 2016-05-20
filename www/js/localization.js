@@ -10,6 +10,7 @@ String.toLocaleString({
 	"Terms of Use" : "Terms of Use",
 	"Cannot change. Username already exists." : "Cannot change. Username already exists.",
 	"Remember my User Name?" : "Remember my User Name?",
+	"Restore From Google Drive" : "Restore From Google Drive",
 	"Confirm Delete..." : "Confirm Delete\u2026",
 	"Purchase successful." : "Purchase successful.",
 	"New Password Hint must be specified for New Password." : "New Password Hint must be specified for New Password.",
@@ -28,6 +29,7 @@ String.toLocaleString({
 	"Backup of Entries in APass." : "Backup of Entries in APass.",
 	"Please specify valid User Name." : "Please specify valid User Name.",
 	"Export CSV File" : "Export CSV File",
+	"Backup To Google Drive" : "Backup To Google Drive",
 	"Login to APass" : "Login to APass",
 	"Updated Resource [%s]" : "Updated Resource [%s]",
 	"Password and Confirmation do not match!  Please re-enter." : "Password and Confirmation do not match!  Please re-enter.",
@@ -54,6 +56,7 @@ String.toLocaleString({
 	"File %s Loaded Successfully" : "File %s Loaded Successfully",
 	"New Password and Confirmation do not match!  Please re-enter." : "New Password and Confirmation do not match!  Please re-enter.",
 	"New Record..." : "New Record\u2026",
+	"Enable Google Drive Backup" : "Enable Google Drive Backup",
 	"Save Encrypted File..." : "Save Encrypted File\u2026",
 	"SECURITY WARNING" : "SECURITY WARNING",
 	"Change Password" : "Change Password",
@@ -134,6 +137,7 @@ String.toLocaleString({
 	"Terms of Use" : "Termos de Uso",
 	"Cannot change. Username already exists." : "N\u00e3o pode alterar. Usu\u00e1rio j\u00e1 existe.",
 	"Remember my User Name?" : "Lembrar nome do usu\u00e1rio?",
+	"Restore From Google Drive" : "Restaurar de Google Drive",
 	"Confirm Delete..." : "Confirmar deletagem\u2026",
 	"Purchase successful." : "Comprado com sucesso.",
 	"New Password Hint must be specified for New Password." : "Nova dica de senha deve ser especificada para a nova senha.",
@@ -152,6 +156,7 @@ String.toLocaleString({
 	"Backup of Entries in APass." : "C\u00f3pia de seguran\u00e7a de entradas no APass.",
 	"Please specify valid User Name." : "Por favor, especifique Nome de Usu\u00e1rio v\u00e1lido.",
 	"Export CSV File" : "Salvar Arquivo CSV",
+	"Backup To Google Drive" : "Backup Para Google Drive",
 	"Login to APass" : "Registrar APass",
 	"Updated Resource [%s]" : "Recurso Atualizado [%s]",
 	"Password and Confirmation do not match!  Please re-enter." : "A senha e a confirma\u00e7\u00e3o n\u00e3o coincidem! Digite novamente.",
@@ -176,6 +181,7 @@ String.toLocaleString({
 	"File %s Loaded Successfully" : "Arquivo %s carregado com \u00eaxito",
 	"New Password and Confirmation do not match!  Please re-enter." : "Nova senha e confirma\u00e7\u00e3o n\u00e3o coincidem! Digite novamente.",
 	"New Record..." : "Novo registro \u2026",
+	"Enable Google Drive Backup" : "Ativar Google Drive Backup",
 	"Save Encrypted File..." : "Salvar Arquivo Criptografado \u2026",
 	"SECURITY WARNING" : "AVISO DE SEGURAN\u00c7A",
 	"Change Password" : "Alterar Senha",
@@ -240,7 +246,7 @@ String.toLocaleString({
 	"Create APass Login" : "Criar Registro",
 	"I Understand, Please Continue" : "Sim por favor, continue",
 	"USER NAME [%s] WAS NOT CREATED.  Please try again." : "USU\u00c1RIO [%s] n\u00e3o foi criado. Por favor, tente novamente."
-}
+},
 "fr": {
 	"Delete" : "Supprimer",
 	"Edit" : "Modifier",
@@ -251,6 +257,7 @@ String.toLocaleString({
 	"Terms of Use" : "Conditions d'utilisation",
 	"Cannot change. Username already exists." : "Vous ne pouvez pas changer. L'utilisateur existe d\u00e9j\u00e0.",
 	"Remember my User Name?" : "Rappelez-vous le nom d'utilisateur?",
+	"Restore From Google Drive" : "Restaurer \u00e0 partir de Google Drive",
 	"Confirm Delete..." : "Confirmer la suppression ...",
 	"Purchase successful." : "Achet\u00e9 avec succ\u00e8s.",
 	"New Password Hint must be specified for New Password." : "Nouveau mot de passe indice doit \u00eatre sp\u00e9cifi\u00e9 pour le nouveau mot de passe.",
@@ -269,6 +276,7 @@ String.toLocaleString({
 	"Backup of Entries in APass." : "entr\u00e9es de sauvegarde dans Apass.",
 	"Please specify valid User Name." : "S'il vous pla\u00eet sp\u00e9cifier valide Nom d'utilisateur.",
 	"Export CSV File" : "Enregistrer le fichier CSV",
+	"Backup To Google Drive" : "La Sauvegarde Pour Google Drive",
 	"Login to APass" : "Enregistrer APass",
 	"Updated Resource [%s]" : "Mise \u00e0 jour des ressources [%s]",
 	"Password and Confirmation do not match!  Please re-enter." : "Le mot de passe et la confirmation ne correspondent pas! Entrez \u00e0 nouveau.",
@@ -293,6 +301,7 @@ String.toLocaleString({
 	"File %s Loaded Successfully" : "charg\u00e9 avec succ\u00e8s",
 	"New Password and Confirmation do not match!  Please re-enter." : "Nouveau mot de passe et la confirmation ne correspondent pas! Entrez \u00e0 nouveau.",
 	"New Record..." : "Nouveau record ...",
+	"Enable Google Drive Backup" : "Activer Google Drive Backup",
 	"Save Encrypted File..." : "Enregistrer le fichier crypt\u00e9 ...",
 	"SECURITY WARNING" : "S\u00c9CURIT\u00c9 AVERTISSEMENT",
 	"Change Password" : "Changer mot de passe",
@@ -357,7 +366,7 @@ String.toLocaleString({
 	"Create APass Login" : "Inscription Cr\u00e9er",
 	"I Understand, Please Continue" : "Oui s'il vous pla\u00eet continuer",
 	"USER NAME [%s] WAS NOT CREATED.  Please try again." : "USER [%s] n'a pas \u00e9t\u00e9 cr\u00e9\u00e9. S'il vous pla\u00eet essayer \u00e0 nouveau."
-}
+},
 "es": {
 	"Delete" : "Eliminar",
 	"Edit" : "Editar",
@@ -368,6 +377,7 @@ String.toLocaleString({
 	"ca-app-pub-6141378478306258\/4525691123" : "ca-app-pub-6141378478306258\/4525691123",
 	"Terms of Use" : "Condiciones de Uso",
 	"Remember my User Name?" : "Recordar mi nombre de usuario?",
+	"Restore From Google Drive" : "Restaurar de Google Drive",
 	"Confirm Delete..." : "Confirmar eliminaci\u00f3n...",
 	"Purchase successful." : "Compra con \u00e9xito.",
 	"New Password Hint must be specified for New Password." : "Nueva sugerencia de contrase\u00f1a debe especificarse para la nueva contrase\u00f1a.",
@@ -386,6 +396,7 @@ String.toLocaleString({
 	"Backup of Entries in APass." : "Copia de seguridad de las inscripciones Apass.",
 	"Please specify valid User Name." : "Por favor especificar nombre de usuario v\u00e1lido.",
 	"Export CSV File" : "Exportar Archivo CSV",
+	"Backup To Google Drive" : "Copia de seguridad en Google Drive",
 	"Login to APass" : "Entrar a Apass",
 	"Updated Resource [%s]" : "Actualizaci\u00f3n de Recursos [%s]",
 	"Password and Confirmation do not match!  Please re-enter." : "Contrase\u00f1a y la confirmaci\u00f3n no coinciden! Por favor, vuelva a entrar.",
@@ -412,6 +423,7 @@ String.toLocaleString({
 	"File %s Loaded Successfully" : "El archivo %s cargado correctamente",
 	"New Password and Confirmation do not match!  Please re-enter." : "Nueva contrase\u00f1a y la confirmaci\u00f3n no coinciden! Por favor, vuelva a entrar.",
 	"New Record..." : "Nuevo registro ...",
+	"Enable Google Drive Backup" : "Habilitar Google Drive Backup",
 	"Save Encrypted File..." : "Guardar cifrado de archivos ...",
 	"SECURITY WARNING" : "SEGURIDAD ADVERTENCIA",
 	"Change Password" : "Cambiar contrase\u00f1a",
@@ -480,5 +492,4 @@ String.toLocaleString({
 	"Create APass Login" : "Crear Apass de sesi\u00f3n",
 	"I Understand, Please Continue" : "I Understand, por favor contin\u00fae",
 	"USER NAME [%s] WAS NOT CREATED.  Please try again." : "nombre de usuario [%s] no fue creada. Por favor, int\u00e9ntelo de nuevo."
-}
-});
+}});
