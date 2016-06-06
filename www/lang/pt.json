@@ -1,6 +1,6 @@
 {
 	"Delete" : "Excluir",
-	"Edit" : "Editar",
+	" <  Edit" : " <  Editar",
 	"Data Load Canceled.  No changes have been made." : "Carregamento de dados cancelada. Nenhuma alteração foi feita.",
 	"<a href=\"http:\/\/www.airanza.com\">www.airanza.com<\/a>" : "<a href=\"http:\/\/www.airanza.com\">www.airanza.com<\/a>",
 	"PASSWORD WAS NOT UPDATED.  Please try again." : "SENHA não foi atualizado. Por favor, tente novamente",
@@ -20,7 +20,7 @@
 	"PASSWORD WAS UPDATED SUCCESSFULLY!" : "Senha foi atualizado com sucesso!",
 	"Action Canceled.  No unencrypted CSV file was created." : "Ação cancelada. O arquivo CSV não criptografado não foi criado.",
 	"ATTACHING: %s" : "ANEXANDO: %s",
-	"Change Login Info" : "Alterar autênticação (login)",
+	" <  Change Login Info" : " <  Alterar autênticação (login)",
 	"New Email and Confirmation do not match!  Please re-enter." : "Novo e-mail e confirmação não coincidem! Digite novamente.",
 	"Backup of Entries in APass." : "Cópia de segurança de entradas no APass.",
 	"Please specify valid User Name." : "Por favor, especifique Nome de Usuário válido.",

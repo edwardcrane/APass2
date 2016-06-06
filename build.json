@@ -1,0 +1,29 @@
+{
+    "android": {
+        "debug": {
+            "keystore": "C:\\java\\AndroidStudioProjects\\keystores\\android.jks",
+            "storePassword": "passw0rd",
+            "alias": "myandroidkey",
+            "password" : "passw0rd",
+            "keystoreType": ""
+        },
+        "release": {
+            "keystore": "C:\\java\\AndroidStudioProjects\\keystores\\android.jks",
+            "storePassword": "passw0rd",
+            "alias": "myandroidkey",
+            "password" : "passw0rd",
+            "keystoreType": ""
+        }
+    },
+
+    "ios": {
+        "debug": {
+            "codeSignIdentity": "iPhone Developer: Edward Crane (465C6AFZ26)",
+            "provisioningProfile": "9b86d3e0-eef5-4277-a46f-38dd19353004"
+        },
+        "release": {
+            "codeSignIdentity": "iPhone Distribution: Airanza, Inc. (X8V4JMCV3C)",
+            "provisioningProfile": "70f699ad-faf1-4adE-8fea-9d84738fb306"
+        }
+    }
+}

@@ -74,7 +74,7 @@
     <string name="new_saved_successfully">Saved [%s]</string>
 
     <!-- EDIT DIALOG VALUES -->
-    <string name="edit_title">Edit</string>
+    <string name="edit_title"> &lt;  Edit</string>
     <string name="edit_resource_updated">Updated Resource [%s]</string>
     <string name="edit_resource_deleted">Deleted Resource [%s]</string>
     <string name="edit_resource_not_deleted">Resource [%s] NOT DELETED.</string>
@@ -98,7 +98,7 @@
     <string name="privacy_policy_text">Privacy Policy</string>
 
     <!-- CHANGE REGISTRATION DIALOG VALUES -->
-    <string name="change_registration_title">Change Login Info</string>
+    <string name="change_registration_title"> &lt;  Change Login Info</string>
     <string name="change_registration_username_hint">User Name</string>
     <string name="change_registration_change_email_text">Change Email</string>
     <string name="change_registration_change_username_button_text">Change Username</string>

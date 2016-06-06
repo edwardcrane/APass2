@@ -53,15 +53,15 @@
 						// use the token we got back from oauth to setup the api.
 						gapi.auth.setToken(data);
 						// load the drive api.
-						gapi.client.load('drive', 'v2', function() {
-							listAppDataFiles();
-						});
+						loadDriveApi();
 						deferred.resolve(data); 
-					}).fail(function(response) { 
+					}).fail(function(response) {
+						console.log("Posting code to Google failed.  No OAuth token will be returned.");
 						deferred.reject(response.responseJSON); 
 					}); 
 				} else if (error) { 
 					//The user denied access to the app 
+					console.log("Error retrieving code from Google.");
 					deferred.reject({ 
 						error: error[1] 
 					}); 
@@ -146,15 +146,23 @@
 	 * Load Drive API client library.
 	 */
 	function loadDriveApi() {
-		gapi.client.load('drive', 'v2', new function() {
-			console.log("called gapi.client.load('drive', 'v2') :" + gapi.client.drive);
-//			updateGoogleDriveFile("file:///storage/emulated/0/Android/data/com.airanza.apass2/files/enc.apass", "enc.apass");
+		try {
+		gapi.client.load('drive', 'v2', null).then(function(resp) {
+			console.log("Google Drive API v2 loaded successfully.");
+		}, function(reason) {
+			alert('Google Drive API v2 FAILED to load: ' + reason.result.error.message);
+			console.log('Google Drive aPI v2 FAILED to load: ' + reason.result.error.message);
 		});
+		} catch(err) {
+			alert(err.message);
+			console.log("Google Drive API v2 FAILED to load.  Exception: " + err.message);
+		}
 	}
 
 	function updateGoogleDriveFile(fullpath, filename) {
 		// first ensure the drive is authenticated and loaded.
-		gapi.client.load('drive', 'v2', new function() {
+		gapi.client.load('drive', 'v2').then(function(resp) {
+			console.log("drive v2 loaded successfully.");
 			getAppDataFileId(filename).done(function(fId) {
 				if(fId) {
 					window.resolveLocalFileSystemURL(fullpath, function(fileEntry) {
@@ -169,6 +177,9 @@
 					uploadToGoogleDrive(fullpath);
 				}
 			})
+		}, function(reason) {
+			alert("Error: " + reason.result.error.message);
+			console.log("Error: " + reason.result.error.message);
 		});
 	}
 
@@ -310,10 +321,17 @@
 	function getAppDataFile(filename) {
 		var deferred = $.Deferred();
 		var resultFiles = [];
-		var request = gapi.client.drive.files.list({
-			spaces: 'appDataFolder',
-			maxResults: 100
+		var request = gapi.client.request({
+			'path': '/drive/v2/files',
+			'method': 'GET',
+			'params': {
+				'maxResults': '100'
+			}
 		});
+//		var request = gapi.client.drive.files.list({
+//			spaces: 'appDataFolder',
+//			maxResults: 100
+//		});
 
 		request.execute(function(resp) {
 			var files = resp.items;

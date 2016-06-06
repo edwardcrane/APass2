@@ -27,7 +27,7 @@
     <string name="action_import_csv_file">Télécharger le fichier CSV</string>
     <string name="action_email_csv_file">fichier CSV E-mail</string>
     <string name="action_email_encrypted_file">E-mail Encrypted File</string>
-    <string name="enable_google_drive_backup">Activer Google Drive Backup</string>
+    <string name="enable_google_drive_backup">Activer stockage de Google Drive </string>
     <string name="backup_to_google_drive">La Sauvegarde Pour Google Drive</string>
     <string name="restore_from_google_drive">Restaurer à partir de Google Drive</string>
     <string name="action_advanced">Avancé ...</string>
@@ -79,7 +79,7 @@
     <string name="overwrite_data_csv_import">Chargez ces données [% s] se défaire des enregistrements existants. Vous pouvez d'abord créer un fichier de sauvegarde. Voulez-vous continuer?</string>
     <string name="overwrite_data_dialog_title">REMPLACEMENT DE DONNÉES AVERTISSEMENT</string>
     <string name="overwrite_data_dialog_message">Chargez ces données se défaire des enregistrements existants. Vous pouvez d'abord créer un fichier de sauvegarde. Voulez-vous continuer?</string>
-    <string name="overwrite_data_dialog_positive_button_text">Oui s'il vous plaît continuer</string>
+    <string name="overwrite_data_dialog_positive_button_text">J'accepte continuer</string>
     <string name="overwrite_data_dialog_negative_button_text">Annuler</string>
     <string name="overwrite_data_dialog_user_declined_message">Le chargement de données annulée. Aucun changement n'a été apporté.</string>
     <string name="overwrite_data_dialog_user_accepted_message">L'utilisateur a choisi d'importer tous les enregistrements existants seront supprimés.</string>
@@ -107,8 +107,8 @@
     <string name="login_password_hint_enter_valid_username">S'il vous plaît spécifier valide Nom d'utilisateur.</string>
     <string name="login_title">Enregistrer APass</string>
     <string name="new_title">Nouveau</string>
-    <string name="edit_title">Modifier</string>
-    <string name="change_registration_title">Modifier l'authentification (login)</string>
+    <string name="edit_title"> &lt;  Modifier</string>
+    <string name="change_registration_title"> &lt;  Modifier l'authentification (login)</string>
     <string name="change_registration_username_password_invalid">utilisateur et mot de passe doit être valide!</string>
     <string name="change_registration_username_not_updated">USER [%s] n'a pas été mis à jour. S'il vous plaît essayer à nouveau.</string>
     <string name="change_registration_username_updated_successfully">L'utilisateur [%s] a été mis à jour avec succès!</string>

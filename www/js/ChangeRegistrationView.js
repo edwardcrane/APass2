@@ -9,6 +9,9 @@ var ChangeRegistrationView = function (loginService) {
 		this.$el.on('click', '.changeregistrationpassword', changePassword);
 		this.$el.on('click', '.changeregistrationpasswordhint', changePassword);
 		this.$el.on('click', '.changeregistrationemail', changeEmail);
+		this.$el.on('click', '.pagetitle', function() {
+			window.location.href="#home";
+		});
 
 		this.render();
 

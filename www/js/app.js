@@ -46,6 +46,7 @@
             router.addRoute('login', function() {
                 slider.slidePage(new LoginView(loginService).render().$el);
                 localizeStrings();
+                adjustForIOSToolbar();
             });
 
             router.addRoute('home', function() {
@@ -54,6 +55,7 @@
                 homeView.setupEventMapping();
                 homeView.setupMenuDisplayOptions();
                 localizeStrings();
+                adjustForIOSToolbar();
                 // force search to refresh:
                 $('.search-key').keyup();
             });
@@ -62,29 +64,32 @@
                 passwordsService.findById(parseInt(id)).done(function(resource) {
                     slider.slidePage(new ResourceView(passwordsService, resource).render().$el);
                     localizeStrings();
+                    adjustForIOSToolbar();
                 })
             });
 
             router.addRoute('', function() {
                 slider.slidePage(new SplashView(loginService).render().$el);
                 localizeStrings();
+                adjustForIOSToolbar();
             });
 
             router.addRoute('register', function() {
                 slider.slidePage(new RegisterView(loginService).render().$el);
                 localizeStrings();
+                adjustForIOSToolbar();
             });
 
             router.addRoute('changeregistration', function() {
                 slider.slidePage(new ChangeRegistrationView(loginService).render().$el);
                 localizeStrings();
+                adjustForIOSToolbar();
             });
 
             router.start();
 
             initializeStore();
         });
-
     }
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -92,6 +97,16 @@
 
     /* ---------------------------------- Local Functions ---------------------------------- */
 
+    function adjustForIOSToolbar() {
+        if(device.platform.toLowerCase() === 'ios') {
+            $('.version_number').css({'margin-top':'20px'});
+            $('.pagetitle').css({'margin-top':'20px'});
+            $('.logintitle').css({'margin-top':'20px'});
+            $('.toolbartable').css({'margin-top':'20px'});
+            $('.resourcetoolbar').css({'margin-top':'20px'});
+            $('.registertable').css({'margin-top':'20px'});
+        }
+    }
 
     function localizeStrings() {
         // change the existing text of H3 elements (titles):

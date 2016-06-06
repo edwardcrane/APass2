@@ -38,10 +38,10 @@
     <string name="action_export_csv_file_confirm">Exportar Archivo CSV a [%s]?</string>
     <string name="action_import_csv_file">Importar archivo CSV</string>
     <string name="action_email_csv_file">Correo electrónico Archivo CSV</string>
-    <string name="action_email_encrypted_file">correo electrónico cifrado de archivos</string>
-    <string name="enable_google_drive_backup">Habilitar Google Drive Backup</string>
+    <string name="action_email_encrypted_file">Correo electrónico cifrado de archivos</string>
+    <string name="enable_google_drive_backup">Habilitar almacenamiento de Google Drive</string>
     <string name="backup_to_google_drive">Copia de seguridad en Google Drive</string>
-    <string name="restore_from_google_drive">Restaurar de Google Drive</string>
+    <string name="restore_from_google_drive">Restaurar Google Drive</string>
     <string name="action_advanced">Opciones avanzadas ...</string>
     <string name="action_save_encrypted_file">Guardar cifrado de archivos ...</string>
     <string name="action_load_encrypted_file">Carga de archivos cifrados ...</string>
@@ -74,7 +74,7 @@
     <string name="new_saved_successfully">guardadas [%s]</string>
 
     <!-- EDIT DIALOG VALUES -->
-    <string name="edit_title">Editar</string>
+    <string name="edit_title"> &lt;  Editar</string>
     <string name="edit_resource_updated">Actualización de Recursos [%s]</string>
     <string name="edit_resource_deleted">Recursos suprimidas [%s]</string>
     <string name="edit_resource_not_deleted">Recurso [%s] no se eliminan.</string>
@@ -98,7 +98,7 @@
     <string name="privacy_policy_text">Política de privacidad</string>
 
     <!-- CHANGE REGISTRATION DIALOG VALUES -->
-    <string name="change_registration_title">Cambiar Entrar Info</string>
+    <string name="change_registration_title"> &lt;  Cambiar Entrar Info</string>
     <string name="change_registration_username_hint">Nombre de usuario</string>
     <string name="change_registration_change_email_text">Cambiar correo electrónico</string>
     <string name="change_registration_change_username_button_text">Cambiar nombre de usuario</string>
@@ -142,12 +142,12 @@
     <string name="overwrite_data_csv_import">Importar archivo CSV a partir de [%s] sobrescribirá todos los datos de Apass con los datos del archivo. ¿Desea continuar?</string>
     <string name="overwrite_data_dialog_title">SOBRESCRIBIR LOS DATOS ADVERTENCIA</string>
     <string name="overwrite_data_dialog_message">Cargando datos, se descartarán los registros existentes. Es posible que desee crear un archivo de copia de seguridad en primer lugar. ¿Desea continuar?</string>
-    <string name="overwrite_data_dialog_positive_button_text">I Understand, por favor continúe</string>
+    <string name="overwrite_data_dialog_positive_button_text">Acepto continúe</string>
     <string name="overwrite_data_dialog_negative_button_text">Cancelar</string>
     <string name="overwrite_data_dialog_user_declined_message">Carga de Datos cancelado. No se han hecho cambios.</string>
     <string name="overwrite_data_dialog_user_accepted_message">El usuario eligió para importar, se descartaron todos los registros existentes.</string>
 
-    <string name="list_default_value">Lista Valor predeterminado</string>
+    <string name="list_default_value">Listar valor predeterminado</string>
 
     <!-- DELETE DIALOG VALUES -->
     <string name="delete_resource_dialog_positive_button_text">Aceptar</string>
