@@ -36,7 +36,11 @@ var PasswordsService = function () {
     };
 
     this.getdbdirectory = function() {
-        return cordova.file.applicationStorageDirectory + "databases/";
+        if(device.platform === "iOS") {
+            return cordova.file.applicationStorageDirectory + "Library/LocalDatabase/"
+        } else {
+            return cordova.file.applicationStorageDirectory + "databases/";
+        }
     };
 
     this.getAllResources = function() {
