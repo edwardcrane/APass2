@@ -25,6 +25,17 @@
         // register FastClick fix for 300ms delay on IOS devices:
         FastClick.attach(document.body);
 
+        if(navigator.notification) { // Override default HTML alert with native dialog
+            window.alert = function (message) {
+                navigator.notification.alert(
+                    message,        // message
+                    null,           // callback
+                    "APass Pro",    // title
+                    'OK'            // buttonName
+                );
+            };
+        }
+
         usersLanguage = setLang();
 
         document.addEventListener("backbutton", onBackKeyDown, false);

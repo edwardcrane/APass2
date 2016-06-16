@@ -27,9 +27,6 @@ public class XMLLangToJSON {
 			for(int i = 1; i < argv.length; i++) {
 				r.readInLocaleFile(getLocaleFromFilename(argv[i]), argv[i]);
 			}
-//			r.readInLocaleFile("pt", argv[1]);
-//			r.readInLocaleFile(getLocaleFromFilename(argv[1]), argv[1]);
-//			System.out.print(r.createJSONLocalizationString("pt"));
 			System.out.print(r.createJSON());
 		} catch 	(Exception e) {
 			e.printStackTrace();
@@ -251,18 +248,8 @@ public class XMLLangToJSON {
 		}
 	}
 
-	// public String createJSONLocalizationString(String lang) {
-	// 	StringJoiner sj = new StringJoiner(",\n", "{\n", "\n}");
-	// 	for (String key : defStrings.keySet() ) {
-	// 		if(localStrings.get(defStrings.get(key)) != null) {
-	// 			sj.add("\t" + quote(key) + " : " + quote(localStrings.get(defStrings.get(key))));
-	// 		}
-	// 	}
-	// 	return(sj.toString());
-	// }
-
 	public String createDefaultsJSON() {
-		StringJoiner sj = new StringJoiner(",\n", "\"en\": {\n", "\n},\n");
+		StringJoiner sj = new StringJoiner(",\n", "\"en\": {\n", "\n}");
 		for (String key : defStrings.keySet() ) {
 			sj.add("\t" + quote(key) + " : " + localizedQuote(key));
 		}
@@ -270,7 +257,7 @@ public class XMLLangToJSON {
 	}
 
 	public String createLocaleJSON(String locale) {
-		StringJoiner sj = new StringJoiner(",\n", quote(locale) + ": {\n", "\n}\n");
+		StringJoiner sj = new StringJoiner(",\n", quote(locale) + ": {\n", "\n}");
 		for (String key : defStrings.keySet() ) {
 			if(hLocales.get(locale).get(defStrings.get(key)) != null) {
 				sj.add("\t" + quote(key) + " : " + localizedQuote(hLocales.get(locale).get(defStrings.get(key))));
@@ -279,43 +266,12 @@ public class XMLLangToJSON {
 		return(sj.toString());
 	}
 
-	public String createLocaleJSON(String locale, HashMap<String, String> hLocale) {
-		StringJoiner sj = new StringJoiner(",\n", quote(locale) + ": {\n", "\n}\n");
-		for (String key : defStrings.keySet() ) {
-			if(hLocale.get(defStrings.get(key)) != null) {
-				sj.add("\t" + quote(key) + " : " + localizedQuote(hLocale.get(defStrings.get(key))));
-			}
+	public String createJSON() {
+		StringJoiner sj = new StringJoiner(",\n", "String.toLocaleString({\n", "});");
+		sj.add(createDefaultsJSON());
+		for(String localeKey : hLocales.keySet()) {
+			sj.add(createLocaleJSON(localeKey));
 		}
 		return(sj.toString());
-	}
-
-	public String createJSON() {
-		StringBuffer sb = new StringBuffer();
-		// beginning of js file:
-		sb.append("String.toLocaleString({\n");
-		sb.append(createDefaultsJSON());
-		for(String localeKey : hLocales.keySet() ) {
-			sb.append(createLocaleJSON(localeKey));
-//			sb.append(createLocaleJSON(localeKey, hLocales.get(localeKey)));
-		}
-
-		// // iterate over each of the keys in hLocales (which are the locales, "en, pt" at first)
-		// for(String localeKey : hLocales.keySet() ) {
-		// 	// create a new StringJoiner for each locale:
-		// 	StringJoiner sj = new StringJoiner(",\n", localeKey + ": {\n", "\n}");
-		// 	// iterate over each of the embedded strings in each locale:
-		// 	for(String key : defStrings.keySet() ) {
-		// 		if(hLocales.get(localeKey).get(defStrings.get(key)) != null) {
-		// 			// defStrings values : hLocales.get(localeKey).get
-		// 			HashMap<String, String> tmpHash = hLocales.get(localeKey);
-		// 			sj.add("\t" + quote(key) + " : " + quote(tmpHash.get(defStrings.get(key))));
-		// 		}
-		// 	}
-		// 	sb.append(sj.toString());
-		// }
-
-		// end of js file:
-		sb.append("});");
-		return(sb.toString());
 	}
 }

@@ -283,7 +283,11 @@ var HomeView = function (loginService, passwordsService) {
         		 	);
         		});
        		} else {
-       			alert(l("Email Plugin is NOT Available."));
+       			if(device.platform === 'iOS') {
+       				alert(l("Email Plugin is NOT Available.") + "  You must have at least one email-enabled account specified in \'Settings\' -> \'Mail, Contacts, Calendars\' -> \'ACCOUNTS\'.");
+       			} else {
+       				alert(l("Email Plugin is NOT Available.") );
+       			}
        		};
         });
 	}
@@ -307,22 +311,37 @@ var HomeView = function (loginService, passwordsService) {
         			var emails = [];
 
         			emails.push(myemail);
-        			atts.push(passwordsService.getStorageDirectory() + "encrypted.apass");
 
-        			window.plugin.email.open({
+        			if(device.platform === 'iOS') {
+	        			// Mime Type is apparently required for IOS:
+    	    			var mType = "application/octet-stream";
+        				atts.push(mType + ":" + passwordsService.getStorageDirectory() + "encrypted.apass");
+
+        				window.plugin.email.open({
+        					to: emails,
+        					attachments: atts,
+        					subject: l("APass Backup File"),
+        					body: l("Backup of Entries in APass"),
+        					isHtml: false
+        				}, function() { console.log('email view dismissed');},this);
+        			} else {
+	        			atts.push(passwordsService.getStorageDirectory() + "encrypted.apass");
+
+        				window.plugin.email.open({
         					to: emails,
     	    				attachments: atts,
         					subject: l("APass Backup File"),
-        					body: l("Backup of Entries in APass")
-        				},
-						function() {
-							console.log('email view dismissed');
-        		 		},
-        		 		this
-        		 	);
+        					body: l("Backup of Entries in APass"),
+        					isHtml: false
+        				}, function() {	console.log('email view dismissed');},this);
+        			}
         		});
        		} else {
-       			alert(l("Email Plugin is NOT Available."));
+       			if(device.platform === 'iOS') {
+       				alert(l("Email Plugin is NOT Available.") + "  You must have at least one email-enabled account specified in \'Settings\' -> \'Mail, Contacts, Calendars\' -> \'ACCOUNTS\'.");
+       			} else {
+       				alert(l("Email Plugin is NOT Available.") );
+       			}
        		};
         });
 	}

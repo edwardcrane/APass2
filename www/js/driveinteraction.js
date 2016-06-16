@@ -38,6 +38,8 @@
             	var code = /\?code=(.+)$/.exec(url);
             	var error = /\?error=(.+)$/.exec(url);
 
+            	// alert("inside loadstart: " + url + "\r\ncode: " + code + "\r\nerror: " + error);
+
             	if(code || error) {
             		authWindow.close();
             	}
@@ -67,6 +69,45 @@
 					}); 
 				} 
             });
+
+			    // $(authWindow).on('loaderror', function(e) {
+    			//		var url = e.originalEvent.url;
+    			//		var code = /\?code=(.+)$/.exec(url);
+    			//		var error = /\?error=(.+)$/.exec(url);
+
+				//		// alert("inside loaderror: " + url + "\r\ncode: " + code + "\r\nerror: " + error);
+
+				//		if(code || error) {
+				//			authWindow.close();
+				//		}
+				// if (code) { 
+				// 	//Exchange the authorization code for an access token 
+				// 	$.post('https://accounts.google.com/o/oauth2/token', { 
+				// 		code: code[1], 
+				// 		client_id: options.client_id, 
+				// 		client_secret: options.client_secret, 
+				// 		redirect_uri: options.redirect_uri, 
+				// 		grant_type: 'authorization_code' 
+				// 	}).done(function(data) {
+				// 		// use the token we got back from oauth to setup the api.
+				// 		gapi.auth.setToken(data);
+				// 		// load the drive api.
+				// 		loadDriveApi();
+				// 		deferred.resolve(data); 
+				// 	}).fail(function(response) {
+				// 		console.log("Posting code to Google failed.  No OAuth token will be returned.");
+				// 		deferred.reject(response.responseJSON); 
+				// 	}); 
+				// } else if (error) { 
+				// 	//The user denied access to the app 
+				// 	console.log("Error retrieving code from Google.");
+				// 	alert("Could not get OAuth code from Google.");
+				// 	deferred.reject({ 
+				// 		error: error[1] 
+				// 	}); 
+				// } 
+
+    //         });
 
             return deferred.promise();
         }
