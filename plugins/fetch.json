@@ -38,5 +38,71 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-file": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-file"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-extension": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-extension"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-globalization": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-globalization"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-admobpro": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-admobpro"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cc.fovea.cordova.purchase": {
+        "source": {
+            "type": "registry",
+            "id": "cc.fovea.cordova.purchase"
+        },
+        "is_top_level": true,
+        "variables": {
+            "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjQ0W7r9/Wl93j0fbKHdELAmRQ83lmGzYLrML3xreiSesEaJ7cWuADGSyBvLlskakxFOKa2N68wGVThUpPIaTbQey6Gxdvuvqz69Pn3izEQZl3FuIim/1ZRCP9qiBTLVg7FR4mH90E1JxSiWpBp58EP2Q6BOB8y2Xw1vFeexKwWhxlPX/xA9puapq6PbPGepYO0/0cdPw2agcYMUaUs/kKZctocsR3z7Rz8snwI3PULoO1xa6sLawIFReRIV1dnDkCBg8mW2l1Xj8ziEwdmB8YVKgZWLDsKhpVZ1BUstyj3MgagV80UVzBbWhsJUBIUtC7/Hj0JiDZRYV2p0SHTnSvQIDAQAB"
+        }
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-email": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-email@~1.1.0"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

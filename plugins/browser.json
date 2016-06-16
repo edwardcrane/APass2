@@ -21,7 +21,32 @@
         },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cc.fovea.cordova.purchase": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-email": {
+            "PACKAGE_NAME": "com.airanza.apass2"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        }
+    }
 }

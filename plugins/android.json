@@ -8,20 +8,46 @@
     },
     "installed_plugins": {
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.airanza.apass2"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.airanza.apass2"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.airanza.apass2"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.airanza.apass2"
+            "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cc.fovea.cordova.purchase": {
+            "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjQ0W7r9/Wl93j0fbKHdELAmRQ83lmGzYLrML3xreiSesEaJ7cWuADGSyBvLlskakxFOKa2N68wGVThUpPIaTbQey6Gxdvuvqz69Pn3izEQZl3FuIim/1ZRCP9qiBTLVg7FR4mH90E1JxSiWpBp58EP2Q6BOB8y2Xw1vFeexKwWhxlPX/xA9puapq6PbPGepYO0/0cdPw2agcYMUaUs/kKZctocsR3z7Rz8snwI3PULoO1xa6sLawIFReRIV1dnDkCBg8mW2l1Xj8ziEwdmB8YVKgZWLDsKhpVZ1BUstyj3MgagV80UVzBbWhsJUBIUtC7/Hj0JiDZRYV2p0SHTnSvQIDAQAB",
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        },
+        "cordova-plugin-email": {
             "PACKAGE_NAME": "com.airanza.apass2"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "com.airanza.apass2"
+        }
+    }
 }
