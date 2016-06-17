@@ -44,6 +44,7 @@
     </platform>
     <preference name="FadeSplashScreenDuration" value="1000" />
     <preference name="SplashScreenDelay" value="0" />
+    <preference name="DisallowOverscroll" value="true" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-device" spec="~1.1.0" />
     <plugin name="cordova-plugin-console" spec="~1.0.2" />

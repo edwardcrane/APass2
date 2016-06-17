@@ -317,7 +317,15 @@ var PasswordsService = function () {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    var strToEncrypt = String.fromCharCode.apply(null, new Uint8Array(reader.result));
+                    // on iOS String.fromCharCode.apply() is limited to 65535 bytes, resulting in maximum stack size error
+                    // so instead, iterate:
+                    // var strToEncrypt = String.fromCharCode.apply(null, new Uint8Array(reader.result));
+                    var strToEncrypt = '';
+                    var u8arr = new Uint8Array(reader.result);
+                    var length = u8arr.length;
+                    for(var i = 0; i < length; i++) {
+                        strToEncrypt += String.fromCharCode(u8arr[i]);
+                    }
                     console.log("Encrypting: [" + strToEncrypt.length + "] bytes.");
                     var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Latin1.parse(strToEncrypt), "APassApp", { format: JsonFormatter });
 
@@ -342,7 +350,15 @@ var PasswordsService = function () {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    var strToEncrypt = String.fromCharCode.apply(null, new Uint8Array(reader.result));
+                    // on iOS String.fromCharCode.apply() is limited to 65535 bytes, resulting in maximum stack size error
+                    // so instead, iterate:
+                    // var strToEncrypt = String.fromCharCode.apply(null, new Uint8Array(reader.result));
+                    var strToEncrypt = '';
+                    var u8arr = new Uint8Array(reader.result);
+                    var length = u8arr.length;
+                    for(var i = 0; i < length; i++) {
+                        strToEncrypt += String.fromCharCode(u8arr[i]);
+                    }
                     console.log("Encrypting: [" + strToEncrypt.length + "] bytes.");
                     var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Latin1.parse(strToEncrypt), "APassApp", { format: JsonFormatter });
 
@@ -392,7 +408,21 @@ var PasswordsService = function () {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    cipherParamsJSON = String.fromCharCode.apply(null, new Uint8Array(reader.result));
+                    var cipherParamsJSON = '';
+                    try {
+                        // on iOS String.fromCharCode.apply() is limited to 65535 bytes, resulting in maximum stack size error
+                        // so instead, iterate:
+                        // cipherParamsJSON = String.fromCharCode.apply(null, new Uint8Array(reader.result));
+                        var u8arr = new Uint8Array(reader.result);
+                        var length = u8arr.length;
+                        for(var i = 0; i < length; i++) {
+                            cipherParamsJSON += String.fromCharCode(u8arr[i]);
+                        }
+                   
+                    } catch(err) {
+                        console.log("ERROR converting from ArrayBuffer to cipherParamsJSON: [" + err.message +"]");
+                        alert("ERROR converting from ArrayBuffer to cipherParamsJSON: [" + err.message + "]");
+                    }
                     console.log("read [" + cipherParamsJSON.length + "] from " + pathToEncryptedFile);
                     var encrypted = JsonFormatter.parse(cipherParamsJSON); // into CipherParams Object
                     var decrypted = CryptoJS.AES.decrypt(encrypted,"APassApp").toString(CryptoJS.enc.Latin1);
