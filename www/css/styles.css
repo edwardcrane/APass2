@@ -239,6 +239,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	min-height: 100%;
 	padding: 0;
 	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 .table-view-cell {
