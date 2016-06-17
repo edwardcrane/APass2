@@ -19,3 +19,6 @@ detected.
 7.  Profiling is needed for >250 rows.  However...   Will look into eliminating CSS as an issue first.
 
 8.  Users sometimes lose, forget and just screw up their login information, and they are not likely to call or email support out of embarassment.  We need to make an anonymous method for changing password tht is still secure, but doesn't call us a fortune by requiring us to have a server.  Step one is a click-combination that prompt for a new username, password, confirmation, and hint.
+
+9.  Cordova sounds great in theory, but in practice, it is not just "write once - run anywhere".  IT is a nightmare of incompatibilities and platform-specific junk, including special settings for things like whitelisted urls that can be accessed, but only necessary on iOS, not Android, special icons required for iOS but not for android, behavior of plugins that is inconsistent or focused on one platform over the other, etc.
+
