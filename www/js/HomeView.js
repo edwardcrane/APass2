@@ -195,7 +195,7 @@ var HomeView = function (loginService, passwordsService) {
 		// http://stackoverflow.com/questions/30539839/createobjecturl-of-javascript-file-object-from-cordova-camera
 		this.$el.on('click', '.menuitemloadencryptedfile', this.onLoadEncryptedFile);
 		this.$el.on('click', '.menuitemchangelogin', this.onChangeLogin);
-		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
+//		this.$el.on('click', '.menuitemremoveads', this.onRemoveAds);
 		this.$el.on('click', '.menuitemabout', this.onAbout);
 	}
 
