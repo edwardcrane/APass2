@@ -234,7 +234,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .resource-list-tpl-description {
 	width: 100%;
+	font-weight: bold;
 	color: #FFF;
+	-webkit-opacity: 1; /* disabled input on iOS webview */
 /*	float: left; /* MAJOR PERFORMANCE ISSUE */*/
 }
 
