@@ -198,6 +198,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 	margin-bottom: 10px;
 	font-size: larger;
 	font-weight: bold;
+	font-style: italic;
+	color: #FFF;
 }
 
 .pagetitle {
@@ -232,6 +234,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .resource-list-tpl-description {
 	width: 100%;
+	color: #FFF;
 /*	float: left; /* MAJOR PERFORMANCE ISSUE */*/
 }
 
