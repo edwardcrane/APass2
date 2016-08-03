@@ -23,6 +23,7 @@ body {
 }
 
 .version_number {
+	font-family: "Arial Black", Gadget, sans-serif;
 	color: #FFFFFF;
 	text-align: center;
 	position: absolute;
@@ -33,6 +34,7 @@ body {
 }
 
 .splash-links {
+	font-family: "Arial Black", Gadget, sans-serif;
 	position:absolute;
 	bottom:0;
 	margin-left: auto;
